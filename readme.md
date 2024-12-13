@@ -54,7 +54,7 @@ items.txt          // Persistent storage for item data
 1.  Clone the repository:
     
     ```bash
-    git clone [https://github.com/your-repository-link.git](https://github.com/your-repository-link.git)
+    git clone [https://github.com/khoilyminh/Credit-based-Auction-Application.git](https://github.com/khoilyminh/Credit-based-Auction-Application.git)
     ```
     
 2.  Open the project in your preferred IDE (e.g., Visual Studio, CLion).
