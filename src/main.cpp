@@ -6,10 +6,10 @@
 int main()
 {
   User user = User("peterdinh", "12345678");
-  // Database database = Database();
-  // database.saveUser(&user);
-  // user.setPassword("87654321");
-  // database.saveUser(&user);
-  // database.getAllUsers();
+  user.save();
+
+  Member member = Member("Peter Dinh", "0867847403", "contact@cuongdinh.dev", user);
+  member.save();
+
   return 0;
 }

@@ -115,3 +115,8 @@ std::string User::toString()
   return "UserID: " + this->getUserID() + ", Username: " + this->getUsername() +
          ", Password: " + hiddenPassword + "\n";
 }
+
+void User::save()
+{
+  Database().saveUser(this);
+}

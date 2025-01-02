@@ -13,8 +13,8 @@ void Database::saveUsersToFile()
   std::ofstream file("./data/users.txt", std::ios::trunc);
   for (int i = 0; i < this->users.size(); i++)
   {
-    file << this->users[i].getUserID() << " " << this->users[i].getUsername()
-         << " " << this->users[i].getPassword() << std::endl;
+    file << this->users[i].getUserID() << ", " << this->users[i].getUsername()
+         << ", " << this->users[i].getPassword() << std::endl;
   }
   file.close();
 }
@@ -28,10 +28,10 @@ std::vector<User> getAllUsersFromDatabase()
   {
     // The first value is the userID, the second value is the username, and the
     // third value is the password.
-    std::string userID = line.substr(0, line.find(" "));
+    std::string userID = line.substr(0, line.find(", "));
     line = line.substr(line.find(" ") + 1);
-    std::string username = line.substr(0, line.find(" "));
-    line = line.substr(line.find(" ") + 1);
+    std::string username = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
     std::string password = line;
     // Create a new user object and add it to the users vector.
     User user(userID, username, password);
@@ -92,4 +92,13 @@ void Database::removeUser(User user)
   }
   // Update the data in the file.
   this->saveUsersToFile();
+  // Remove all member that have the same userID.
+  for (int index = 0; index < this->members.size(); index++)
+  {
+    if (this->members.at(index).getUserID() == user.getUserID())
+    {
+      this->members.erase(this->members.begin() + index);
+      index--;
+    }
+  }
 }
