@@ -10,119 +10,108 @@ The Credit-Based Auction Application is a console-based C++ program that allows 
 
 **Non-Member (Guest):**
 
-*   View limited item details: name, category, and description.
-*   Register as a member with a strong password policy.
+-   View limited item details: name, category, and description.
+-   Register as a member with a strong password policy.
 
 **Member:**
 
-*   **Profile Management:** View, update, and top up credit points.
-*   **Item Listings:** Create, edit, and remove listings (restrictions apply if bids are placed).
-*   **Bidding:**
-    *   Search for items by name, category, or credit point range.
-    *   View item details, including the highest bid and bidder.
-    *   Place bids, ensuring sufficient CP balance.
-*   **Ratings & Reviews:**
-    *   Rate buyers and sellers after transactions.
-    *   View own average ratings and reviews.
+-   **Profile Management:** View, update, and top up credit points.
+-   **Item Listings:** Create, edit, and remove listings (restrictions apply if bids are placed).
+-   **Bidding:**
+    -   Search for items by name, category, or credit point range.
+    -   View item details, including the highest bid and bidder.
+    -   Place bids, ensuring sufficient CP balance.
+-   **Ratings & Reviews:**
+    -   Rate buyers and sellers after transactions.
+    -   View own average ratings and reviews.
 
 **Admin:**
 
-*   Access all member profiles and item listings without restrictions.
-*   **Auction Conclusion:**
-    *   Automatically update credit points after a successful auction.
-    *   Prevent negative credit point balances.
+-   Access all member profiles and item listings without restrictions.
+-   **Auction Conclusion:**
+    -   Automatically update credit points after a successful auction.
+    -   Prevent negative credit point balances.
 
 ### Advanced Features
 
-*   **Activity Dashboard:** Personalized account overview for logged-in members.
-*   **Automatic Bid Limit:** Automatically place bids until a user-defined limit is reached.
+-   **Activity Dashboard:** Personalized account overview for logged-in members.
+-   **Automatic Bid Limit:** Automatically place bids until a user-defined limit is reached.
 
 ## Project Structure
 
 /src
-main.cpp           // Entry point for the application
-User.h/.cpp        // User class for member and guest functionality
-Admin.h/.cpp       // Admin-specific functionality
-Item.h/.cpp        // Item class for auction listings
-Auction.h/.cpp     // Auction-related operations
+main.cpp // Entry point for the application
+User.h/.cpp // User class for member and guest functionality
+Admin.h/.cpp // Admin-specific functionality
+Item.h/.cpp // Item class for auction listings
+Auction.h/.cpp // Auction-related operations
 /data
-users.txt          // Persistent storage for user data
-items.txt          // Persistent storage for item data
+users.txt // Persistent storage for user data
+items.txt // Persistent storage for item data
 
 ## Installation
 
 1.  Clone the repository:
-    
+
     ```bash
     git clone https://github.com/khoilyminh/Credit-based-Auction-Application.git
     ```
-    
-2.  Open the project in your preferred IDE (e.g., Visual Studio, CLion).
-    
-3.  Build the project to generate the executable file.
-    
-4.  Run the application from the console or IDE.
-    
+
+2.  If you are using Windows OS, open the terminal (PowerShell, CMD, etc.) and then run the command:
+    ```powershell
+    .\run.ps1
+    ```
+3.  If you are using MacOS or any Linux distribution, open the terminal and then run the command:
+    ```bash
+    ./run.sh
+    ```
 
 ## Usage
 
 1.  Launch the application.
-    
 2.  Select your user type:
-    
-    *   **Guest:** View items or register as a member.
-        
-    *   **Member:** Log in to access profile, auction listings, and bidding features.
-        
-    *   **Admin:** Log in to view all member profiles and listings.
-        
+
+    -   **Guest:** View items or register as a member.
+    -   **Member:** Log in to access profile, auction listings, and bidding features.
+    -   **Admin:** Log in to view all member profiles and listings.
+
 3.  Follow the prompts to explore features such as creating listings, bidding, and rating.
-    
 
 ## Data Files
 
-*   **users.txt:** Stores registered user details, including username, password (encrypted), and ratings.
-    
-*   **items.txt:** Stores auction items with details like name, category, and current bid status.
-    
+-   **users.txt:** Stores registered user details, including username, password (encrypted), and ratings.
+-   **items.txt:** Stores auction items with details like name, category, and current bid status.
 
 ## Contributing
 
 This project uses GitHub for version control. To contribute:
 
 1.  Fork the repository.
-    
 2.  Create a new branch for your feature:
-    
+
     ```bash
     git checkout -b feature-name
     ```
-    
+
 3.  Commit and push your changes:
-    
+
     ```bash
     git commit -m "Add feature description"
     git push origin feature-name
     ```
-    
+
 4.  Submit a pull request.
-    
 
 ## Testing
 
-*   Unit testing is implemented for core functionalities like registration, bidding, and file handling.
-    
-*   Test cases are included to validate edge conditions, such as insufficient credit points and invalid inputs.
-    
+-   Unit testing is implemented for core functionalities like registration, bidding, and file handling.
+-   Test cases are included to validate edge conditions, such as insufficient credit points and invalid inputs.
 
 ## Acknowledgments
 
-*   Instructor: Dr. Ling Huo Chong
-    
-*   Course: Software Engineering Design (EEET2482) / Advanced Programming Techniques (COSC2082)
-    
-*   Semester: 3, 2024
-    
+-   Instructor: Dr. Ling Huo Chong
+-   Course: Software Engineering Design (EEET2482) / Advanced Programming Techniques (COSC2082)
+-   Semester: 3, 2024
 
 ## License
 
