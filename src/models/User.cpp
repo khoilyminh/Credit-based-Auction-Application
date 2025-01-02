@@ -1,32 +1,38 @@
+#include <vector>
+#include <iostream>
+
 #include "../libs/User.h"
 #include "../libs/Database.h"
-
-#include <iostream>
-#include <vector>
-
 #include "../libs/IDGenerator.h"
+
+#define DEFAULT_USERNAME ""
+#define DEFAULT_PASSWORD ""
+#define DEFAULT_STATUS true
 
 // ------- Default constructor -------
 
 User::User()
 {
   this->userID = IDGenerator::generateID(16);
-  this->username = "";
-  this->password = "";
+  this->username = DEFAULT_USERNAME;
+  this->password = DEFAULT_PASSWORD;
+  this->status = DEFAULT_STATUS;
 }
 
 // ------- Constructor with parameters -------
 
-User::User(std::string userID, std::string username, std::string password)
+User::User(std::string userID, std::string username, std::string password, bool status)
 {
   this->userID = userID;
   this->username = username;
   this->password = password;
+  this->status = status;
 }
 
 User::User(std::string username, std::string password)
 {
   this->userID = IDGenerator::generateID(16);
+  this->status = DEFAULT_STATUS;
   try
   {
     this->setUsername(username);
@@ -50,6 +56,8 @@ bool User::checkPassword(std::string password)
 {
   return this->password == password;
 }
+
+bool User::getStatus() { return this->status; }
 
 // ------- Setters -------
 
@@ -107,13 +115,16 @@ void User::setPassword(std::string password)
   this->password = password;
 }
 
+void User::setStatus(bool status) { this->status = status; }
+
 // ------- Other methods -------
 
 std::string User::toString()
 {
   std::string hiddenPassword = "********";
+  std::string status = this->status ? "active" : "inactive";
   return "UserID: " + this->getUserID() + ", Username: " + this->getUsername() +
-         ", Password: " + hiddenPassword + "\n";
+         ", Password: " + hiddenPassword + ", Status: " + status + "\n";
 }
 
 void User::save()

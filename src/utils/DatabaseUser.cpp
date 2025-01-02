@@ -13,8 +13,9 @@ void Database::saveUsersToFile()
   std::ofstream file("./data/users.txt", std::ios::trunc);
   for (int i = 0; i < this->users.size(); i++)
   {
+    bool status = this->users[i].getStatus() ? "active" : "inactive";
     file << this->users[i].getUserID() << ", " << this->users[i].getUsername()
-         << ", " << this->users[i].getPassword() << std::endl;
+         << ", " << this->users[i].getPassword() << ", " << status << std::endl;
   }
   file.close();
 }
@@ -27,14 +28,15 @@ std::vector<User> getAllUsersFromDatabase()
   while (std::getline(file, line))
   {
     // The first value is the userID, the second value is the username, and the
-    // third value is the password.
+    // third value is the password, the forth value will be status.
     std::string userID = line.substr(0, line.find(", "));
     line = line.substr(line.find(" ") + 1);
     std::string username = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
     std::string password = line;
+    bool status = line.substr(line.find(", ") + 1) == "active";
     // Create a new user object and add it to the users vector.
-    User user(userID, username, password);
+    User user(userID, username, password, status);
     users.push_back(user);
   }
   file.close();
