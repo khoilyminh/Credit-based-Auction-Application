@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 #include "../libs/User.h"
 
@@ -42,7 +43,10 @@ std::vector<User> getAllUsersFromDatabase()
 
 Database::Database() { this->users = getAllUsersFromDatabase(); }
 
-std::vector<User> Database::getAllUsers() { return this->users; }
+std::vector<User> Database::getAllUsers()
+{
+  return this->users;
+}
 
 User *Database::getUserByID(std::string userID)
 {
