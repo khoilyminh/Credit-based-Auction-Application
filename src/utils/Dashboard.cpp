@@ -90,8 +90,45 @@ void Dashboard::handleMainMenu(bool clear = true)
 
   case 3:
   {
+    std::system("clear");
     std::cout << "Logging in as Admin..." << std::endl;
-    // Add logic for admin login
+
+    std::string username, password;
+    std::cout << "Enter username: ";
+    std::cin >> username;
+    std::cout << "Enter password: ";
+    std::cin >> password;
+
+    User user;
+    try
+    {
+      user.checkAuthentication(username, password);
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+
+    Admin admin;
+    try
+    {
+      admin.getAdminByUser(user);
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+
+    std::cout << "Welcome back " << user.getUsername() << "!" << std::endl;
+    this->admin = &admin;
+    this->currentRole = "Admin";
+
     break;
   }
 
@@ -144,9 +181,39 @@ void Dashboard::handleMainMenu(bool clear = true)
 
   case 5:
   {
+    std::system("clear");
     std::cout << "Signing up as Admin..." << std::endl;
-    // Add logic for admin sign up
-    break;
+    User user;
+    try
+    {
+      // Create a new user
+      std::string username, password;
+      std::cout << "Enter username: ";
+      std::cin >> username;
+      std::cout << "Enter password: ";
+      std::cin >> password;
+      user = User(username, password);
+      user.save();
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+    try
+    {
+      Admin admin = Admin(user);
+      admin.save();
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
   }
 
   case 6:

@@ -1,7 +1,10 @@
 #include "../libs/Admin.h"
 #include "../libs/IDGenerator.h"
 #include "../libs/Database.h"
+
 #include <stdexcept>
+#include <vector>
+#include <iostream>
 
 #define ADMIN_ID_LENGTH 16
 
@@ -50,4 +53,27 @@ void Admin::setUserID(std::string userID)
 std::string Admin::toString()
 {
   return "Admin ID: " + this->adminID + "\nUser ID: " + this->userID + "\n";
+}
+
+void Admin::save()
+{
+  Database database = Database();
+  database.saveAdmin(this);
+}
+
+void Admin::getAdminByUser(User user)
+{
+  Database database = Database();
+  std::vector<Admin> admins = database.getAllAdmins();
+  for (Admin &admin : admins)
+  {
+    std::cout << admin.getUserID() << std::endl;
+    std::cout << user.getUserID() << std::endl;
+    if (admin.getUserID() == user.getUserID())
+    {
+      *this = admin;
+      return;
+    }
+  }
+  throw std::invalid_argument("Admin is not existed.");
 }

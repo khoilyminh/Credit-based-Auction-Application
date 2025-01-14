@@ -29,6 +29,7 @@ public:
   std::string toString();
   void save();
   User getUser();
+  void getAdminByUser(User user);
 };
 
 #endif

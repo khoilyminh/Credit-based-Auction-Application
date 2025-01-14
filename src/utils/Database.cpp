@@ -75,8 +75,8 @@ std::vector<Admin> getAllAdminsFromDatabase()
     // The first value is the adminID, the second value is the adminID, and the
     // third value is the userID.
     std::string adminID = line.substr(0, line.find(", "));
-    line = line.substr(line.find(" ") + 1);
-    std::string userID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string userID = line.substr(1, line.find(", "));
     // Create a new admin object and add it to the admins vector.
     Admin admin(adminID, userID);
     admins.push_back(admin);
@@ -239,7 +239,7 @@ void Database::saveAdminsToFile()
   std::ofstream file("./data/admins.txt", std::ios::trunc);
   for (int i = 0; i < this->admins.size(); i++)
   {
-    file << this->admins[i].getAdminID() << ", " << this->admins[i].getAdminID() << ", " << this->admins[i].getUserID() << std::endl;
+    file << this->admins[i].getAdminID() << ", " << this->admins[i].getUserID() << std::endl;
   }
   file.close();
 }
