@@ -85,9 +85,6 @@ std::vector<Admin> getAllAdminsFromDatabase()
   return admins;
 }
 
-struct tm startTimeAuction;
-struct tm endTimeAuction;
-
 std::vector<Auction>
 getAllAuctionsFromDatabase()
 {
@@ -105,13 +102,13 @@ getAllAuctionsFromDatabase()
     std::string auctionName = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
     std::string startTimeStr = line.substr(1, line.find(", ") - 1);
-    strptime(startTimeStr.c_str(), "%Y-%m-%d %H:%M:%S", &startTimeAuction);
+    long startTimeAuction = std::stol(startTimeStr);
     line = line.substr(line.find(", ") + 1);
     std::string endTimeStr = line.substr(1, line.find(", ") - 1);
-    strptime(endTimeStr.c_str(), "%Y-%m-%d %H:%M:%S", &endTimeAuction);
+    long endTimeAuction = std::stol(endTimeStr);
     line = line.substr(line.find(", ") + 1);
     // Create a new auction object and add it to the auctions vector.
-    Auction auction(auctionID, auctionName, std::mktime(&startTimeAuction), std::mktime(&endTimeAuction));
+    Auction auction(auctionID, auctionName, startTimeAuction, endTimeAuction);
     auctions.push_back(auction);
   }
   file.close();

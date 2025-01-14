@@ -6,6 +6,7 @@
 #include "./User.h"
 #include "./Member.h"
 #include "./Admin.h"
+#include "./Auction.h"
 
 class Dashboard
 {
@@ -31,11 +32,15 @@ public:
 
   void handleAdminMenu(bool clear);
 
-  // ------- Auction methods -------
+  // ------- Auction methods for admin -------
 
   void displayAdminAuctionMenu();
 
   void handleAdminAuctionMenu(bool clear);
+
+  void displayAdminAuctionDetailMenu(Auction *auction);
+
+  void handleAdminAuctionDetailMenu(Auction *auction, bool clear);
 
   // ------- Member methods -------
 
