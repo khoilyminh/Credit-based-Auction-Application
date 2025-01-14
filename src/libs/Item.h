@@ -14,11 +14,14 @@ private:
   float startingBid;
   float currentBid;
   std::string highestBidderID;
+  float bidIncrement;
+  float minBuyerRating;
 
 public:
   // Constructors
   Item();
-  Item(std::string itemID, std::string itemName, std::string category, std::string description, float startingBid);
+  Item(std::string itemID, std::string itemName, std::string category, std::string description, float startingBid, float currentBid, std::string highestBidderID, float bidIncrement, float minBuyerRating);
+  Item(std::string itemName, std::string category, std::string description, float startingBid, float bidIncrement, float minBuyerRating);
 
   // Getters
   std::string getItemID();

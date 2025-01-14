@@ -7,6 +7,7 @@
 #include "./Member.h"
 #include "./Admin.h"
 #include "./Auction.h"
+#include "./Item.h"
 
 class Dashboard
 {
@@ -47,6 +48,20 @@ public:
   void displayMemberMenu();
 
   void handleMemberMenu(bool clear);
+
+  // ------- Auction methods for member -------
+
+  void displayMemberAuctionMenu();
+
+  void handleMemberAuctionMenu(bool clear);
+
+  void displayMemberAuctionDetailMenu(Auction *auction);
+
+  // ------- Items methods -------
+
+  void displayItemsMenu(Auction *auction);
+
+  void displayItemsDetailMenu(Item *item);
 };
 
 #endif

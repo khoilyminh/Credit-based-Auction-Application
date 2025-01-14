@@ -522,7 +522,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
 
   case 2:
   {
-    break;
+    return Dashboard::displayMemberAuctionMenu();
   }
 
   default:
@@ -534,4 +534,101 @@ void Dashboard::handleMemberMenu(bool clear = true)
   }
   }
   return Dashboard::displayMemberMenu();
+}
+
+void Dashboard::displayMemberAuctionMenu()
+{
+  std::system("clear");
+
+  Database database;
+  std::vector<Auction> auctions = database.getAllAuctions();
+  std::vector<Auction> activeAuctions;
+  for (Auction &auction : auctions)
+  {
+    if (auction.getEndTime() == -1)
+      activeAuctions.push_back(auction);
+  }
+
+  std::cout << "====================================" << std::endl;
+  std::cout << "          Active auctions           " << std::endl;
+  std::cout << "====================================" << std::endl
+            << std::endl;
+  std::cout << "0. Back to member menu." << std::endl;
+  for (int index = 1; index <= activeAuctions.size(); index++)
+  {
+    std::cout << index << ". View " << activeAuctions.at(index - 1).getAuctionName() << std::endl;
+  }
+
+  return Dashboard::handleMemberAuctionMenu(false);
+}
+
+void Dashboard::handleMemberAuctionMenu(bool clear = true)
+{
+  if (clear)
+    std::system("clear");
+  std::cout << "Enter your choice: ";
+  int choice;
+  std::cin >> choice;
+
+  switch (choice)
+  {
+  case 0:
+  {
+    return Dashboard::displayMemberMenu();
+  }
+
+  default:
+  {
+    // Check if choice is integer and within the range of auctions
+    Database database;
+    std::vector<Auction> auctions = database.getAllAuctions();
+    std::vector<Auction> activeAuctions;
+    for (Auction &auction : auctions)
+    {
+      if (auction.getEndTime() == -1)
+        activeAuctions.push_back(auction);
+    }
+
+    if (choice < 0 || choice > activeAuctions.size())
+    {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMemberAuctionMenu();
+    }
+    else
+    {
+      Auction auction = activeAuctions.at(choice - 1);
+      return Dashboard::displayMemberAuctionDetailMenu(&auction);
+    }
+  }
+  }
+  return Dashboard::displayMemberAuctionMenu();
+}
+
+void Dashboard::displayMemberAuctionDetailMenu(Auction *auction)
+{
+  std::system("clear");
+  std::cout << "=====================================" << std::endl;
+  std::cout << "    Auction Detail Menu for Member   " << std::endl;
+  std::cout << "=====================================" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "Auction ID: " << auction->getAuctionID() << std::endl;
+  std::cout << "Auction name: " << auction->getAuctionName() << std::endl;
+
+  time_t startTimeT = auction->getStartTime();
+  time_t endTimeT = auction->getEndTime();
+  std::string startTime = std::string(ctime(&startTimeT));
+  std::string endTime = std::string(ctime(&endTimeT));
+  startTime.pop_back();
+  endTime.pop_back();
+  std::cout << "Start time: " << (auction->getStartTime() == -1 ? "Not yet" : startTime) << std::endl;
+  std::cout << "End time: " << (auction->getEndTime() == -1 ? "Not yet" : endTime) << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "Please choose an option:" << std::endl;
+  std::cout << "0. Back to member auction menu." << std::endl;
+  std::cout << "1. View auction details." << std::endl;
+  std::cout << "2. Place bid." << std::endl;
 }
