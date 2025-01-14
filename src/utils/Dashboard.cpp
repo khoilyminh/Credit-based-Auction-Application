@@ -1,5 +1,7 @@
 #include <string>
 #include <stdlib.h>
+// #include <windows.h> // For Windows OS
+#include <unistd.h> // For Unix-based OS
 
 #include "../libs/Dashboard.h"
 #include "../libs/User.h"
@@ -7,7 +9,6 @@
 
 Dashboard::Dashboard()
 {
-  // Constructor
 }
 
 void Dashboard::displayMainMenu()
@@ -25,12 +26,13 @@ void Dashboard::displayMainMenu()
   std::cout << "4. Sign up as Member" << std::endl;
   std::cout << "5. Sign up as Admin" << std::endl;
   std::cout << "6. Exit" << std::endl;
-  return Dashboard::handleMainMenu();
+  return Dashboard::handleMainMenu(false);
 }
 
-void Dashboard::handleMainMenu()
+void Dashboard::handleMainMenu(bool clear = true)
 {
-  std::system("clear");
+  if (clear)
+    std::system("clear");
 
   int choice;
   std::cout << "Enter your choice: ";
@@ -47,7 +49,42 @@ void Dashboard::handleMainMenu()
 
   case 2:
   {
+    std::system("clear");
     std::cout << "Logging in as Member..." << std::endl;
+    std::string username, password;
+    std::cout << "Enter username: ";
+    std::cin >> username;
+    std::cout << "Enter password: ";
+    std::cin >> password;
+
+    User user;
+    try
+    {
+      user.checkAuthentication(username, password);
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+
+    Member member;
+    try
+    {
+      member.findMemberByUser(user);
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+    std::cout << "Welcome back, " << member.getFullname() << "!" << std::endl;
+    this->member = &member;
+    this->currentRole = "Member";
     break;
   }
 
@@ -60,26 +97,49 @@ void Dashboard::handleMainMenu()
 
   case 4:
   {
-    std::cout << "Signing up as Member..." << std::endl;
-    // Create a new user
-    std::string username, password;
-    std::cout << "Enter username: ";
-    std::cin >> username;
-    std::cout << "Enter password: ";
-    std::cin >> password;
-    User user = User(username, password);
-    user.save();
-    // Create a new member
-    std::string fullname, phoneNumber, email;
-    std::cout << "Enter full name: ";
-    std::cin >> fullname;
-    std::cout << "Enter phone number: ";
-    std::cin >> phoneNumber;
-    std::cout << "Enter email: ";
-    std::cin >> email;
-    Member member = Member(fullname, phoneNumber, email, user);
-    member.save();
-    return Dashboard::handleMainMenu();
+    std::system("clear");
+    User user;
+    try
+    {
+      std::cout << "Signing up as Member..." << std::endl;
+      // Create a new user
+      std::string username, password;
+      std::cout << "Enter username: ";
+      std::cin >> username;
+      std::cout << "Enter password: ";
+      std::cin >> password;
+      user = User(username, password);
+      user.save();
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+    try
+    {
+      // Create a new member
+      std::string fullname, phoneNumber, email;
+      // Get whole line including spaces
+      std::cout << "Enter full name: ";
+      getline(std::cin >> std::ws, fullname);
+      std::cout << "Enter phone number: ";
+      std::cin >> phoneNumber;
+      std::cout << "Enter email: ";
+      std::cin >> email;
+      Member member = Member(fullname, phoneNumber, email, user);
+      member.save();
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cout << "Error: " << e.what() << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMainMenu();
+    }
+    return Dashboard::displayMainMenu();
   }
 
   case 5:
@@ -98,8 +158,9 @@ void Dashboard::handleMainMenu()
   default:
   {
     std::cout << "Invalid choice. Please try again." << std::endl;
-    Dashboard::handleMainMenu(); // Prompt again for valid input
-    break;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::handleMainMenu(); // Prompt again for valid input
   }
   }
 }

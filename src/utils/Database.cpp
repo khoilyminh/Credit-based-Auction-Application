@@ -17,11 +17,12 @@ std::vector<User> getAllUsersFromDatabase()
     // The first value is the userID, the second value is the username, and the
     // third value is the password, the forth value will be status.
     std::string userID = line.substr(0, line.find(", "));
-    line = line.substr(line.find(" ") + 1);
-    std::string username = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
-    std::string password = line;
-    bool status = line.substr(line.find(", ") + 1) == "active";
+    std::string username = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string password = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 2);
+    bool status = line.substr(line.find(", ") + 1) == "1";
     // Create a new user object and add it to the users vector.
     User user(userID, username, password, status);
     users.push_back(user);
@@ -45,17 +46,17 @@ std::vector<Member> getAllMembersFromDatabase()
     line = line.substr(line.find(" ") + 1);
     std::string fullname = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
-    std::string phoneNumber = line.substr(0, line.find(", "));
+    std::string phoneNumber = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
-    std::string email = line.substr(0, line.find(", "));
+    std::string email = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
-    int creditPoint = std::stoi(line.substr(0, line.find(", ")));
+    int creditPoint = std::stoi(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
-    float rating = std::stof(line.substr(0, line.find(", ")));
+    float rating = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
-    int credit = std::stoi(line.substr(0, line.find(", ")));
+    int credit = std::stoi(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
-    std::string userID = line;
+    std::string userID = line.substr(1, line.find(", ") - 1);
     // Create a new member object and add it to the members vector.
     Member member(memberID, fullname, phoneNumber, email, creditPoint, rating, credit, userID);
     members.push_back(member);
@@ -280,7 +281,7 @@ void Database::saveAdmin(Admin *admin)
   this->saveAdminsToFile();
 }
 
-void Database::removeAdmin(Admin admin) 
+void Database::removeAdmin(Admin admin)
 {
   for (int index = 0; index < this->admins.size(); index++)
   {
@@ -298,92 +299,92 @@ void Database::removeAdmin(Admin admin)
 
 void Database::saveItemsToFile()
 {
-    std::ofstream file("./data/items.txt", std::ios::trunc);
-    for (int i = 0; i < this->items.size(); i++)
-    {
-        file << this->items[i].getItemID() << ", " << this->items[i].getItemName()
-             << ", " << this->items[i].getCategory() << ", " << this->items[i].getDescription()
-             << ", " << this->items[i].getStartingBid() << ", " << this->items[i].getCurrentBid()
-             << ", " << this->items[i].getHighestBidderID() << std::endl;
-    }
-    file.close();
+  std::ofstream file("./data/items.txt", std::ios::trunc);
+  for (int i = 0; i < this->items.size(); i++)
+  {
+    file << this->items[i].getItemID() << ", " << this->items[i].getItemName()
+         << ", " << this->items[i].getCategory() << ", " << this->items[i].getDescription()
+         << ", " << this->items[i].getStartingBid() << ", " << this->items[i].getCurrentBid()
+         << ", " << this->items[i].getHighestBidderID() << std::endl;
+  }
+  file.close();
 }
 
 std::vector<Item> Database::getAllItems()
 {
-    std::vector<Item> items;
-    std::ifstream file("./data/items.txt", std::ios::in);
-    std::string line;
-    while (std::getline(file, line))
-    {
-        std::string itemID = line.substr(0, line.find(", "));
-        line = line.substr(line.find(", ") + 1);
-        std::string itemName = line.substr(0, line.find(", "));
-        line = line.substr(line.find(", ") + 1);
-        std::string category = line.substr(0, line.find(", "));
-        line = line.substr(line.find(", ") + 1);
-        std::string description = line.substr(0, line.find(", "));
-        line = line.substr(line.find(", ") + 1);
-        float startingBid = std::stof(line.substr(0, line.find(", ")));
-        line = line.substr(line.find(", ") + 1);
-        float currentBid = std::stof(line.substr(0, line.find(", ")));
-        line = line.substr(line.find(", ") + 1);
-        std::string highestBidderID = line;
+  std::vector<Item> items;
+  std::ifstream file("./data/items.txt", std::ios::in);
+  std::string line;
+  while (std::getline(file, line))
+  {
+    std::string itemID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string itemName = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string category = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string description = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    float startingBid = std::stof(line.substr(0, line.find(", ")));
+    line = line.substr(line.find(", ") + 1);
+    float currentBid = std::stof(line.substr(0, line.find(", ")));
+    line = line.substr(line.find(", ") + 1);
+    std::string highestBidderID = line;
 
-        // Create a new item object and add it to the items vector.
-        Item item(itemID, itemName, category, description, startingBid);
-        item.setCurrentBid(currentBid);
-        item.setHighestBidderID(highestBidderID);
-        items.push_back(item);
-    }
-    file.close();
-    return items;
+    // Create a new item object and add it to the items vector.
+    Item item(itemID, itemName, category, description, startingBid);
+    item.setCurrentBid(currentBid);
+    item.setHighestBidderID(highestBidderID);
+    items.push_back(item);
+  }
+  file.close();
+  return items;
 }
 
 Item *Database::getItemByID(std::string itemID)
 {
-    for (int index = 0; index < this->items.size(); index++)
+  for (int index = 0; index < this->items.size(); index++)
+  {
+    if (this->items.at(index).getItemID() == itemID)
     {
-        if (this->items.at(index).getItemID() == itemID)
-        {
-            return &this->items.at(index);
-        }
+      return &this->items.at(index);
     }
-    return NULL;
+  }
+  return NULL;
 }
 
 void Database::saveItem(Item *item)
 {
-    bool isExist = false;
-    for (int index = 0; index < this->items.size(); index++)
+  bool isExist = false;
+  for (int index = 0; index < this->items.size(); index++)
+  {
+    // If the item exists in the database, update the item.
+    if (this->items.at(index).getItemID() == item->getItemID())
     {
-        // If the item exists in the database, update the item.
-        if (this->items.at(index).getItemID() == item->getItemID())
-        {
-            this->items.at(index) = *item;
-            isExist = true;
-            break;
-        }
+      this->items.at(index) = *item;
+      isExist = true;
+      break;
     }
-    // If the item does not exist in the database, add it to the database.
-    if (!isExist)
-    {
-        this->items.push_back(*item);
-    }
-    // Update the data in the file.
-    this->saveItemsToFile();
+  }
+  // If the item does not exist in the database, add it to the database.
+  if (!isExist)
+  {
+    this->items.push_back(*item);
+  }
+  // Update the data in the file.
+  this->saveItemsToFile();
 }
 
 void Database::removeItem(Item item)
 {
-    for (int index = 0; index < this->items.size(); index++)
+  for (int index = 0; index < this->items.size(); index++)
+  {
+    if (this->items.at(index).getItemID() == item.getItemID())
     {
-        if (this->items.at(index).getItemID() == item.getItemID())
-        {
-            this->items.erase(this->items.begin() + index);
-            break;
-        }
+      this->items.erase(this->items.begin() + index);
+      break;
     }
-    // Update the data in the file.
-    this->saveItemsToFile();
+  }
+  // Update the data in the file.
+  this->saveItemsToFile();
 }

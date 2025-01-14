@@ -21,7 +21,6 @@ int main()
   // // Testing the Dashboard
   Dashboard dashboard;
   dashboard.displayMainMenu();
-  // dashboard.handleUserInput();
 
   return 0;
 }

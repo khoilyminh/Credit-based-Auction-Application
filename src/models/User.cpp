@@ -33,15 +33,8 @@ User::User(std::string username, std::string password)
 {
   this->userID = IDGenerator::generateID(16);
   this->status = DEFAULT_STATUS;
-  try
-  {
-    this->setUsername(username);
-    this->setPassword(password);
-  }
-  catch (const std::logic_error &e)
-  {
-    std::cerr << "Error: " << e.what() << std::endl;
-  }
+  this->setUsername(username);
+  this->setPassword(password);
 }
 
 // ------- Getters -------
@@ -133,4 +126,18 @@ void User::save()
   {
     Database().saveUser(this);
   }
+}
+
+void User::checkAuthentication(std::string username, std::string password)
+{
+  std::vector<User> users = Database().getAllUsers();
+  for (User &user : users)
+  {
+    if (user.getUsername() == username && user.checkPassword(password))
+    {
+      *this = user;
+      return;
+    }
+  }
+  throw std::invalid_argument("Invalid username or password.");
 }

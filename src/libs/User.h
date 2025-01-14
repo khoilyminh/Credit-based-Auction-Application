@@ -35,6 +35,8 @@ public:
   // ------- Other methods -------
   std::string toString();
   void save();
+  /** This function is used to check username and password */
+  void checkAuthentication(std::string username, std::string password);
 };
 
 #endif
