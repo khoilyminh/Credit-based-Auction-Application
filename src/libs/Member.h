@@ -24,7 +24,7 @@ public:
 	Member();
 	/** This constructor create a member instance with provide parameters. Only use this constructor for loading from database. */
 	Member(std::string memberID, std::string fullname, std::string phoneNumber, std::string email, int creditPoint, float rating, int credit, std::string userID);
-	/** This constructor create a member instance with provide parameters. Use this for create new memeber. */
+	/** This constructor create a member instance with provide parameters. Use this for create new member. */
 	Member(std::string fullname, std::string phoneNumber, std::string email, User user);
 
 	// ------- Getters -------
@@ -67,7 +67,7 @@ public:
 	void print();
 	/** This method will convert the member instance to string. */
 	std::string toString();
-	/** This method will get the user instance of the memeber instance. */
+	/** This method will get the user instance of the member instance. */
 	User getUser();
 	/** This method will save the member instance to the database. */
 	void save();

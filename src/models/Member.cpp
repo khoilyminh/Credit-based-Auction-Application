@@ -188,7 +188,7 @@ User Member::getUser()
 			return users[index];
 		}
 	}
-	throw std::invalid_argument("User ID is not existed.");
+	throw std::invalid_argument("User ID does not exist.");
 }
 
 void Member::save()
