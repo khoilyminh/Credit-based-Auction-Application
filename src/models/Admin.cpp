@@ -67,8 +67,6 @@ void Admin::getAdminByUser(User user)
   std::vector<Admin> admins = database.getAllAdmins();
   for (Admin &admin : admins)
   {
-    std::cout << admin.getUserID() << std::endl;
-    std::cout << user.getUserID() << std::endl;
     if (admin.getUserID() == user.getUserID())
     {
       *this = admin;
