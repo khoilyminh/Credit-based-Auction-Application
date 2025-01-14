@@ -33,9 +33,15 @@ public:
 
   // ------- Auction methods -------
 
-  void displayAuctionMenu();
+  void displayAdminAuctionMenu();
 
-  void handleAuctionMenu(bool clear);
+  void handleAdminAuctionMenu(bool clear);
+
+  // ------- Member methods -------
+
+  void displayMemberMenu();
+
+  void handleMemberMenu(bool clear);
 };
 
 #endif

@@ -11,7 +11,7 @@
 #define DEFAULT_PHONE_NUMBER ""
 #define DEFAULT_EMAIL ""
 #define DEFAULT_CREDIT_POINT 0
-#define DEFAULT_RATING 0
+#define DEFAULT_RATING 3.0
 #define DEFAULT_CREDIT 0
 
 // ------- Constructors -------
