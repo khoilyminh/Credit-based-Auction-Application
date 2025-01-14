@@ -85,11 +85,45 @@ std::vector<Admin> getAllAdminsFromDatabase()
   return admins;
 }
 
+struct tm startTimeAuction;
+struct tm endTimeAuction;
+
+std::vector<Auction>
+getAllAuctionsFromDatabase()
+{
+  std::vector<Auction> auctions;
+  std::ifstream file("./data/auctions.txt", std::ios::in);
+  std::string line;
+  while (std::getline(file, line))
+  {
+    // The first value is the auctionID, the second value is the itemID, the
+    // third value is the sellerID, the fourth value is the startingPrice, the
+    // fifth value is the currentPrice, the sixth value is the highestBidderID,
+    // and the seventh value is the status.
+    std::string auctionID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string auctionName = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string startTimeStr = line.substr(1, line.find(", ") - 1);
+    strptime(startTimeStr.c_str(), "%Y-%m-%d %H:%M:%S", &startTimeAuction);
+    line = line.substr(line.find(", ") + 1);
+    std::string endTimeStr = line.substr(1, line.find(", ") - 1);
+    strptime(endTimeStr.c_str(), "%Y-%m-%d %H:%M:%S", &endTimeAuction);
+    line = line.substr(line.find(", ") + 1);
+    // Create a new auction object and add it to the auctions vector.
+    Auction auction(auctionID, auctionName, std::mktime(&startTimeAuction), std::mktime(&endTimeAuction));
+    auctions.push_back(auction);
+  }
+  file.close();
+  return auctions;
+}
+
 Database::Database()
 {
   this->users = getAllUsersFromDatabase();
   this->members = getAllMembersFromDatabase();
   this->admins = getAllAdminsFromDatabase();
+  this->auctions = getAllAuctionsFromDatabase();
 }
 
 // ------- User methods -------
@@ -387,4 +421,68 @@ void Database::removeItem(Item item)
   }
   // Update the data in the file.
   this->saveItemsToFile();
+}
+
+// ------- Auction methods -------
+
+void Database::saveAuctionsToFile()
+{
+  std::ofstream file("./data/auctions.txt", std::ios::trunc);
+  for (Auction &auction : this->auctions)
+  {
+    file << auction.getAuctionID() << ", " << auction.getAuctionName()
+         << ", " << auction.getStartTime() << ", " << auction.getEndTime() << std::endl;
+  }
+  file.close();
+}
+
+std::vector<Auction> Database::getAllAuctions()
+{
+  return this->auctions;
+}
+
+Auction *Database::getAuctionByID(std::string auctionID)
+{
+  for (int index = 0; index < this->auctions.size(); index++)
+  {
+    if (this->auctions.at(index).getAuctionID() == auctionID)
+    {
+      return &this->auctions.at(index);
+    }
+  }
+  return nullptr;
+}
+
+void Database::saveAuction(Auction *auction)
+{
+  bool isExist = false;
+  for (int index = 0; index < this->auctions.size(); index++)
+  {
+    // If the auction is exist in the database, update the auction.
+    if (this->auctions.at(index).getAuctionID() == auction->getAuctionID())
+    {
+      this->auctions.at(index) = *auction;
+      isExist = true;
+      break;
+    }
+  }
+  // If the auction is not exist in the database, add it to the database.
+  if (!isExist)
+    this->auctions.push_back(*auction);
+  // Update the data in the file.
+  this->saveAuctionsToFile();
+}
+
+void Database::removeAuction(Auction auction)
+{
+  for (int index = 0; index < this->auctions.size(); index++)
+  {
+    if (this->auctions.at(index).getAuctionID() == auction.getAuctionID())
+    {
+      this->auctions.erase(this->auctions.begin() + index);
+      break;
+    }
+  }
+  // Update the data in the file.
+  this->saveAuctionsToFile();
 }

@@ -6,6 +6,7 @@
 #include "./User.h"
 #include "./Member.h"
 #include "./Admin.h"
+#include "./Auction.h"
 #include "./Item.h"
 
 class Database
@@ -22,6 +23,10 @@ private:
   std::vector<Admin> admins;
   /** This function is used to save the whole admin list to file. */
   void saveAdminsToFile();
+
+  std::vector<Auction> auctions;
+  /** This function is used to save the whole auction list to file. */
+  void saveAuctionsToFile();
 
   std::vector<Item> items;
   /** This function is used to save the whole member list to file. */
@@ -73,6 +78,16 @@ public:
   void saveItem(Item *item);
   /** This function is used to remove an Item from the database. */
   void removeItem(Item item);
+
+  // ------- Auction Methods -------
+  /** This function get all auction in the database. */
+  std::vector<Auction> getAllAuctions();
+  /** This function is used to get auction by auctionID. */
+  Auction *getAuctionByID(std::string auctionID);
+  /** This function is used to add or update an Auction in the database. */
+  void saveAuction(Auction *auction);
+  /** This function is used to remove an Auction from the database. */
+  void removeAuction(Auction auction);
 };
 
 #endif

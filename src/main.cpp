@@ -1,26 +1,16 @@
 #include <iostream>
 
-#include "./libs/Database.h"
-#include "./libs/User.h"
 #include "./libs/Dashboard.h"
+#include "./libs/Auction.h"
 
 int main()
 {
-  // try
-  // {
-  //   User user = User("peterdinh", "12345678");
-  //   user.save();
-
-  //   Member member = Member("Peter Dinh", "0867847403", "contact@cuongdinh.dev", user);
-  //   member.save();
-  // }
-  // catch (const std::invalid_argument &e)
-  // {
-  //   std::cerr << e.what() << std::endl;
-
   // // Testing the Dashboard
-  Dashboard dashboard;
-  dashboard.displayMainMenu();
+  // Dashboard dashboard;
+  // dashboard.displayMainMenu();
+
+  Auction auction("Auction A");
+  auction.save();
 
   return 0;
 }

@@ -2,40 +2,42 @@
 #define AUCTION_H
 
 #include <vector>
+#include <ctime>
+
 #include "Item.h"
 
 class Auction
 {
 private:
-    std::vector<Item> items;
-    std::string auctionID;
-    std::string auctionName;
-    std::string startTime;
-    std::string endTime;
+  std::vector<Item> items;
+  std::string auctionID;
+  std::string auctionName;
+  std::time_t startTime;
+  std::time_t endTime;
 
 public:
-    // Constructors
-    Auction();
-    Auction(std::string auctionID, std::string auctionName, std::string startTime, std::string endTime);
+  // Constructors
+  Auction();
+  Auction(std::string auctionID, std::string auctionName, std::time_t startTime, std::time_t endTime);
+  Auction(std::string auctionName);
 
-    // Getters
-    std::string getAuctionID();
-    std::string getAuctionName();
-    std::string getStartTime();
-    std::string getEndTime();
-    std::vector<Item> getItems();
+  // Getters
+  std::string getAuctionID();
+  std::string getAuctionName();
+  std::time_t getStartTime();
+  std::time_t getEndTime();
+  std::vector<Item> getItems();
 
-    // Setters
-    void setAuctionName(std::string auctionName);
-    void setStartTime(std::string startTime);
-    void setEndTime(std::string endTime);
+  // Setters
+  void setAuctionName(std::string auctionName);
 
-    // Other methods
-    void addItem(Item item);
-    void removeItem(std::string itemID);
-    void startAuction();
-    void endAuction();
-    std::string toString();
+  // Other methods
+  void addItem(Item item);
+  void removeItem(std::string itemID);
+  void startAuction();
+  void endAuction();
+  std::string toString();
+  void save();
 };
 
 #endif

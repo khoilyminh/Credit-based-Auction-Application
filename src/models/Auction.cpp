@@ -4,101 +4,123 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <ctime>
 
 // Define constants
+#define DEFAULT_AUCTION_ID_LENGTH 16
 #define DEFAULT_AUCTION_NAME ""
-#define DEFAULT_START_TIME ""
-#define DEFAULT_END_TIME ""
+#define DEFAULT_START_TIME time(NULL)
+#define DEFAULT_END_TIME time(NULL)
 
 // ------- Constructors -------
 
 // Default constructor
 Auction::Auction()
 {
-    this->auctionID = IDGenerator::generateID(16);
-    this->auctionName = DEFAULT_AUCTION_NAME;
-    this->startTime = DEFAULT_START_TIME;
-    this->endTime = DEFAULT_END_TIME;
+  this->auctionID = IDGenerator::generateID(16);
+  this->auctionName = DEFAULT_AUCTION_NAME;
+  this->startTime = DEFAULT_START_TIME;
+  this->endTime = DEFAULT_END_TIME;
+}
+
+Auction::Auction(std::string auctionID, std::string auctionName, std::time_t startTime, std::time_t endTime)
+    : auctionID(auctionID), auctionName(auctionName)
+{
+  this->startTime = startTime;
+  this->endTime = endTime;
 }
 
 // Parameterized constructor
-Auction::Auction(std::string auctionID, std::string auctionName, std::string startTime, std::string endTime)
-    : auctionID(auctionID), auctionName(auctionName), startTime(startTime), endTime(endTime) {}
+Auction::Auction(std::string auctionName)
+    : auctionID(auctionID), auctionName(auctionName)
+{
+  this->auctionID = IDGenerator::generateID(DEFAULT_AUCTION_ID_LENGTH);
+  this->startTime = DEFAULT_START_TIME;
+  this->endTime = DEFAULT_END_TIME;
+}
 
 // ------- Getters -------
 
 std::string Auction::getAuctionID()
 {
-    return auctionID;
+  return auctionID;
 }
 
 std::string Auction::getAuctionName()
 {
-    return auctionName;
+  return auctionName;
 }
 
-std::string Auction::getStartTime()
+std::time_t Auction::getStartTime()
 {
-    return startTime;
+  return startTime;
 }
 
-std::string Auction::getEndTime()
+std::time_t Auction::getEndTime()
 {
-    return endTime;
+  return endTime;
 }
 
 std::vector<Item> Auction::getItems()
 {
-    return items;
+  return items;
 }
 
 // ------- Setters -------
 
 void Auction::setAuctionName(std::string auctionName)
 {
-    this->auctionName = auctionName;
-}
-
-void Auction::setStartTime(std::string startTime)
-{
-    this->startTime = startTime;
-}
-
-void Auction::setEndTime(std::string endTime)
-{
-    this->endTime = endTime;
+  this->auctionName = auctionName;
 }
 
 // ------- Other methods -------
 
 void Auction::addItem(Item item)
 {
-    items.push_back(item);
+  items.push_back(item);
 }
 
 void Auction::removeItem(std::string itemID)
 {
-    for (int index = 0; index < items.size(); index++)
+  for (int index = 0; index < items.size(); index++)
+  {
+    if (items[index].getItemID() == itemID)
     {
-        if (items[index].getItemID() == itemID)
-        {
-            items.erase(items.begin() + index);
-            break;
-        }
+      items.erase(items.begin() + index);
+      break;
     }
+  }
 }
 
 void Auction::startAuction()
 {
-    std::cout << "Auction " << auctionName << " has started!" << std::endl;
+  std::time_t startTime;
+  time(&startTime);
+  this->startTime = startTime;
 }
 
 void Auction::endAuction()
 {
-    std::cout << "Auction " << auctionName << " has ended!" << std::endl;
+  std::time_t endTime;
+  time(&endTime);
+  this->endTime = endTime;
 }
 
 std::string Auction::toString()
 {
-    return "Auction ID: " + auctionID + ", Name: " + auctionName + ", Start Time: " + startTime + ", End Time: " + endTime;
+  std::string startTime = ctime(&this->startTime);
+  // Remove endline of the string
+  startTime.pop_back();
+
+  std::string endTime = ctime(&this->endTime);
+  // Remove endline of the string
+  endTime.pop_back();
+
+  return "Auction ID: " + this->auctionID + ", Name: " + this->auctionName + ", Start Time: " + startTime + ", End Time: " + endTime;
+}
+
+void Auction::save()
+{
+  Database database;
+  database.saveAuction(this);
 }
