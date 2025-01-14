@@ -5,6 +5,7 @@
 
 #include "./User.h"
 #include "./Member.h"
+#include "./Admin.h"
 
 class Database
 {
@@ -16,6 +17,10 @@ private:
   std::vector<Member> members;
   /** This function is used to save the whole member list to file. */
   void saveMembersToFile();
+
+  std::vector<Admin> admins;
+  /** This function is used to save the whole admin list to file. */
+  void saveAdminsToFile();
 
 public:
   Database();
@@ -41,6 +46,17 @@ public:
   void saveMember(Member *member);
   /** This function is used to remove a member from the database. */
   void removeMember(Member member);
+
+  // ------- Admin methods -------
+
+  /** This function get all admin in the database. */
+  std::vector<Admin> getAllAdmins();
+  /** This function is used to get admin by adminID. */
+  Admin *getAdminByID(std::string adminID);
+  /** This function is used to add or update admin in the database. */
+  void saveAdmin(Admin *admin);
+  /** This function is used to remove a admin from the database. */
+  void removeAdmin(Admin admin);
 };
 
 #endif

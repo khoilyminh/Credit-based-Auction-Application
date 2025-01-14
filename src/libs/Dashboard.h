@@ -6,17 +6,17 @@
 class Dashboard
 {
 public:
-    // Constructor
-    Dashboard();
+  // Constructor
+  Dashboard();
 
-    // Method to display the welcome screen
-    void displayWelcomeScreen();
+  // Method to display the welcome screen
+  void displayWelcomeScreen();
 
-    // Method to display the main menu options
-    void displayMainMenu();
+  // Method to display the main menu options
+  void displayMainMenu();
 
-    // Method to handle user input
-    void handleUserInput();
+  // Method to handle user input
+  void handleMainMenu();
 };
 
 #endif

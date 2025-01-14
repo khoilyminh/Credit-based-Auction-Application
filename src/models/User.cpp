@@ -129,5 +129,8 @@ std::string User::toString()
 
 void User::save()
 {
-  Database().saveUser(this);
+  if (this->username != DEFAULT_USERNAME)
+  {
+    Database().saveUser(this);
+  }
 }
