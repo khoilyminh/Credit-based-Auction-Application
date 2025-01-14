@@ -24,6 +24,18 @@ public:
 
   // Method to handle the main menu options
   void handleMainMenu(bool clear);
+
+  // ------- Admin methods -------
+
+  void displayAdminMenu();
+
+  void handleAdminMenu(bool clear);
+
+  // ------- Auction methods -------
+
+  void displayAuctionMenu();
+
+  void handleAuctionMenu(bool clear);
 };
 
 #endif

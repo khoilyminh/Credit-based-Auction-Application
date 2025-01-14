@@ -11,6 +11,7 @@
 #define DEFAULT_AUCTION_NAME ""
 #define DEFAULT_START_TIME time(NULL)
 #define DEFAULT_END_TIME time(NULL)
+#define TIME_NULL_VALUE -7352812800
 
 // ------- Constructors -------
 
@@ -32,7 +33,7 @@ Auction::Auction(std::string auctionID, std::string auctionName, std::time_t sta
 
 // Parameterized constructor
 Auction::Auction(std::string auctionName)
-    : auctionID(auctionID), auctionName(auctionName)
+    : auctionName(auctionName)
 {
   this->auctionID = IDGenerator::generateID(DEFAULT_AUCTION_ID_LENGTH);
   this->startTime = DEFAULT_START_TIME;
@@ -108,13 +109,29 @@ void Auction::endAuction()
 
 std::string Auction::toString()
 {
-  std::string startTime = ctime(&this->startTime);
-  // Remove endline of the string
-  startTime.pop_back();
+  std::string startTime;
+  if (this->startTime == TIME_NULL_VALUE)
+  {
+    startTime = "Not started";
+  }
+  else
+  {
+    startTime = ctime(&this->startTime);
+    // Remove endline of the string
+    startTime.pop_back();
+  }
 
-  std::string endTime = ctime(&this->endTime);
-  // Remove endline of the string
-  endTime.pop_back();
+  std::string endTime;
+  if (this->endTime == TIME_NULL_VALUE)
+  {
+    endTime = "Not ended";
+  }
+  else
+  {
+    endTime = ctime(&this->endTime);
+    // Remove endline of the string
+    endTime.pop_back();
+  }
 
   return "Auction ID: " + this->auctionID + ", Name: " + this->auctionName + ", Start Time: " + startTime + ", End Time: " + endTime;
 }

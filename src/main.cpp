@@ -5,12 +5,9 @@
 
 int main()
 {
-  // // Testing the Dashboard
-  // Dashboard dashboard;
-  // dashboard.displayMainMenu();
-
-  Auction auction("Auction A");
-  auction.save();
+  // Testing the Dashboard
+  Dashboard dashboard;
+  dashboard.displayMainMenu();
 
   return 0;
 }
