@@ -5,6 +5,8 @@
 
 #include "./User.h"
 #include "./Member.h"
+#include "./Item.h" 
+
 
 class Database
 {
@@ -16,6 +18,10 @@ private:
   std::vector<Member> members;
   /** This function is used to save the whole member list to file. */
   void saveMembersToFile();
+
+  std::vector<Item> items;
+  /** This function is used to save the whole member list to file. */
+  void saveItemsToFile();
 
 public:
   Database();
@@ -41,6 +47,21 @@ public:
   void saveMember(Member *member);
   /** This function is used to remove a member from the database. */
   void removeMember(Member member);
+
+
+// ------- Item Methods -------
+
+  /** This function get all member in the database. */
+  std::vector<Item> getAllItems();
+  /** This function is used to get member by itemID. */
+  Item *getItemByID(std::string itemID);
+  /** This function is used to add or update an Item in the database. */
+  void saveItem(Item *item);
+  /** This function is used to remove an Item from the database. */
+  void removeItem(Item item);
+
+
+
 };
 
 #endif
