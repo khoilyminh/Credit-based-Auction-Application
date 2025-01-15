@@ -2,34 +2,40 @@
 #define BID_H
 
 #include <string>
-#include "Member.h"
+
 #include "Item.h"
+#include "Member.h"
 
 class Bid {
-private:
-    std::string bidID;
-    Member member;
-    Item item;
-    bool automaticBid;
-    float limitPrice;
+ private:
+  std::string bidID;
+  std::string memberID;
+  std::string itemID;
+  float bidAmount;
+  bool automaticBid;
+  float limitPrice;
 
-public:
-    // Constructors
-    Bid();
-    Bid(std::string bidID, Member member, Item item, bool automaticBid, float limitPrice);
+ public:
+  // Constructors
+  Bid();
+  Bid(std::string bidID, std::string memberID, std::string itemID,
+      float bidAmount, bool automaticBid, float limitPrice);
+  Bid(Member member, Item item, float bidAmount, bool automaticBid,
+      float limitPrice);
 
-    // Getters
-    std::string getBidID();
-    Member getMember();
-    Item getItem();
-    bool isAutomaticBid();
-    float getLimitPrice();
+  // Getters
+  std::string getBidID();
+  std::string getMemberID();
+  std::string getItemID();
+  float getBidAmount();
+  bool isAutomaticBid();
+  float getLimitPrice();
 
-    // Methods
-    void placeBid(Member member, float bidAmount);
-    void updateDetails();
-    void removeListing();
-    void closeAuction();
+  // Methods
+  void placeBid(Member member, float bidAmount);
+  void updateDetails();
+  void removeListing();
+  void closeAuction();
 };
 
 #endif

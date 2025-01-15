@@ -1,5 +1,7 @@
 #include "../libs/Database.h"
 
+#include <unistd.h>
+
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -108,26 +110,26 @@ std::vector<Auction> getAllAuctionsFromDatabase() {
   return auctions;
 }
 
-std::vector<Item> getAllItems() {
+std::vector<Item> getAllItemsFromDatabase() {
   std::vector<Item> items;
   std::ifstream file("./data/items.txt", std::ios::in);
   std::string line;
   while (std::getline(file, line)) {
     std::string itemID = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
-    std::string itemName = line.substr(1, line.find(", "));
+    std::string itemName = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
-    std::string category = line.substr(1, line.find(", "));
+    std::string category = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
-    std::string description = line.substr(1, line.find(", "));
+    std::string description = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
-    float startingBidAmount = std::stof(line.substr(1, line.find(", ")));
+    float startingBidAmount = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
-    float currentBidAmount = std::stof(line.substr(1, line.find(", ")));
+    float currentBidAmount = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
-    float bidIncrement = std::stof(line.substr(1, line.find(", ")));
+    float bidIncrement = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
-    float minBuyerRating = std::stof(line.substr(1, line.find(", ")));
+    float minBuyerRating = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
     std::string auctionID = line.substr(1, line.find(", "));
 
@@ -139,12 +141,37 @@ std::vector<Item> getAllItems() {
   return items;
 }
 
+std::vector<Bid> getAllBidsFromDatabase() {
+  std::vector<Bid> bids;
+  std::ifstream file("./data/bids.txt", std::ios::in);
+  std::string line;
+  while (std::getline(file, line)) {
+    std::string bidID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string memberID = line.substr(1, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string itemID = line.substr(1, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    float bidAmount = std::stof(line.substr(1, line.find(", ")));
+    line = line.substr(line.find(", ") + 1);
+    bool automaticBid = line.substr(1, line.find(", ")) == "1";
+    line = line.substr(line.find(", ") + 1);
+    float limitPrice = std::stof(line.substr(1, line.find(", ")));
+
+    Bid bid(bidID, memberID, itemID, bidAmount, automaticBid, limitPrice);
+    bids.push_back(bid);
+  }
+  file.close();
+  return bids;
+}
+
 Database::Database() {
   this->users = getAllUsersFromDatabase();
   this->members = getAllMembersFromDatabase();
   this->admins = getAllAdminsFromDatabase();
   this->auctions = getAllAuctionsFromDatabase();
-  this->items = getAllItems();
+  this->items = getAllItemsFromDatabase();
+  this->bids = getAllBidsFromDatabase();
 }
 
 // ------- User methods -------
@@ -411,4 +438,17 @@ void Database::removeAuction(Auction auction) {
   }
   // Update the data in the file.
   this->saveAuctionsToFile();
+}
+
+// ------- Bid methods -------
+std::vector<Bid> Database::getAllBids() { return this->bids; }
+
+void Database::saveBidsToFile() {
+  std::ofstream file("./data/bids.txt", std::ios::trunc);
+  for (Bid &bid : this->bids) {
+    file << bid.getBidID() << ", " << bid.getMemberID() << ", "
+         << bid.getItemID() << ", " << bid.getBidAmount() << ", "
+         << bid.isAutomaticBid() << ", " << bid.getLimitPrice() << std::endl;
+  }
+  file.close();
 }

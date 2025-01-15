@@ -565,7 +565,7 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
     }
 
     case 1: {
-      break;
+      return Dashboard::displayItemsMenu(auction);
     }
 
     case 2: {
@@ -617,4 +617,142 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
     }
   }
   return Dashboard::displayMemberAuctionDetailMenu(auction);
+}
+
+void Dashboard::displayItemsMenu(Auction *auction) {
+  std::system("clear");
+  std::cout << "=====================================" << std::endl;
+  std::cout << "       Buying items in auction       " << std::endl;
+  std::cout << "=====================================" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "0. Back to member auction detail menu." << std::endl;
+
+  std::vector<Item> filteredItems;
+  Database database;
+  for (Item &item : database.getAllItems()) {
+    if (item.getAuctionID() == auction->getAuctionID() &&
+        item.getMinBuyerRating() <= this->member->getRating()) {
+      filteredItems.push_back(item);
+    }
+  }
+
+  int index = 1;
+  for (Item &item : filteredItems) {
+    std::cout << index << ". " << item.getItemName() << std::endl;
+    index++;
+  }
+  return Dashboard::handleItemsMenu(auction, false);
+}
+
+void Dashboard::handleItemsMenu(Auction *auction, bool clear = true) {
+  if (clear) std::system("clear");
+  std::cout << "Enter your choice: ";
+  int choice;
+  std::cin >> choice;
+
+  switch (choice) {
+    case 0: {
+      return Dashboard::displayMemberAuctionDetailMenu(auction);
+    }
+
+    default: {
+      // Check if choice is integer and within the range of items
+      std::vector<Item> filteredItems;
+      Database database;
+      for (Item &item : database.getAllItems()) {
+        if (item.getAuctionID() == auction->getAuctionID() &&
+            item.getMinBuyerRating() <= this->member->getRating()) {
+          filteredItems.push_back(item);
+        }
+      }
+
+      if (choice < 0 || choice > filteredItems.size()) {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayItemsMenu(auction);
+      } else {
+        Item item = filteredItems.at(choice - 1);
+        return Dashboard::displayItemsDetailMenu(&item, auction);
+      }
+    }
+  }
+  return Dashboard::displayItemsMenu(auction);
+}
+
+void Dashboard::displayItemsDetailMenu(Item *item, Auction *auction) {
+  std::system("clear");
+  std::cout << "=====================================" << std::endl;
+  std::cout << "     Item Detail Menu for Member     " << std::endl;
+  std::cout << "=====================================" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "Item ID: " << item->getItemID() << std::endl;
+  std::cout << "Item name: " << item->getItemName() << std::endl;
+  std::cout << "Item description: " << item->getDescription() << std::endl;
+  std::cout << "Item category: " << item->getCategory() << std::endl;
+  std::cout << "Starting bid amount: " << item->getStartingBidAmount()
+            << std::endl;
+  std::cout << "Bid increment: " << item->getBidIncrement() << std::endl;
+  std::cout << "Minimum buyer rating: " << item->getMinBuyerRating()
+            << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "Please choose an option:" << std::endl;
+  std::cout << "0. Back to items menu." << std::endl;
+  std::cout << "1. Place bid." << std::endl;
+  return Dashboard::handleItemsDetailMenu(item, auction, false);
+}
+
+void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
+                                      bool clear = true) {
+  if (clear) std::system("clear");
+  std::cout << "Enter your choice: ";
+  int choice;
+  std::cin >> choice;
+
+  switch (choice) {
+    case 0: {
+      return Dashboard::displayItemsMenu(auction);
+    }
+
+    case 1: {
+      std::system("clear");
+      std::cout << "=====================================" << std::endl;
+      std::cout << "       Placing bid for item          " << std::endl;
+      std::cout << "=====================================" << std::endl;
+      std::cout << std::endl;
+
+      float bidAmount;
+      std::cout << "Enter bid amount: ";
+      std::cin >> bidAmount;
+
+      std::cout
+          << "Do you want to place an automatic bid? (Y for yes, N for no): ";
+      char choice;
+      std::cin >> choice;
+      bool automaticBid = choice == 'Y' || choice == 'y';
+
+      float limitPrice = 0;
+      if (automaticBid) {
+        std::cout << "Enter limit price: ";
+        std::cin >> limitPrice;
+      }
+
+      Bid bid(*this->member, *item, bidAmount, automaticBid, limitPrice);
+      std::cout << "Bid placed successfully!" << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
+
+    default: {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
+  }
+  return Dashboard::displayItemsDetailMenu(item, auction);
 }
