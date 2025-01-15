@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <regex>
+#include <cstring>
 
 #define MEMBER_ID_LENGTH 16
 #define DEFAULT_FULLNAME ""
