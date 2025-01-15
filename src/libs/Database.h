@@ -3,15 +3,15 @@
 
 #include <vector>
 
-#include "./User.h"
-#include "./Member.h"
 #include "./Admin.h"
 #include "./Auction.h"
+#include "./Bid.h"
 #include "./Item.h"
+#include "./Member.h"
+#include "./User.h"
 
-class Database
-{
-private:
+class Database {
+ private:
   std::vector<User> users;
   /** This function is used to save the whole user list to file. */
   void saveUsersToFile();
@@ -32,7 +32,11 @@ private:
   /** This function is used to save the whole member list to file. */
   void saveItemsToFile();
 
-public:
+  std::vector<Bid> bids;
+  /** This function is used to save the whole bid list to file. */
+  void saveBidsToFile();
+
+ public:
   Database();
 
   // ------- User methods -------
@@ -88,6 +92,19 @@ public:
   void saveAuction(Auction *auction);
   /** This function is used to remove an Auction from the database. */
   void removeAuction(Auction auction);
+
+  // ------- Bid Methods -------
+
+  /** This function is used to get all bids of an auction. */
+  std::vector<Bid> getAllBids();
+  /** This function is used to get all bids of an auction. */
+  std::vector<Bid> getBidsByItemID(std::string auctionID);
+  /** This function is used to get all bids of an auction. */
+  std::vector<Bid> getBidsByMemberID(std::string memberID);
+  /** This function is used to add or update a Bid in the database. */
+  void saveBid(Bid *bid);
+  /** This function is used to remove a Bid from the database. */
+  void removeBid(Bid bid);
 };
 
 #endif

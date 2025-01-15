@@ -7,6 +7,7 @@
 #include "../libs/Auction.h"
 #include "../libs/Database.h"
 #include "../libs/IDGenerator.h"
+#include "../libs/Member.h"
 
 // Define constants
 #define ITEM_ID_LENGTH 16
@@ -34,13 +35,14 @@ Item::Item() {
 
 // Parameterized constructor
 Item::Item(std::string itemID, std::string itemName, std::string category,
-           std::string description, float startingBidAmount,
-           float currentBidAmount, float bidIncrement, float minBuyerRating,
-           std::string auctionID) {
+           std::string sellerID, std::string description,
+           float startingBidAmount, float currentBidAmount, float bidIncrement,
+           float minBuyerRating, std::string auctionID) {
   this->itemID = itemID;
   this->itemName = itemName;
   this->category = category;
   this->description = description;
+  this->sellerID = sellerID;
   this->startingBidAmount = startingBidAmount;
   this->currentBidAmount = currentBidAmount;
   this->bidIncrement = bidIncrement;
@@ -49,12 +51,13 @@ Item::Item(std::string itemID, std::string itemName, std::string category,
 }
 
 Item::Item(std::string itemName, std::string category, std::string description,
-           float startingBidAmount, float bidIncrement, float minBuyerRating,
-           std::string auctionID) {
+           Member seller, float startingBidAmount, float bidIncrement,
+           float minBuyerRating, std::string auctionID) {
   this->itemID = IDGenerator::generateID(ITEM_ID_LENGTH);
   this->itemName = itemName;
   this->category = category;
   this->description = description;
+  this->sellerID = seller.getMemberID();
   this->startingBidAmount = startingBidAmount;
   this->currentBidAmount = DEFAULT_CURRENT_BID_AMOUNT;
   this->bidIncrement = bidIncrement;
@@ -71,6 +74,8 @@ std::string Item::getItemName() { return this->itemName; }
 std::string Item::getCategory() { return this->category; }
 
 std::string Item::getDescription() { return this->description; }
+
+std::string Item::getSellerID() { return this->sellerID; }
 
 float Item::getStartingBidAmount() { return this->startingBidAmount; }
 
@@ -91,6 +96,8 @@ void Item::setCategory(std::string category) { this->category = category; }
 void Item::setDescription(std::string description) {
   this->description = description;
 }
+
+void Item::setSellerID(std::string sellerID) { this->sellerID = sellerID; }
 
 void Item::setStartingBidAmount(float startingBidAmount) {
   this->startingBidAmount = startingBidAmount;

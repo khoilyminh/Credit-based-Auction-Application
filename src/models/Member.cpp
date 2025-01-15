@@ -12,7 +12,6 @@
 #define DEFAULT_FULLNAME ""
 #define DEFAULT_PHONE_NUMBER ""
 #define DEFAULT_EMAIL ""
-#define DEFAULT_CREDIT_POINT 0
 #define DEFAULT_RATING 3.0
 #define DEFAULT_CREDIT 0
 
@@ -23,19 +22,17 @@ Member::Member() {
   this->fullname = DEFAULT_FULLNAME;
   this->phoneNumber = DEFAULT_PHONE_NUMBER;
   this->email = DEFAULT_EMAIL;
-  this->creditPoint = DEFAULT_CREDIT_POINT;
   this->rating = DEFAULT_RATING;
   this->credit = DEFAULT_CREDIT;
 }
 
 Member::Member(std::string memberID, std::string fullname,
-               std::string phoneNumber, std::string email, int creditPoint,
-               float rating, int credit, std::string userID) {
+               std::string phoneNumber, std::string email, float rating,
+               int credit, std::string userID) {
   this->memberID = memberID;
   this->fullname = fullname;
   this->phoneNumber = phoneNumber;
   this->email = email;
-  this->creditPoint = creditPoint;
   this->rating = rating;
   this->credit = credit;
   this->userID = userID;
@@ -47,7 +44,6 @@ Member::Member(std::string fullname, std::string phoneNumber, std::string email,
   this->setFullname(fullname);
   this->setPhoneNumber(phoneNumber);
   this->setEmail(email);
-  this->creditPoint = DEFAULT_CREDIT_POINT;
   this->rating = DEFAULT_RATING;
   this->credit = DEFAULT_CREDIT;
   this->userID = user.getUserID();
@@ -62,8 +58,6 @@ std::string Member::getFullname() { return this->fullname; }
 std::string Member::getPhoneNumber() { return this->phoneNumber; }
 
 std::string Member::getEmail() { return this->email; }
-
-int Member::getCreditPoint() { return this->creditPoint; }
 
 float Member::getRating() { return this->rating; }
 
@@ -119,10 +113,6 @@ void Member::setEmail(std::string email) {
   this->email = email;
 }
 
-void Member::setCreditPoint(int creditPoint) {
-  this->creditPoint = creditPoint;
-}
-
 void Member::setRating(float rating) { this->rating = rating; }
 
 void Member::setCredit(int credit) { this->credit = credit; }
@@ -137,7 +127,6 @@ std::string Member::getUserID() {
 std::string Member::toString() {
   return "Member ID: " + this->memberID + ", Fullname: " + this->fullname +
          ", Phone number: " + this->phoneNumber + ", Email: " + this->email +
-         ", Credit point: " + std::to_string(this->creditPoint) +
          ", Rating: " + std::to_string(this->rating) +
          ", Credit: " + std::to_string(this->credit) +
          ", User ID: " + this->userID;

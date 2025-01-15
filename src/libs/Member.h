@@ -3,29 +3,32 @@
 
 #include <string>
 #include <vector>
+
 #include "User.h"
 
-class Member
-{
-private:
+class Member {
+ private:
   std::string memberID;
   std::string fullname;
   std::string phoneNumber;
   std::string email;
-  int creditPoint;
   float rating;
   int credit;
   std::string userID;
 
-public:
+ public:
   // ------- Constructors -------
 
   /** This constructor create a blank member instance. */
   Member();
-  /** This constructor create a member instance with provide parameters. Only use this constructor for loading from database. */
-  Member(std::string memberID, std::string fullname, std::string phoneNumber, std::string email, int creditPoint, float rating, int credit, std::string userID);
-  /** This constructor create a member instance with provide parameters. Use this for create new member. */
-  Member(std::string fullname, std::string phoneNumber, std::string email, User user);
+  /** This constructor create a member instance with provide parameters. Only
+   * use this constructor for loading from database. */
+  Member(std::string memberID, std::string fullname, std::string phoneNumber,
+         std::string email, float rating, int credit, std::string userID);
+  /** This constructor create a member instance with provide parameters. Use
+   * this for create new member. */
+  Member(std::string fullname, std::string phoneNumber, std::string email,
+         User user);
 
   // ------- Getters -------
 
@@ -37,8 +40,6 @@ public:
   std::string getPhoneNumber();
   /** Get member email. */
   std::string getEmail();
-  /** Get member credit point. */
-  int getCreditPoint();
   /** Get member rating. */
   float getRating();
   /** Get member reviews. */
@@ -55,8 +56,6 @@ public:
   void setPhoneNumber(std::string phoneNumber);
   /** This function is used to set the email of member instance. */
   void setEmail(std::string email);
-  /** This function is used to set the credit point of member instance. */
-  void setCreditPoint(int creditPoint);
   /** This function is used to set the rating of member instance. */
   void setRating(float rating);
   /** This function is used to set the credit of member instance. */

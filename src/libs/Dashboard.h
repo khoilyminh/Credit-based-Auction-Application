@@ -62,7 +62,11 @@ class Dashboard {
 
   void displayItemsMenu(Auction *auction);
 
-  void displayItemsDetailMenu(Item *item);
+  void handleItemsMenu(Auction *auction, bool clear);
+
+  void displayItemsDetailMenu(Item *item, Auction *auction);
+
+  void handleItemsDetailMenu(Item *item, Auction *auction, bool clear);
 };
 
 #endif

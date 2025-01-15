@@ -1,46 +1,55 @@
 #include "../libs/Bid.h"
 
+#include "../libs/IDGenerator.h"
+
+#define BID_ID_LENGTH 16
+
 // Default constructor
 Bid::Bid() : automaticBid(false), limitPrice(0.0f) {}
 
 // Parameterized constructor
-Bid::Bid(std::string bidID, Member member, Item item, bool automaticBid, float limitPrice)
-    : bidID(bidID), member(member), item(item), automaticBid(automaticBid), limitPrice(limitPrice) {}
+Bid::Bid(Member member, Item item, float bidAmount, bool automaticBid,
+         float limitPrice)
+    : automaticBid(automaticBid), limitPrice(limitPrice) {
+  this->bidID = IDGenerator::generateID(BID_ID_LENGTH);
+  this->memberID = member.getMemberID();
+  this->itemID = item.getItemID();
+}
+
+Bid::Bid(std::string bidID, std::string memberID, std::string itemID,
+         float bidAmount, bool automaticBid, float limitPrice)
+    : bidID(bidID),
+      memberID(memberID),
+      itemID(itemID),
+      automaticBid(automaticBid),
+      limitPrice(limitPrice) {}
 
 // Getters
-std::string Bid::getBidID() {
-    return bidID;
-}
+std::string Bid::getBidID() { return bidID; }
 
-Member Bid::getMember() {
-    return member;
-}
+std::string Bid::getMemberID() { return memberID; }
 
-Item Bid::getItem() {
-    return item;
-}
+std::string Bid::getItemID() { return itemID; }
 
-bool Bid::isAutomaticBid() {
-    return automaticBid;
-}
+float Bid::getBidAmount() { return bidAmount; }
 
-float Bid::getLimitPrice() {
-    return limitPrice;
-}
+bool Bid::isAutomaticBid() { return automaticBid; }
+
+float Bid::getLimitPrice() { return limitPrice; }
 
 // Methods
 void Bid::placeBid(Member member, float bidAmount) {
-    // Logic to place a bid
+  // Logic to place a bid
 }
 
 void Bid::updateDetails() {
-    // Logic to update bid details
+  // Logic to update bid details
 }
 
 void Bid::removeListing() {
-    // Logic to remove the bid listing
+  // Logic to remove the bid listing
 }
 
 void Bid::closeAuction() {
-    // Logic to close the auction
+  // Logic to close the auction
 }
