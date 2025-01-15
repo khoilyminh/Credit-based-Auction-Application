@@ -1,3 +1,5 @@
+clear
+
 # Check if the bin directory exists
 # If not create it
 if [ ! -d "./bin" ]; then

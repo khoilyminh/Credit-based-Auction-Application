@@ -1,24 +1,23 @@
-#include <string>
 #include <stdlib.h>
+
+#include <string>
 // #include <windows.h> // For Windows OS
-#include <unistd.h> // For Unix-based OS
+#include <unistd.h>  // For Unix-based OS
+
 #include <ctime>
 
-#include "../libs/Dashboard.h"
-#include "../libs/User.h"
-#include "../libs/Member.h"
 #include "../libs/Admin.h"
 #include "../libs/Auction.h"
+#include "../libs/Dashboard.h"
 #include "../libs/Database.h"
+#include "../libs/Member.h"
+#include "../libs/User.h"
 
 #define NULL_TIME -2209075200
 
-Dashboard::Dashboard()
-{
-}
+Dashboard::Dashboard() {}
 
-void Dashboard::displayMainMenu()
-{
+void Dashboard::displayMainMenu() {
   std::system("clear");
   std::cout << "====================================" << std::endl;
   std::cout << "           Welcome to the           " << std::endl;
@@ -35,217 +34,182 @@ void Dashboard::displayMainMenu()
   return Dashboard::handleMainMenu(false);
 }
 
-void Dashboard::handleMainMenu(bool clear = true)
-{
-  if (clear)
-    std::system("clear");
+void Dashboard::handleMainMenu(bool clear = true) {
+  if (clear) std::system("clear");
 
   int choice;
   std::cout << "Enter your choice: ";
   std::cin >> choice;
 
-  switch (choice)
-  {
-  case 1:
-  {
-    std::cout << "Continuing as Guest..." << std::endl;
-    // Add logic for guest functionality
-    break;
-  }
-
-  case 2:
-  {
-    std::system("clear");
-    std::cout << "Logging in as Member..." << std::endl;
-    std::string username, password;
-    std::cout << "Enter username: ";
-    std::cin >> username;
-    std::cout << "Enter password: ";
-    std::cin >> password;
-
-    User user;
-    try
-    {
-      user.checkAuthentication(username, password);
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMainMenu();
+  switch (choice) {
+    case 1: {
+      std::cout << "Continuing as Guest..." << std::endl;
+      // Add logic for guest functionality
+      break;
     }
 
-    Member member;
-    try
-    {
-      member.findMemberByUser(user);
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMainMenu();
-    }
-    std::cout << "Welcome back, " << member.getFullname() << "!" << std::endl;
-    this->member = &member;
-    this->currentRole = "Member";
-    return Dashboard::displayMemberMenu();
-  }
-
-  case 3:
-  {
-    std::system("clear");
-    std::cout << "Logging in as Admin..." << std::endl;
-
-    std::string username, password;
-    std::cout << "Enter username: ";
-    std::cin >> username;
-    std::cout << "Enter password: ";
-    std::cin >> password;
-
-    User user;
-    try
-    {
-      user.checkAuthentication(username, password);
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMainMenu();
-    }
-
-    Admin admin;
-    try
-    {
-      admin.getAdminByUser(user);
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMainMenu();
-    }
-
-    std::cout << "Welcome back " << user.getUsername() << "!" << std::endl;
-    this->admin = &admin;
-    this->currentRole = "Admin";
-
-    return Dashboard::displayAdminMenu();
-  }
-
-  case 4:
-  {
-    std::system("clear");
-    User user;
-    try
-    {
-      std::cout << "Signing up as Member..." << std::endl;
-      // Create a new user
+    case 2: {
+      std::system("clear");
+      std::cout << "Logging in as Member..." << std::endl;
       std::string username, password;
       std::cout << "Enter username: ";
       std::cin >> username;
       std::cout << "Enter password: ";
       std::cin >> password;
-      user = User(username, password);
-      user.save();
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMainMenu();
-    }
-    try
-    {
-      // Create a new member
-      std::string fullname, phoneNumber, email;
-      // Get whole line including spaces
-      std::cout << "Enter full name: ";
-      getline(std::cin >> std::ws, fullname);
-      std::cout << "Enter phone number: ";
-      std::cin >> phoneNumber;
-      std::cout << "Enter email: ";
-      std::cin >> email;
-      Member member = Member(fullname, phoneNumber, email, user);
-      member.save();
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMainMenu();
-    }
-    return Dashboard::displayMainMenu();
-  }
 
-  case 5:
-  {
-    std::system("clear");
-    std::cout << "Signing up as Admin..." << std::endl;
-    User user;
-    try
-    {
-      // Create a new user
+      User user;
+      try {
+        user.checkAuthentication(username, password);
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+
+      Member member;
+      try {
+        member.findMemberByUser(user);
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+      std::cout << "Welcome back, " << member.getFullname() << "!" << std::endl;
+      this->member = &member;
+      this->currentRole = "Member";
+      return Dashboard::displayMemberMenu();
+    }
+
+    case 3: {
+      std::system("clear");
+      std::cout << "Logging in as Admin..." << std::endl;
+
       std::string username, password;
       std::cout << "Enter username: ";
       std::cin >> username;
       std::cout << "Enter password: ";
       std::cin >> password;
-      user = User(username, password);
-      user.save();
+
+      User user;
+      try {
+        user.checkAuthentication(username, password);
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+
+      Admin admin;
+      try {
+        admin.getAdminByUser(user);
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+
+      std::cout << "Welcome back " << user.getUsername() << "!" << std::endl;
+      this->admin = &admin;
+      this->currentRole = "Admin";
+
+      return Dashboard::displayAdminMenu();
     }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
+
+    case 4: {
+      std::system("clear");
+      User user;
+      try {
+        std::cout << "Signing up as Member..." << std::endl;
+        // Create a new user
+        std::string username, password;
+        std::cout << "Enter username: ";
+        std::cin >> username;
+        std::cout << "Enter password: ";
+        std::cin >> password;
+        user = User(username, password);
+        user.save();
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+      try {
+        // Create a new member
+        std::string fullname, phoneNumber, email;
+        // Get whole line including spaces
+        std::cout << "Enter full name: ";
+        getline(std::cin >> std::ws, fullname);
+        std::cout << "Enter phone number: ";
+        std::cin >> phoneNumber;
+        std::cout << "Enter email: ";
+        std::cin >> email;
+        Member member = Member(fullname, phoneNumber, email, user);
+        member.save();
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+      return Dashboard::displayMainMenu();
+    }
+
+    case 5: {
+      std::system("clear");
+      std::cout << "Signing up as Admin..." << std::endl;
+      User user;
+      try {
+        // Create a new user
+        std::string username, password;
+        std::cout << "Enter username: ";
+        std::cin >> username;
+        std::cout << "Enter password: ";
+        std::cin >> password;
+        user = User(username, password);
+        user.save();
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+      try {
+        Admin admin = Admin(user);
+        admin.save();
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMainMenu();
+      }
+      std::cout << "Admin account created successfully!" << std::endl;
       // Wait for 3 seconds
       sleep(3);
       return Dashboard::displayMainMenu();
     }
-    try
-    {
-      Admin admin = Admin(user);
-      admin.save();
+
+    case 6: {
+      std::cout << "Exiting the application." << std::endl;
+      exit(0);
     }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
+
+    default: {
+      std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
       sleep(3);
-      return Dashboard::displayMainMenu();
+      return Dashboard::displayMainMenu();  // Prompt again for valid input
     }
-    std::cout << "Admin account created successfully!" << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    return Dashboard::displayMainMenu();
-  }
-
-  case 6:
-  {
-    std::cout << "Exiting the application." << std::endl;
-    exit(0);
-  }
-
-  default:
-  {
-    std::cout << "Invalid choice. Please try again." << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    return Dashboard::displayMainMenu(); // Prompt again for valid input
-  }
   }
 }
 
 // ------- Admin Menu -------
 
-void Dashboard::displayAdminMenu()
-{
+void Dashboard::displayAdminMenu() {
   std::system("clear");
   std::cout << "====================================" << std::endl;
   std::cout << "         Administrator Menu         " << std::endl;
@@ -258,64 +222,56 @@ void Dashboard::displayAdminMenu()
   return Dashboard::handleAdminMenu(false);
 }
 
-void Dashboard::handleAdminMenu(bool clear = true)
-{
-  if (clear)
-    std::system("clear");
+void Dashboard::handleAdminMenu(bool clear = true) {
+  if (clear) std::system("clear");
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
 
-  switch (choice)
-  {
-  case 1:
-  {
-    std::system("clear");
-    std::cout << "Creating new auction..." << std::endl;
+  switch (choice) {
+    case 1: {
+      std::system("clear");
+      std::cout << "Creating new auction..." << std::endl;
 
-    std::string name;
-    std::cout << "Enter auction name: ";
-    getline(std::cin >> std::ws, name);
+      std::string name;
+      std::cout << "Enter auction name: ";
+      getline(std::cin >> std::ws, name);
 
-    Auction auction(name);
-    auction.save();
+      Auction auction(name);
+      auction.save();
 
-    std::cout << "Auction created successfully!" << std::endl;
-    std::cout << auction.toString() << std::endl;
+      std::cout << "Auction created successfully!" << std::endl;
+      std::cout << auction.toString() << std::endl;
 
-    // Wait for 3 seconds
-    sleep(3);
-    break;
-  }
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
 
-  case 2:
-  {
-    return Dashboard::displayAdminAuctionMenu();
-  }
+    case 2: {
+      return Dashboard::displayAdminAuctionMenu();
+    }
 
-  case 5:
-  {
-    std::cout << "Logging out..." << std::endl;
-    this->admin = nullptr;
-    this->currentRole = "";
-    return Dashboard::displayMainMenu();
-  }
+    case 5: {
+      std::cout << "Logging out..." << std::endl;
+      this->admin = nullptr;
+      this->currentRole = "";
+      return Dashboard::displayMainMenu();
+    }
 
-  default:
-  {
-    std::cout << "Invalid choice. Please try again." << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    break;
-  }
+    default: {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
   }
   return Dashboard::displayAdminMenu();
 }
 
 // ------- Auction Menu for admin -------
 
-void Dashboard::displayAdminAuctionMenu()
-{
+void Dashboard::displayAdminAuctionMenu() {
   std::system("clear");
   std::cout << "====================================" << std::endl;
   std::cout << "  Auctions Menu for Administrator   " << std::endl;
@@ -326,8 +282,7 @@ void Dashboard::displayAdminAuctionMenu()
 
   Database database;
   int index = 1;
-  for (Auction &auction : database.getAllAuctions())
-  {
+  for (Auction &auction : database.getAllAuctions()) {
     std::cout << index << ". " << auction.getAuctionName() << std::endl;
     index++;
   }
@@ -335,44 +290,35 @@ void Dashboard::displayAdminAuctionMenu()
   return Dashboard::handleAdminAuctionMenu(false);
 }
 
-void Dashboard::handleAdminAuctionMenu(bool clear = true)
-{
-  if (clear)
-    std::system("clear");
+void Dashboard::handleAdminAuctionMenu(bool clear = true) {
+  if (clear) std::system("clear");
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
 
-  switch (choice)
-  {
-  case 0:
-  {
-    return Dashboard::displayAdminMenu();
-  }
+  switch (choice) {
+    case 0: {
+      return Dashboard::displayAdminMenu();
+    }
 
-  default:
-  {
-    // Check if choice is integer and within the range of auctions
-    Database database;
-    if (choice < 0 || choice > database.getAllAuctions().size())
-    {
-      std::cout << "Invalid choice. Please try again." << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayAdminAuctionMenu();
+    default: {
+      // Check if choice is integer and within the range of auctions
+      Database database;
+      if (choice < 0 || choice > database.getAllAuctions().size()) {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayAdminAuctionMenu();
+      } else {
+        Auction auction = database.getAllAuctions().at(choice - 1);
+        return Dashboard::displayAdminAuctionDetailMenu(&auction);
+      }
     }
-    else
-    {
-      Auction auction = database.getAllAuctions().at(choice - 1);
-      return Dashboard::displayAdminAuctionDetailMenu(&auction);
-    }
-  }
   }
   return Dashboard::displayAdminAuctionMenu();
 }
 
-void Dashboard::displayAdminAuctionDetailMenu(Auction *auction)
-{
+void Dashboard::displayAdminAuctionDetailMenu(Auction *auction) {
   std::system("clear");
   std::cout << "=====================================" << std::endl;
   std::cout << "Auction Detail Menu for Administrator" << std::endl;
@@ -388,8 +334,11 @@ void Dashboard::displayAdminAuctionDetailMenu(Auction *auction)
   std::string endTime = std::string(ctime(&endTimeT));
   startTime.pop_back();
   endTime.pop_back();
-  std::cout << "Start time: " << (auction->getStartTime() == -1 ? "Not yet" : startTime) << std::endl;
-  std::cout << "End time: " << (auction->getEndTime() == -1 ? "Not yet" : endTime) << std::endl;
+  std::cout << "Start time: "
+            << (auction->getStartTime() == -1 ? "Not yet" : startTime)
+            << std::endl;
+  std::cout << "End time: "
+            << (auction->getEndTime() == -1 ? "Not yet" : endTime) << std::endl;
   std::cout << std::endl;
 
   std::cout << "Please choose an option:" << std::endl;
@@ -400,76 +349,63 @@ void Dashboard::displayAdminAuctionDetailMenu(Auction *auction)
   return Dashboard::handleAdminAuctionDetailMenu(auction, false);
 }
 
-void Dashboard::handleAdminAuctionDetailMenu(Auction *auction, bool clear = true)
-{
-  if (clear)
-    std::system("clear");
+void Dashboard::handleAdminAuctionDetailMenu(Auction *auction,
+                                             bool clear = true) {
+  if (clear) std::system("clear");
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
 
-  switch (choice)
-  {
-  case 0:
-  {
-    return Dashboard::displayAdminAuctionMenu();
-  }
-
-  case 1:
-  {
-    try
-    {
-      auction->startAuction();
-      auction->save();
+  switch (choice) {
+    case 0: {
+      return Dashboard::displayAdminAuctionMenu();
     }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
+
+    case 1: {
+      try {
+        auction->startAuction();
+        auction->save();
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayAdminAuctionDetailMenu(auction);
+      }
+      std::cout << "Auction started successfully!" << std::endl;
       // Wait for 3 seconds
       sleep(3);
-      return Dashboard::displayAdminAuctionDetailMenu(auction);
+      break;
     }
-    std::cout << "Auction started successfully!" << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    break;
-  }
 
-  case 2:
-  {
-    try
-    {
-      auction->endAuction();
-      auction->save();
-    }
-    catch (const std::invalid_argument &e)
-    {
-      std::cout << "Error: " << e.what() << std::endl;
+    case 2: {
+      try {
+        auction->endAuction();
+        auction->save();
+      } catch (const std::invalid_argument &e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayAdminAuctionDetailMenu(auction);
+      }
+      std::cout << "Auction ended successfully!" << std::endl;
       // Wait for 3 seconds
       sleep(3);
-      return Dashboard::displayAdminAuctionDetailMenu(auction);
+      break;
     }
-    std::cout << "Auction ended successfully!" << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    break;
-  }
 
-  default:
-  {
-    std::cout << "Invalid choice. Please try again." << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    break;
-  }
+    default: {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
   }
   return Dashboard::displayAdminAuctionDetailMenu(auction);
 }
 
 // ------- Member Menu -------
 
-void Dashboard::displayMemberMenu()
-{
+void Dashboard::displayMemberMenu() {
   std::system("clear");
   std::cout << "====================================" << std::endl;
   std::cout << "            Member Menu             " << std::endl;
@@ -482,132 +418,111 @@ void Dashboard::displayMemberMenu()
   return Dashboard::handleMemberMenu(false);
 }
 
-void Dashboard::handleMemberMenu(bool clear = true)
-{
-  if (clear)
-    std::system("clear");
+void Dashboard::handleMemberMenu(bool clear = true) {
+  if (clear) std::system("clear");
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
 
-  switch (choice)
-  {
-  case 0:
-  {
-    std::cout << "Logging out..." << std::endl;
-    this->member = nullptr;
-    this->currentRole = "";
-    return Dashboard::displayMainMenu();
-  }
+  switch (choice) {
+    case 0: {
+      std::cout << "Logging out..." << std::endl;
+      this->member = nullptr;
+      this->currentRole = "";
+      return Dashboard::displayMainMenu();
+    }
 
-  case 1:
-  {
-    std::system("clear");
-    std::cout << "====================================" << std::endl;
-    std::cout << "          Account detailed          " << std::endl;
-    std::cout << "====================================" << std::endl
-              << std::endl;
-    std::cout << "Member ID: " << this->member->getMemberID() << std::endl;
-    std::cout << "Full name: " << this->member->getFullname() << std::endl;
-    std::cout << "Phone number: " << this->member->getPhoneNumber() << std::endl;
-    std::cout << "Email: " << this->member->getEmail() << std::endl;
-    std::cout << "Credit: " << this->member->getCredit() << std::endl;
-    std::cout << "Rating score: " << this->member->getRating() << std::endl;
-    std::cout << std::endl
-              << "Return to member menu in 10 seconds..." << std::endl;
-    // Wait 10 seconds
-    sleep(10);
-    return Dashboard::displayMemberMenu();
-  }
+    case 1: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "          Account detailed          " << std::endl;
+      std::cout << "====================================" << std::endl
+                << std::endl;
+      std::cout << "Member ID: " << this->member->getMemberID() << std::endl;
+      std::cout << "Full name: " << this->member->getFullname() << std::endl;
+      std::cout << "Phone number: " << this->member->getPhoneNumber()
+                << std::endl;
+      std::cout << "Email: " << this->member->getEmail() << std::endl;
+      std::cout << "Credit: " << this->member->getCredit() << std::endl;
+      std::cout << "Rating score: " << this->member->getRating() << std::endl;
+      std::cout << std::endl
+                << "Return to member menu in 10 seconds..." << std::endl;
+      // Wait 10 seconds
+      sleep(10);
+      return Dashboard::displayMemberMenu();
+    }
 
-  case 2:
-  {
-    return Dashboard::displayMemberAuctionMenu();
-  }
+    case 2: {
+      return Dashboard::displayMemberAuctionMenu();
+    }
 
-  default:
-  {
-    std::cout << "Invalid choice. Please try again." << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
-    break;
-  }
+    default: {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
   }
   return Dashboard::displayMemberMenu();
 }
 
-void Dashboard::displayMemberAuctionMenu()
-{
+void Dashboard::displayMemberAuctionMenu() {
   std::system("clear");
 
   Database database;
   std::vector<Auction> auctions = database.getAllAuctions();
   std::vector<Auction> activeAuctions;
-  for (Auction &auction : auctions)
-  {
-    if (auction.getEndTime() == -1)
-      activeAuctions.push_back(auction);
+  for (Auction &auction : auctions) {
+    if (auction.getEndTime() == -1) activeAuctions.push_back(auction);
   }
 
   std::cout << "====================================" << std::endl;
   std::cout << "          Active auctions           " << std::endl;
-  std::cout << "====================================" << std::endl
-            << std::endl;
+  std::cout << "====================================" << std::endl << std::endl;
   std::cout << "0. Back to member menu." << std::endl;
-  for (int index = 1; index <= activeAuctions.size(); index++)
-  {
-    std::cout << index << ". View " << activeAuctions.at(index - 1).getAuctionName() << std::endl;
+  for (int index = 1; index <= activeAuctions.size(); index++) {
+    std::cout << index << ". View "
+              << activeAuctions.at(index - 1).getAuctionName() << std::endl;
   }
 
   return Dashboard::handleMemberAuctionMenu(false);
 }
 
-void Dashboard::handleMemberAuctionMenu(bool clear = true)
-{
-  if (clear)
-    std::system("clear");
+void Dashboard::handleMemberAuctionMenu(bool clear = true) {
+  if (clear) std::system("clear");
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
 
-  switch (choice)
-  {
-  case 0:
-  {
-    return Dashboard::displayMemberMenu();
-  }
-
-  default:
-  {
-    // Check if choice is integer and within the range of auctions
-    Database database;
-    std::vector<Auction> auctions = database.getAllAuctions();
-    std::vector<Auction> activeAuctions;
-    for (Auction &auction : auctions)
-    {
-      if (auction.getEndTime() == -1)
-        activeAuctions.push_back(auction);
+  switch (choice) {
+    case 0: {
+      return Dashboard::displayMemberMenu();
     }
 
-    if (choice < 0 || choice > activeAuctions.size())
-    {
-      std::cout << "Invalid choice. Please try again." << std::endl;
-      // Wait for 3 seconds
-      sleep(3);
-      return Dashboard::displayMemberAuctionMenu();
+    default: {
+      // Check if choice is integer and within the range of auctions
+      Database database;
+      std::vector<Auction> auctions = database.getAllAuctions();
+      std::vector<Auction> activeAuctions;
+      for (Auction &auction : auctions) {
+        if (auction.getEndTime() == -1) activeAuctions.push_back(auction);
+      }
+
+      if (choice < 0 || choice > activeAuctions.size()) {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMemberAuctionMenu();
+      } else {
+        Auction auction = activeAuctions.at(choice - 1);
+        return Dashboard::displayMemberAuctionDetailMenu(&auction);
+      }
     }
-    else
-    {
-      Auction auction = activeAuctions.at(choice - 1);
-      return Dashboard::displayMemberAuctionDetailMenu(&auction);
-    }
-  }
   }
   return Dashboard::displayMemberAuctionMenu();
 }
 
-void Dashboard::displayMemberAuctionDetailMenu(Auction *auction)
-{
+void Dashboard::displayMemberAuctionDetailMenu(Auction *auction) {
   std::system("clear");
   std::cout << "=====================================" << std::endl;
   std::cout << "    Auction Detail Menu for Member   " << std::endl;
@@ -623,12 +538,83 @@ void Dashboard::displayMemberAuctionDetailMenu(Auction *auction)
   std::string endTime = std::string(ctime(&endTimeT));
   startTime.pop_back();
   endTime.pop_back();
-  std::cout << "Start time: " << (auction->getStartTime() == -1 ? "Not yet" : startTime) << std::endl;
-  std::cout << "End time: " << (auction->getEndTime() == -1 ? "Not yet" : endTime) << std::endl;
+  std::cout << "Start time: "
+            << (auction->getStartTime() == -1 ? "Not yet" : startTime)
+            << std::endl;
+  std::cout << "End time: "
+            << (auction->getEndTime() == -1 ? "Not yet" : endTime) << std::endl;
   std::cout << std::endl;
 
   std::cout << "Please choose an option:" << std::endl;
   std::cout << "0. Back to member auction menu." << std::endl;
-  std::cout << "1. View auction details." << std::endl;
-  std::cout << "2. Place bid." << std::endl;
+  std::cout << "1. View auction items." << std::endl;
+  std::cout << "2. Sell items." << std::endl;
+  return Dashboard::handleMemberAuctionDetailMenu(auction, false);
+}
+
+void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
+                                              bool clear = true) {
+  if (clear) std::system("clear");
+  std::cout << "Enter your choice: ";
+  int choice;
+  std::cin >> choice;
+
+  switch (choice) {
+    case 0: {
+      return Dashboard::displayMemberAuctionMenu();
+    }
+
+    case 1: {
+      break;
+    }
+
+    case 2: {
+      std::system("clear");
+      std::cout << "=====================================" << std::endl;
+      std::cout << "       Selling items in auction      " << std::endl;
+      std::cout << "=====================================" << std::endl;
+      std::cout << std::endl;
+
+      std::string name;
+      std::cout << "Enter item name: ";
+      getline(std::cin >> std::ws, name);
+
+      std::string description;
+      std::cout << "Enter item description: ";
+      getline(std::cin >> std::ws, description);
+
+      std::string category;
+      std::cout << "Enter item category: ";
+      getline(std::cin >> std::ws, category);
+
+      float startingBidAmount;
+      std::cout << "Enter starting bid amount: ";
+      std::cin >> startingBidAmount;
+
+      float bidIncrement;
+      std::cout << "Enter bid increment: ";
+      std::cin >> bidIncrement;
+
+      float minBuyerRating;
+      std::cout << "Enter minimum buyer rating: ";
+      std::cin >> minBuyerRating;
+
+      Item item(name, category, description, startingBidAmount, bidIncrement,
+                minBuyerRating, auction->getAuctionID());
+      item.save();
+      std::cout << "Item added successfully!" << std::endl;
+
+      // Wait for 3 seconds
+      sleep(3);
+      return Dashboard::displayMemberAuctionDetailMenu(auction);
+    }
+
+    default: {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // Wait for 3 seconds
+      sleep(3);
+      break;
+    }
+  }
+  return Dashboard::displayMemberAuctionDetailMenu(auction);
 }
