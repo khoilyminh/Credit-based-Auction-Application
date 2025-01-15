@@ -3,21 +3,20 @@
 
 #include <iostream>
 
-#include "./User.h"
-#include "./Member.h"
 #include "./Admin.h"
 #include "./Auction.h"
 #include "./Item.h"
+#include "./Member.h"
+#include "./User.h"
 
-class Dashboard
-{
-private:
+class Dashboard {
+ private:
   std::string currentRole;
   User *user;
   Member *member;
   Admin *admin;
 
-public:
+ public:
   // Constructor
   Dashboard();
 
@@ -56,6 +55,8 @@ public:
   void handleMemberAuctionMenu(bool clear);
 
   void displayMemberAuctionDetailMenu(Auction *auction);
+
+  void handleMemberAuctionDetailMenu(Auction *auction, bool clear);
 
   // ------- Items methods -------
 

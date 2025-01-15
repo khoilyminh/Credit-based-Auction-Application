@@ -14,15 +14,17 @@ class Item {
   float currentBidAmount;
   float bidIncrement;
   float minBuyerRating;
+  std::string auctionID;
 
  public:
   // Constructors
   Item();
   Item(std::string itemID, std::string itemName, std::string category,
        std::string description, float startingBidAmount, float currentBidAmount,
-       float bidIncrement, float minBuyerRating);
+       float bidIncrement, float minBuyerRating, std::string auctionID);
   Item(std::string itemName, std::string category, std::string description,
-       float startingBidAmount, float bidIncrement, float minBuyerRating);
+       float startingBidAmount, float bidIncrement, float minBuyerRating,
+       std::string auctionID);
 
   // Getters
   std::string getItemID();
@@ -33,6 +35,7 @@ class Item {
   float getCurrentBidAmount();
   float getBidIncrement();
   float getMinBuyerRating();
+  std::string getAuctionID();
 
   // Setters
   void setItemName(std::string itemName);
@@ -42,6 +45,7 @@ class Item {
   void setCurrentBidAmount(float currentBidAmount);
   void setBidIncrement(float bidIncrement);
   void setMinBuyerRating(float minBuyerRating);
+  void setAuctionID(std::string auctionID);
 
   // Other methods
 

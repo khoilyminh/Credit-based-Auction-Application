@@ -4,6 +4,7 @@
 #include <regex>
 #include <stdexcept>
 
+#include "../libs/Auction.h"
 #include "../libs/Database.h"
 #include "../libs/IDGenerator.h"
 
@@ -34,7 +35,8 @@ Item::Item() {
 // Parameterized constructor
 Item::Item(std::string itemID, std::string itemName, std::string category,
            std::string description, float startingBidAmount,
-           float currentBidAmount, float bidIncrement, float minBuyerRating) {
+           float currentBidAmount, float bidIncrement, float minBuyerRating,
+           std::string auctionID) {
   this->itemID = itemID;
   this->itemName = itemName;
   this->category = category;
@@ -43,10 +45,12 @@ Item::Item(std::string itemID, std::string itemName, std::string category,
   this->currentBidAmount = currentBidAmount;
   this->bidIncrement = bidIncrement;
   this->minBuyerRating = minBuyerRating;
+  this->auctionID = auctionID;
 }
 
 Item::Item(std::string itemName, std::string category, std::string description,
-           float startingBidAmount, float bidIncrement, float minBuyerRating) {
+           float startingBidAmount, float bidIncrement, float minBuyerRating,
+           std::string auctionID) {
   this->itemID = IDGenerator::generateID(ITEM_ID_LENGTH);
   this->itemName = itemName;
   this->category = category;
@@ -55,6 +59,7 @@ Item::Item(std::string itemName, std::string category, std::string description,
   this->currentBidAmount = DEFAULT_CURRENT_BID_AMOUNT;
   this->bidIncrement = bidIncrement;
   this->minBuyerRating = minBuyerRating;
+  this->auctionID = auctionID;
 }
 
 // ------- Getters -------
@@ -74,6 +79,8 @@ float Item::getCurrentBidAmount() { return this->currentBidAmount; }
 float Item::getBidIncrement() { return this->bidIncrement; }
 
 float Item::getMinBuyerRating() { return this->minBuyerRating; }
+
+std::string Item::getAuctionID() { return this->auctionID; }
 
 // ------- Setters -------
 
@@ -100,6 +107,8 @@ void Item::setBidIncrement(float bidIncrement) {
 void Item::setMinBuyerRating(float minBuyerRating) {
   this->minBuyerRating = minBuyerRating;
 }
+
+void Item::setAuctionID(std::string auctionID) { this->auctionID = auctionID; }
 
 // ------- Other methods -------
 
