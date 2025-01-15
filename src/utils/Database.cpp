@@ -49,16 +49,14 @@ std::vector<Member> getAllMembersFromDatabase() {
     line = line.substr(line.find(", ") + 1);
     std::string email = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
-    int creditPoint = std::stoi(line.substr(1, line.find(", ") - 1));
-    line = line.substr(line.find(", ") + 1);
     float rating = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
     int credit = std::stoi(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
     std::string userID = line.substr(1, line.find(", ") - 1);
     // Create a new member object and add it to the members vector.
-    Member member(memberID, fullname, phoneNumber, email, creditPoint, rating,
-                  credit, userID);
+    Member member(memberID, fullname, phoneNumber, email, rating, credit,
+                  userID);
     members.push_back(member);
   }
   file.close();
@@ -242,10 +240,9 @@ void Database::saveMembersToFile() {
     file << this->members[i].getMemberID() << ", "
          << this->members[i].getFullname() << ", "
          << this->members[i].getPhoneNumber() << ", "
-         << this->members[i].getEmail() << ", "
-         << this->members[i].getCreditPoint() << ", "
-         << this->members[i].getRating() << ", " << this->members[i].getCredit()
-         << ", " << this->members[i].getUserID() << std::endl;
+         << this->members[i].getEmail() << ", " << this->members[i].getRating()
+         << ", " << this->members[i].getCredit() << ", "
+         << this->members[i].getUserID() << std::endl;
   }
   file.close();
 }

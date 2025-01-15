@@ -415,6 +415,7 @@ void Dashboard::displayMemberMenu() {
   std::cout << "0. Logout" << std::endl;
   std::cout << "1. View my account" << std::endl;
   std::cout << "2. View active auction" << std::endl;
+  std::cout << "3. Top up credit" << std::endl;
   return Dashboard::handleMemberMenu(false);
 }
 
@@ -454,6 +455,26 @@ void Dashboard::handleMemberMenu(bool clear = true) {
 
     case 2: {
       return Dashboard::displayMemberAuctionMenu();
+    }
+
+    case 3: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "          Top up credit             " << std::endl;
+      std::cout << "====================================" << std::endl;
+      std::cout << std::endl;
+
+      float credit;
+      std::cout << "Enter credit amount: ";
+      std::cin >> credit;
+
+      this->member->setCredit(credit);
+      this->member->save();
+      std::cout << "Credit topped up successfully!" << std::endl;
+
+      // Wait for 3 seconds
+      sleep(3);
+      break;
     }
 
     default: {
