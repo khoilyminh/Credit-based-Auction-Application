@@ -123,6 +123,8 @@ std::vector<Item> getAllItemsFromDatabase() {
     line = line.substr(line.find(", ") + 1);
     std::string description = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
+    std::string sellerID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
     float startingBidAmount = std::stof(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
     float currentBidAmount = std::stof(line.substr(1, line.find(", ") - 1));
@@ -133,8 +135,9 @@ std::vector<Item> getAllItemsFromDatabase() {
     line = line.substr(line.find(", ") + 1);
     std::string auctionID = line.substr(1, line.find(", "));
 
-    Item item(itemID, itemName, category, description, startingBidAmount,
-              currentBidAmount, bidIncrement, minBuyerRating, auctionID);
+    Item item(itemID, itemName, category, sellerID, description,
+              startingBidAmount, currentBidAmount, bidIncrement, minBuyerRating,
+              auctionID);
     items.push_back(item);
   }
   file.close();
@@ -344,6 +347,7 @@ void Database::saveItemsToFile() {
     file << this->items[i].getItemID() << ", " << this->items[i].getItemName()
          << ", " << this->items[i].getCategory() << ", "
          << this->items[i].getDescription() << ", "
+         << this->items[i].getSellerID() << ", "
          << this->items[i].getStartingBidAmount() << ", "
          << this->items[i].getCurrentBidAmount() << ", "
          << this->items[i].getBidIncrement() << ", "

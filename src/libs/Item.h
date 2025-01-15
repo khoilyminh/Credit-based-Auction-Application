@@ -4,12 +4,15 @@
 #include <string>
 #include <vector>
 
+#include "Member.h"
+
 class Item {
  private:
   std::string itemID;
   std::string itemName;
   std::string category;
   std::string description;
+  std::string sellerID;
   float startingBidAmount;
   float currentBidAmount;
   float bidIncrement;
@@ -20,17 +23,19 @@ class Item {
   // Constructors
   Item();
   Item(std::string itemID, std::string itemName, std::string category,
-       std::string description, float startingBidAmount, float currentBidAmount,
-       float bidIncrement, float minBuyerRating, std::string auctionID);
-  Item(std::string itemName, std::string category, std::string description,
-       float startingBidAmount, float bidIncrement, float minBuyerRating,
+       std::string description, std::string sellerID, float startingBidAmount,
+       float currentBidAmount, float bidIncrement, float minBuyerRating,
        std::string auctionID);
+  Item(std::string itemName, std::string category, std::string description,
+       Member member, float startingBidAmount, float bidIncrement,
+       float minBuyerRating, std::string auctionID);
 
   // Getters
   std::string getItemID();
   std::string getItemName();
   std::string getCategory();
   std::string getDescription();
+  std::string getSellerID();
   float getStartingBidAmount();
   float getCurrentBidAmount();
   float getBidIncrement();
@@ -41,6 +46,7 @@ class Item {
   void setItemName(std::string itemName);
   void setCategory(std::string category);
   void setDescription(std::string description);
+  void setSellerID(std::string sellerID);
   void setStartingBidAmount(float startingBidAmount);
   void setCurrentBidAmount(float currentBidAmount);
   void setBidIncrement(float bidIncrement);
