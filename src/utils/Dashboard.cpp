@@ -1,7 +1,7 @@
 #include <string>
 #include <stdlib.h>
-// #include <windows.h> // For Windows OS
-#include <unistd.h> // For Unix-based OS
+#include <windows.h> // For Windows OS
+//#include <unistd.h> // For Unix-based OS
 #include <ctime>
 
 #include "../libs/Dashboard.h"
@@ -72,7 +72,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
 
@@ -85,7 +86,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
     std::cout << "Welcome back, " << member.getFullname() << "!" << std::endl;
@@ -114,7 +116,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
 
@@ -127,7 +130,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
 
@@ -158,7 +162,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
     try
@@ -179,7 +184,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
     return Dashboard::displayMainMenu();
@@ -205,7 +211,8 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
     try
@@ -217,12 +224,14 @@ void Dashboard::handleMainMenu(bool clear = true)
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
     std::cout << "Admin account created successfully!" << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     return Dashboard::displayMainMenu();
   }
 
@@ -236,7 +245,8 @@ void Dashboard::handleMainMenu(bool clear = true)
   {
     std::cout << "Invalid choice. Please try again." << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     return Dashboard::displayMainMenu(); // Prompt again for valid input
   }
   }
@@ -284,7 +294,8 @@ void Dashboard::handleAdminMenu(bool clear = true)
     std::cout << auction.toString() << std::endl;
 
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     break;
   }
 
@@ -305,7 +316,8 @@ void Dashboard::handleAdminMenu(bool clear = true)
   {
     std::cout << "Invalid choice. Please try again." << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     break;
   }
   }
@@ -358,7 +370,8 @@ void Dashboard::handleAdminAuctionMenu(bool clear = true)
     {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayAdminAuctionMenu();
     }
     else
@@ -426,12 +439,14 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction, bool clear = true
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayAdminAuctionDetailMenu(auction);
     }
     std::cout << "Auction started successfully!" << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     break;
   }
 
@@ -446,12 +461,14 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction, bool clear = true
     {
       std::cout << "Error: " << e.what() << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayAdminAuctionDetailMenu(auction);
     }
     std::cout << "Auction ended successfully!" << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     break;
   }
 
@@ -459,7 +476,8 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction, bool clear = true
   {
     std::cout << "Invalid choice. Please try again." << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     break;
   }
   }
@@ -516,7 +534,8 @@ void Dashboard::handleMemberMenu(bool clear = true)
     std::cout << std::endl
               << "Return to member menu in 10 seconds..." << std::endl;
     // Wait 10 seconds
-    sleep(10);
+    //sleep(10); // for MacOS and Linux
+    Sleep(10000); // for Window
     return Dashboard::displayMemberMenu();
   }
 
@@ -529,7 +548,8 @@ void Dashboard::handleMemberMenu(bool clear = true)
   {
     std::cout << "Invalid choice. Please try again." << std::endl;
     // Wait for 3 seconds
-    sleep(3);
+    //sleep(3); // for MacOS and Linux
+    Sleep(3000); // for Window
     break;
   }
   }
@@ -593,7 +613,8 @@ void Dashboard::handleMemberAuctionMenu(bool clear = true)
     {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3); // for MacOS and Linux
+      Sleep(3000); // for Window
       return Dashboard::displayMemberAuctionMenu();
     }
     else
