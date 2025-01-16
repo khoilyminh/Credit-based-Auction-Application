@@ -8,9 +8,12 @@
 
 #include "../../libs/Admin.h"
 #include "../../libs/Auction.h"
+#include "../../libs/Bid.h"
 #include "../../libs/Dashboard.h"
 #include "../../libs/Database.h"
+#include "../../libs/Item.h"
 #include "../../libs/Member.h"
+#include "../../libs/Transaction.h"
 #include "../../libs/User.h"
 
 void Dashboard::displayMemberMenu() {
@@ -24,6 +27,7 @@ void Dashboard::displayMemberMenu() {
   std::cout << "1. View my account" << std::endl;
   std::cout << "2. View active auction" << std::endl;
   std::cout << "3. Top up credit" << std::endl;
+  std::cout << "4. Account overview." << std::endl;
   return Dashboard::handleMemberMenu(false);
 }
 
@@ -93,6 +97,145 @@ void Dashboard::handleMemberMenu(bool clear = true) {
       // Wait for 3 seconds
       sleep(3);
       break;
+    }
+
+    case 4: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "          Account overview          " << std::endl;
+      std::cout << "====================================" << std::endl;
+      std::cout << std::endl;
+
+      Database database;
+      std::vector<Item> activeItems;
+      for (Item &item : Database().getAllItems()) {
+        if (database.getAuctionByID(item.getAuctionID())->getEndTime() == -1 &&
+            item.getSellerID() == this->member->getMemberID()) {
+          activeItems.push_back(item);
+        }
+      }
+      std::cout << "Active item listings: " << activeItems.size() << std::endl;
+
+      std::vector<Bid> activeBid;
+      for (Bid &bid : Database().getAllBids()) {
+        Auction auction = *database.getAuctionByID(
+            database.getItemByID(bid.getItemID())->getAuctionID());
+        Item item = *database.getItemByID(bid.getItemID());
+
+        if (auction.getEndTime() == -1 &&  // Auction is still active
+            bid.getMemberID() ==
+                this->member->getMemberID() &&  // Bidder is
+                                                // current member
+            item.getCurrentBidAmount() == bid.getBidAmount()) {  // Bid is
+                                                                 // highest
+          activeBid.push_back(bid);
+        }
+      }
+      std::cout << "Active bids: " << activeBid.size() << std::endl;
+
+      std::vector<Transaction> boughtTransaction;
+      for (Transaction &transaction : Database().getAllTransactions()) {
+        if (transaction.getBuyerID() == this->member->getMemberID() ||
+            transaction.getSellerID() == this->member->getMemberID()) {
+          boughtTransaction.push_back(transaction);
+        }
+      }
+      std::cout << "Total bought items: " << boughtTransaction.size()
+                << std::endl;
+
+      std::vector<Transaction> soldTransaction;
+      for (Transaction &transaction : Database().getAllTransactions()) {
+        if (transaction.getSellerID() == this->member->getMemberID()) {
+          soldTransaction.push_back(transaction);
+        }
+      }
+      std::cout << "Total sold items: " << soldTransaction.size() << std::endl;
+
+      std::cout << "Account balance: " << this->member->getCredit() << " CP."
+                << std::endl;
+
+      std::cout << std::endl << "----------" << std::endl;
+      std::cout << "Your active item listings:" << std::endl;
+      int index = 1;
+      for (Item &item : activeItems) {
+        std::cout << index << ". Name: " << item.getItemName()
+                  << ", Category: " << item.getCategory()
+                  << ", Current bid: " << item.getCurrentBidAmount() << " CP."
+                  << std::endl;
+        index++;
+      }
+      if (activeItems.size() == 0) {
+        std::cout << "No active item listings." << std::endl;
+      }
+
+      std::cout << std::endl << "----------" << std::endl;
+      std::cout << "Your active bids (bids that leading the item):"
+                << std::endl;
+      index = 1;
+      for (Bid &bid : activeBid) {
+        Item item = *database.getItemByID(bid.getItemID());
+        std::cout << index << ". Item: " << item.getItemName()
+                  << ", Category: " << item.getCategory()
+                  << ", Bid: " << bid.getBidAmount() << " CP." << std::endl;
+        index++;
+      }
+      if (activeBid.size() == 0) {
+        std::cout << "No active bids." << std::endl;
+      }
+
+      std::cout << std::endl << "----------" << std::endl;
+      std::cout << "Your bought items:" << std::endl;
+      index = 1;
+      for (Transaction &transaction : boughtTransaction) {
+        Item item = *database.getItemByID(transaction.getItemID());
+        std::cout << index << ". Item: " << item.getItemName()
+                  << ", Category: " << item.getCategory()
+                  << ", Price: " << item.getCurrentBidAmount() << " CP."
+                  << std::endl;
+        index++;
+      }
+      if (boughtTransaction.size() == 0) {
+        std::cout << "No bought items." << std::endl;
+      }
+
+      std::cout << std::endl << "----------" << std::endl;
+      std::cout << "Your sold items:" << std::endl;
+      index = 1;
+      for (Transaction &transaction : soldTransaction) {
+        Item item = *database.getItemByID(transaction.getItemID());
+        std::cout << index << ". Item: " << item.getItemName()
+                  << ", Category: " << item.getCategory()
+                  << ", Price: " << item.getCurrentBidAmount() << " CP."
+                  << std::endl;
+        index++;
+      }
+      if (soldTransaction.size() == 0) {
+        std::cout << "No sold items." << std::endl;
+      }
+
+      int choice;
+      std::cout << std::endl << "0. Back to member menu." << std::endl;
+      std::cout << "Enter your choice: ";
+      std::cin >> choice;
+
+      // Check if choice is integer
+      if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMemberMenu();
+      }
+
+      if (choice == 0) {
+        return Dashboard::displayMemberMenu();
+      } else {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMemberMenu();
+      }
     }
 
     default: {
