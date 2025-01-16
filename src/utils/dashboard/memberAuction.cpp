@@ -2,17 +2,16 @@
 #include <string>
 #include <ctime>
 
-#include "../../libs/Admin.h"
 #include "../../libs/Auction.h"
 #include "../../libs/Dashboard.h"
 #include "../../libs/Database.h"
 #include "../../libs/Member.h"
-#include "../../libs/User.h"
 #include "../../libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void Dashboard::displayMemberAuctionMenu()
 {
-  std::system("clear");
+  clearing();
 
   Database database;
   std::vector<Auction> auctions = database.getAllAuctions();
@@ -40,7 +39,7 @@ void Dashboard::displayMemberAuctionMenu()
 void Dashboard::handleMemberAuctionMenu(bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -94,7 +93,7 @@ void Dashboard::handleMemberAuctionMenu(bool clear = true)
 
 void Dashboard::displayMemberAuctionDetailMenu(Auction *auction)
 {
-  std::system("clear");
+  clearing();
   std::cout << "=====================================" << std::endl;
   std::cout << "    Auction Detail Menu for Member   " << std::endl;
   std::cout << "=====================================" << std::endl;
@@ -127,7 +126,7 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
                                               bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -157,7 +156,7 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
 
   case 2:
   {
-    std::system("clear");
+    clearing();
     std::cout << "=====================================" << std::endl;
     std::cout << "       Selling items in auction      " << std::endl;
     std::cout << "=====================================" << std::endl;

@@ -12,4 +12,4 @@ if (-not (Test-Path -Path "data")) {
 g++ -std=c++11 ./src/main.cpp ./src/**/*.cpp ./src/**/**/*.cpp -o ./bin/main.exe
 
 # Run the program
-.\bin\main.exe WINDOWS
+.\bin\main.exe

@@ -5,13 +5,13 @@
 #include <vector>
 
 #include "../../libs/Database.h"
-#include "../../libs/Item.h"
 #include "../../libs/Member.h"
-#include "../../libs/User.h"
 
-void Database::saveMembersToFile() {
+void Database::saveMembersToFile()
+{
   std::ofstream file("./data/members.txt", std::ios::trunc);
-  for (int i = 0; i < this->members.size(); i++) {
+  for (int i = 0; i < this->members.size(); i++)
+  {
     file << this->members[i].getMemberID() << ", "
          << this->members[i].getFullname() << ", "
          << this->members[i].getPhoneNumber() << ", "
@@ -24,34 +24,44 @@ void Database::saveMembersToFile() {
 
 std::vector<Member> Database::getAllMembers() { return this->members; }
 
-Member *Database::getMemberByID(std::string memberID) {
-  for (int index = 0; index < this->members.size(); index++) {
-    if (this->members.at(index).getMemberID() == memberID) {
+Member *Database::getMemberByID(std::string memberID)
+{
+  for (int index = 0; index < this->members.size(); index++)
+  {
+    if (this->members.at(index).getMemberID() == memberID)
+    {
       return &this->members.at(index);
     }
   }
   return nullptr;
 }
 
-void Database::saveMember(Member *member) {
+void Database::saveMember(Member *member)
+{
   bool isExist = false;
-  for (int index = 0; index < this->members.size(); index++) {
+  for (int index = 0; index < this->members.size(); index++)
+  {
     // If the member is exist in the database, update the member.
-    if (this->members.at(index).getMemberID() == member->getMemberID()) {
+    if (this->members.at(index).getMemberID() == member->getMemberID())
+    {
       this->members.at(index) = *member;
       isExist = true;
       break;
     }
   }
   // If the member is not exist in the database, add it to the database.
-  if (!isExist) this->members.push_back(*member);
+  if (!isExist)
+    this->members.push_back(*member);
   // Update the data in the file.
   this->saveMembersToFile();
 }
 
-void Database::removeMember(Member member) {
-  for (int index = 0; index < this->members.size(); index++) {
-    if (this->members.at(index).getMemberID() == member.getMemberID()) {
+void Database::removeMember(Member member)
+{
+  for (int index = 0; index < this->members.size(); index++)
+  {
+    if (this->members.at(index).getMemberID() == member.getMemberID())
+    {
       this->members.erase(this->members.begin() + index);
       break;
     }

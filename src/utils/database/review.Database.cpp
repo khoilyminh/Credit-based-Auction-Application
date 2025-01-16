@@ -7,13 +7,13 @@
 #include <vector>
 
 #include "../../libs/Database.h"
-#include "../../libs/Item.h"
-#include "../../libs/Member.h"
-#include "../../libs/User.h"
+#include "../../libs/Review.h"
 
-void Database::saveReviewsToFile() {
+void Database::saveReviewsToFile()
+{
   std::ofstream file("./data/reviews.txt", std::ios::trunc);
-  for (int i = 0; i < this->reviews.size(); i++) {
+  for (int i = 0; i < this->reviews.size(); i++)
+  {
     file << this->reviews[i].getReviewID() << ", "
          << this->reviews[i].getMemberID() << ", "
          << this->reviews[i].getReviewerID() << ", "
@@ -25,28 +25,35 @@ void Database::saveReviewsToFile() {
 
 std::vector<Review> Database::getAllReviews() { return this->reviews; }
 
-std::vector<Review> Database::getReviewsByMemberID(std::string memberID) {
+std::vector<Review> Database::getReviewsByMemberID(std::string memberID)
+{
   std::vector<Review> reviews;
-  for (Review review : this->reviews) {
-    if (review.getMemberID() == memberID) {
+  for (Review review : this->reviews)
+  {
+    if (review.getMemberID() == memberID)
+    {
       reviews.push_back(review);
     }
   }
   return reviews;
 }
 
-void Database::saveReview(Review *review) {
+void Database::saveReview(Review *review)
+{
   bool isExist = false;
-  for (int index = 0; index < this->reviews.size(); index++) {
+  for (int index = 0; index < this->reviews.size(); index++)
+  {
     // If the review is exist in the database, update the review.
-    if (this->reviews.at(index).getReviewID() == review->getReviewID()) {
+    if (this->reviews.at(index).getReviewID() == review->getReviewID())
+    {
       this->reviews.at(index) = *review;
       isExist = true;
       break;
     }
   }
   // If the review is not exist in the database, add the review.
-  if (!isExist) {
+  if (!isExist)
+  {
     this->reviews.push_back(*review);
   }
   this->saveReviewsToFile();

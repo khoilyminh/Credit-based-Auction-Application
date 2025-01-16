@@ -8,7 +8,6 @@
 #include "../../libs/Dashboard.h"
 #include "../../libs/Database.h"
 #include "../../libs/Member.h"
-#include "../../libs/User.h"
 #include "../..//libs/waiting.h"
 #include "../../libs/clearing.h"
 
