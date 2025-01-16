@@ -20,9 +20,9 @@ void Dashboard::displayAdminMenu() {
   std::cout << "====================================" << std::endl;
   std::cout << std::endl;
   std::cout << "Please choose an option:" << std::endl;
+  std::cout << "0. Logout" << std::endl;
   std::cout << "1. Create new auction" << std::endl;
   std::cout << "2. View all auctions" << std::endl;
-  std::cout << "5. Logout" << std::endl;
   return Dashboard::handleAdminMenu(false);
 }
 
@@ -56,7 +56,7 @@ void Dashboard::handleAdminMenu(bool clear = true) {
       return Dashboard::displayAdminAuctionMenu();
     }
 
-    case 5: {
+    case 0: {
       std::cout << "Logging out..." << std::endl;
       this->admin = nullptr;
       this->currentRole = "";

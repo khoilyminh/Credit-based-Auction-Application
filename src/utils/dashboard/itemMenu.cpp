@@ -13,18 +13,19 @@
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
 
-void processAutomaticBid(Bid currentBid, Bid lastBid, Item item) {
+Item *processAutomaticBid(Bid currentBid, Bid lastBid, Item *item) {
   // Check if lastBid is automatic
-  if (!lastBid.isAutomaticBid()) return;
+  if (!lastBid.isAutomaticBid()) return item;
 
   // Check if lastBid reach the limit price
-  if (lastBid.getBidAmount() + item.getBidIncrement() > lastBid.getLimitPrice())
-    return;
+  if (lastBid.getBidAmount() + item->getBidIncrement() >
+      lastBid.getLimitPrice())
+    return item;
 
-  lastBid.setBidAmount(lastBid.getBidAmount() + item.getBidIncrement());
+  lastBid.setBidAmount(lastBid.getBidAmount() + item->getBidIncrement());
   lastBid.save();
-  item.setCurrentBidAmount(lastBid.getBidAmount());
-  item.save();
+  item->setCurrentBidAmount(lastBid.getBidAmount());
+  item->save();
 
   return processAutomaticBid(lastBid, currentBid, item);
 }
@@ -117,7 +118,8 @@ void Dashboard::displayItemsDetailMenu(Item *item, Auction *auction) {
   std::cout << "0. Back to items menu." << std::endl;
   std::cout << "1. Place bid." << std::endl;
   std::cout << "2. Remove item." << std::endl;
-  std::cout << "3. View seller information and reviews." << std::endl;
+  std::cout << "3. View seller information." << std::endl;
+  std::cout << "4. View seller reviews." << std::endl;
   return Dashboard::handleItemsDetailMenu(item, auction, false);
 }
 
@@ -286,11 +288,12 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
         item->setCurrentBidAmount(bidAmount);
         item->save();
 
-        processAutomaticBid(currentBid, lastBid, *item);
+        item = processAutomaticBid(currentBid, lastBid, item);
       }
 
       // Wait for 3 seconds
       sleep(3);
+      // Reload the item
       return Dashboard::displayItemsDetailMenu(item, auction);
     }
 
@@ -319,6 +322,14 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
         sleep(3);
         return Dashboard::displayItemsDetailMenu(item, auction);
       }
+    }
+
+    case 3: {
+      std::system("clear");
+      std::cout << "=====================================" << std::endl;
+      std::cout << "         Seller information          " << std::endl;
+      std::cout << "=====================================" << std::endl;
+      std::cout << std::endl;
     }
 
     default: {
