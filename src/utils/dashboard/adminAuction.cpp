@@ -23,7 +23,6 @@ void processEndAuction(Auction *auction) {
     if (item.getAuctionID() == auction->getAuctionID() &&
         item.getCurrentBidAmount() != 0) {
       filteredItems.push_back(item);
-      std::cout << "Item: " << item.getItemName() << std::endl;
     }
   }
 

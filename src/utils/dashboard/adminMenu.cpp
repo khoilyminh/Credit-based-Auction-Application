@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include <iomanip>
 #include <string>
 // #include <windows.h> // For Windows OS
 #include <unistd.h>  // For Unix-based OS
@@ -23,6 +24,8 @@ void Dashboard::displayAdminMenu() {
   std::cout << "0. Logout" << std::endl;
   std::cout << "1. Create new auction" << std::endl;
   std::cout << "2. View all auctions" << std::endl;
+  std::cout << "3. View all members." << std::endl;
+  std::cout << "4. View all items." << std::endl;
   return Dashboard::handleAdminMenu(false);
 }
 
@@ -54,6 +57,39 @@ void Dashboard::handleAdminMenu(bool clear = true) {
 
     case 2: {
       return Dashboard::displayAdminAuctionMenu();
+    }
+
+    case 3: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "           List of members          " << std::endl;
+      std::cout << "====================================" << std::endl;
+      std::cout << std::endl;
+
+      int index = 1;
+      Database database;
+      for (Member &member : database.getAllMembers()) {
+        std::cout << std::to_string(index) << ". "
+                  << "Fullname: " << member.getFullname()
+                  << ", Email: " << member.getEmail()
+                  << ", Phone: " << member.getPhoneNumber()
+                  << ", Rating: " << member.getRating()
+                  << ", Credit point: " << member.getCredit() << std::endl;
+        index++;
+      }
+
+      std::cout << std::endl;
+      std::cout << "Please choose an option:" << std::endl;
+      std::cout << "0. Back to administrator menu." << std::endl;
+      int choice;
+      std::cout << "Enter your choice: ";
+      std::cin >> choice;
+      if (choice != 0) {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+      }
+      return Dashboard::displayAdminMenu();
     }
 
     case 0: {

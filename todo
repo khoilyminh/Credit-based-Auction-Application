@@ -1,4 +1,4 @@
-endAuction -> transaction -> review
+transaction -> review
 admin -> view all member -> view all items
 guest -> view item name, category, description
 
