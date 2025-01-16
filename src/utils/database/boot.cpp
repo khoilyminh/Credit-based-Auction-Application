@@ -1,5 +1,4 @@
 #include <unistd.h>
-
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -11,11 +10,13 @@
 #include "../../libs/Transaction.h"
 #include "../../libs/User.h"
 
-std::vector<User> getAllUsersFromDatabase() {
+std::vector<User> getAllUsersFromDatabase()
+{
   std::vector<User> users;
   std::ifstream file("./data/users.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     // The first value is the userID, the second value is the username, and the
     // third value is the password, the forth value will be status.
     std::string userID = line.substr(0, line.find(", "));
@@ -33,11 +34,13 @@ std::vector<User> getAllUsersFromDatabase() {
   return users;
 }
 
-std::vector<Member> getAllMembersFromDatabase() {
+std::vector<Member> getAllMembersFromDatabase()
+{
   std::vector<Member> members;
   std::ifstream file("./data/members.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     // The first value is the memberID, the second value is the fullname, the
     // third value is the phoneNumber, the fourth value is the email, the fifth
     // value is the creditPoint, the sixth value is the rating, the seventh
@@ -64,11 +67,13 @@ std::vector<Member> getAllMembersFromDatabase() {
   return members;
 }
 
-std::vector<Admin> getAllAdminsFromDatabase() {
+std::vector<Admin> getAllAdminsFromDatabase()
+{
   std::vector<Admin> admins;
   std::ifstream file("./data/admins.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     // The first value is the adminID, the second value is the adminID, and the
     // third value is the userID.
     std::string adminID = line.substr(0, line.find(", "));
@@ -82,11 +87,13 @@ std::vector<Admin> getAllAdminsFromDatabase() {
   return admins;
 }
 
-std::vector<Auction> getAllAuctionsFromDatabase() {
+std::vector<Auction> getAllAuctionsFromDatabase()
+{
   std::vector<Auction> auctions;
   std::ifstream file("./data/auctions.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     // The first value is the auctionID, the second value is the itemID, the
     // third value is the sellerID, the fourth value is the startingPrice, the
     // fifth value is the currentPrice, the sixth value is the highestBidderID,
@@ -109,11 +116,13 @@ std::vector<Auction> getAllAuctionsFromDatabase() {
   return auctions;
 }
 
-std::vector<Item> getAllItemsFromDatabase() {
+std::vector<Item> getAllItemsFromDatabase()
+{
   std::vector<Item> items;
   std::ifstream file("./data/items.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     std::string itemID = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
     std::string itemName = line.substr(1, line.find(", ") - 1);
@@ -143,11 +152,13 @@ std::vector<Item> getAllItemsFromDatabase() {
   return items;
 }
 
-std::vector<Bid> getAllBidsFromDatabase() {
+std::vector<Bid> getAllBidsFromDatabase()
+{
   std::vector<Bid> bids;
   std::ifstream file("./data/bids.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     std::string bidID = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
     std::string memberID = line.substr(1, line.find(", ") - 1);
@@ -167,11 +178,13 @@ std::vector<Bid> getAllBidsFromDatabase() {
   return bids;
 }
 
-std::vector<Transaction> getAllTransactionsFromDatabase() {
+std::vector<Transaction> getAllTransactionsFromDatabase()
+{
   std::vector<Transaction> transactions;
   std::ifstream file("./data/transactions.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     std::string transactionID = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
     std::string buyerID = line.substr(1, line.find(", ") - 1);
@@ -192,11 +205,13 @@ std::vector<Transaction> getAllTransactionsFromDatabase() {
   return transactions;
 }
 
-std::vector<Review> getAllReviewsFromDatabase() {
+std::vector<Review> getAllReviewsFromDatabase()
+{
   std::vector<Review> reviews;
   std::ifstream file("./data/reviews.txt", std::ios::in);
   std::string line;
-  while (std::getline(file, line)) {
+  while (std::getline(file, line))
+  {
     std::string reviewID = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
     std::string memberID = line.substr(1, line.find(", ") - 1);
@@ -214,7 +229,8 @@ std::vector<Review> getAllReviewsFromDatabase() {
   return reviews;
 }
 
-Database::Database() {
+Database::Database()
+{
   this->users = getAllUsersFromDatabase();
   this->members = getAllMembersFromDatabase();
   this->admins = getAllAdminsFromDatabase();

@@ -1,13 +1,13 @@
 #include <vector>
-// #include <windows.h> // For Windows OS
-#include <unistd.h>  // For Unix-based OS
 
 #include "../../libs/Dashboard.h"
 #include "../../libs/Database.h"
 #include "../../libs/Item.h"
 #include "../../libs/Transaction.h"
+#include "../..//libs/waiting.h"
 
-void Dashboard::displayGuestMenu() {
+void Dashboard::displayGuestMenu()
+{
   std::system("clear");
   std::cout << "====================================" << std::endl;
   std::cout << "        Items list for Guest        " << std::endl;
@@ -20,21 +20,24 @@ void Dashboard::displayGuestMenu() {
   std::vector<Item> items = database.getAllItems();
 
   std::vector<Item> filteredItems;
-  for (Item &item : database.getAllItems()) {
+  for (Item &item : database.getAllItems())
+  {
     if (database.getTransactionsByItemID(item.getItemID()).size() == 0)
       filteredItems.push_back(item);
   }
 
   int index = 1;
 
-  for (Item &item : filteredItems) {
+  for (Item &item : filteredItems)
+  {
     std::cout << index << ". " << "Name: " << item.getItemName()
               << ", Description: " << item.getDescription()
               << ", Category: " << item.getCategory() << std::endl;
     index++;
   }
 
-  if (filteredItems.size() == 0) {
+  if (filteredItems.size() == 0)
+  {
     std::cout << "No items available." << std::endl;
   }
 
@@ -47,21 +50,25 @@ void Dashboard::displayGuestMenu() {
   std::cin >> choice;
 
   // Check if choice is integer
-  if (std::cin.fail()) {
+  if (std::cin.fail())
+  {
     std::cin.clear();
     std::cin.ignore();
     std::cout << "Invalid choice. Please try again." << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
+    // waiting for 3 seconds
+    waiting(3);
     return Dashboard::displayGuestMenu();
   }
 
-  if (choice == 0) {
+  if (choice == 0)
+  {
     return Dashboard::displayMainMenu();
-  } else {
+  }
+  else
+  {
     std::cout << "Invalid choice. Please try again." << std::endl;
-    // Wait for 3 seconds
-    sleep(3);
+    // waiting for 3 seconds
+    waiting(3);
     return Dashboard::displayGuestMenu();
   }
 }

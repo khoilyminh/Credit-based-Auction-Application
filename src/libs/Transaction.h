@@ -2,13 +2,15 @@
 #define TRANSACTION_H
 
 #include <string>
+#include <ctime>
 
 #include "./Bid.h"
 #include "./Item.h"
 #include "./Member.h"
 
-class Transaction {
- private:
+class Transaction
+{
+private:
   std::string transactionID;
   std::string buyerID;
   std::string sellerID;
@@ -16,7 +18,7 @@ class Transaction {
   std::string itemID;
   std::time_t transactionTime;
 
- public:
+public:
   // ---------- Constructors ----------
 
   Transaction();

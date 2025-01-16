@@ -1,2 +1,2 @@
 # Run the program
-./bin/main
+./bin/main NOT_WINDOWS
