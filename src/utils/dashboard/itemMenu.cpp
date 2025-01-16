@@ -6,6 +6,7 @@
 #include "../../libs/Dashboard.h"
 #include "../../libs/Database.h"
 #include "../../libs/Member.h"
+#include "../../libs/Review.h"
 #include "../..//libs/waiting.h"
 #include "../../libs/clearing.h"
 
@@ -443,6 +444,54 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
       return Dashboard::displayItemsDetailMenu(item, auction);
     }
     if (choice == 0)
+    {
+      return Dashboard::displayItemsDetailMenu(item, auction);
+    }
+    else
+    {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayItemsDetailMenu(item, auction);
+    }
+  }
+
+  case 4:
+  {
+    clearing();
+    std::cout << "=====================================" << std::endl;
+    std::cout << "            Seller reviews           " << std::endl;
+    std::cout << "=====================================" << std::endl;
+    std::cout << std::endl;
+
+    Database database;
+    std::vector<Review> filterReviews;
+    for (Review &review : database.getAllReviews())
+    {
+      if (review.getMemberID() == item->getSellerID())
+      {
+        std::cout << "From: " << database.getMemberByID(review.getReviewerID())->getFullname() << std::endl;
+        std::cout << "Rating: " << review.getRating() << std::endl;
+        std::cout << "Comment: " << review.getContent() << std::endl;
+        std::cout << std::endl;
+      }
+    }
+
+    std::cout << "0. Back to item detail menu." << std::endl;
+    std::cout << "Enter your choice: ";
+    int choice;
+    std::cin >> choice;
+
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore();
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayItemsDetailMenu(item, auction);
+    }
+    else if (choice == 0)
     {
       return Dashboard::displayItemsDetailMenu(item, auction);
     }
