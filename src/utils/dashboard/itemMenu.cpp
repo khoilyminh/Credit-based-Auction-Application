@@ -15,12 +15,19 @@
 
 Item *processAutomaticBid(Bid currentBid, Bid lastBid, Item *item) {
   // Check if lastBid is automatic
-  if (!lastBid.isAutomaticBid()) return item;
+  if (!lastBid.isAutomaticBid()) {
+    item->setCurrentBidAmount(currentBid.getBidAmount());
+    item->save();
+    return item;
+  }
 
   // Check if lastBid reach the limit price
   if (lastBid.getBidAmount() + item->getBidIncrement() >
-      lastBid.getLimitPrice())
+      lastBid.getLimitPrice()) {
+    item->setCurrentBidAmount(lastBid.getBidAmount());
+    item->save();
     return item;
+  }
 
   lastBid.setBidAmount(lastBid.getBidAmount() + item->getBidIncrement());
   lastBid.save();
@@ -267,6 +274,17 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
           // Wait for 3 seconds
           sleep(3);
           return Dashboard::displayItemsDetailMenu(item, auction);
+        }
+
+        // Check if the limit price is unique
+        for (Bid &bid : database.getAllBids()) {
+          std::cout << "Bid limit price: " << bid.getLimitPrice() << std::endl;
+          if (bid.getLimitPrice() == limitPrice &&
+              bid.getItemID() == item->getItemID()) {
+            // Wait for 3 seconds
+            sleep(3);
+            return Dashboard::displayItemsDetailMenu(item, auction);
+          }
         }
       }
 
