@@ -92,6 +92,45 @@ void Dashboard::handleAdminMenu(bool clear = true) {
       return Dashboard::displayAdminMenu();
     }
 
+    case 4: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "            List of items           " << std::endl;
+      std::cout << "====================================" << std::endl;
+      std::cout << std::endl;
+
+      int index = 1;
+      Database database;
+      for (Item &item : database.getAllItems()) {
+        std::cout
+            << std::to_string(index) << ". "
+            << "Name: " << item.getItemName()
+            << ", Description: " << item.getDescription()
+            << ", Category: " << item.getCategory()
+            << ", Starting price: " << item.getStartingBidAmount()
+            << ", Current price: " << item.getCurrentBidAmount()
+            << ", Auction: "
+            << database.getAuctionByID(item.getAuctionID())->getAuctionName()
+            << (database.getTransactionsByItemID(item.getItemID()).size() > 0
+                    ? ", Sold"
+                    : ", Unsold")
+            << std::endl;
+      }
+
+      std::cout << std::endl;
+      std::cout << "Please choose an option:" << std::endl;
+      std::cout << "0. Back to administrator menu." << std::endl;
+      int choice;
+      std::cout << "Enter your choice: ";
+      std::cin >> choice;
+      if (choice != 0) {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+      }
+      return Dashboard::displayAdminMenu();
+    }
+
     case 0: {
       std::cout << "Logging out..." << std::endl;
       this->admin = nullptr;
