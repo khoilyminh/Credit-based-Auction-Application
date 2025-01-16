@@ -28,6 +28,7 @@ void Dashboard::displayMemberMenu() {
   std::cout << "2. View active auction" << std::endl;
   std::cout << "3. Top up credit" << std::endl;
   std::cout << "4. Account overview." << std::endl;
+  std::cout << "5. View all transactions." << std::endl;
   return Dashboard::handleMemberMenu(false);
 }
 
@@ -135,8 +136,7 @@ void Dashboard::handleMemberMenu(bool clear = true) {
 
       std::vector<Transaction> boughtTransaction;
       for (Transaction &transaction : Database().getAllTransactions()) {
-        if (transaction.getBuyerID() == this->member->getMemberID() ||
-            transaction.getSellerID() == this->member->getMemberID()) {
+        if (transaction.getBuyerID() == this->member->getMemberID()) {
           boughtTransaction.push_back(transaction);
         }
       }
@@ -215,6 +215,61 @@ void Dashboard::handleMemberMenu(bool clear = true) {
 
       int choice;
       std::cout << std::endl << "0. Back to member menu." << std::endl;
+      std::cout << "Enter your choice: ";
+      std::cin >> choice;
+
+      // Check if choice is integer
+      if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMemberMenu();
+      }
+
+      if (choice == 0) {
+        return Dashboard::displayMemberMenu();
+      } else {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayMemberMenu();
+      }
+    }
+
+    case 5: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "        Account transactions        " << std::endl;
+      std::cout << "====================================" << std::endl
+                << std::endl;
+      std::cout << "0. Back to member menu." << std::endl;
+
+      Database database;
+      std::vector<Transaction> filteredTransactions;
+      // Get all transactions that this member is involved in
+      for (Transaction &transaction : Database().getAllTransactions()) {
+        if (transaction.getBuyerID() == this->member->getMemberID() ||
+            transaction.getSellerID() == this->member->getMemberID()) {
+          filteredTransactions.push_back(transaction);
+        }
+      }
+
+      int index = 1;
+      for (Transaction &transaction : filteredTransactions) {
+        Item item = *database.getItemByID(transaction.getItemID());
+        if (transaction.getBuyerID() == this->member->getMemberID()) {
+          std::cout << index << ". Bought " << item.getItemName() << " with "
+                    << item.getCurrentBidAmount() << " CP." << std::endl;
+        } else {
+          std::cout << index << ". Sold " << item.getItemName() << " with "
+                    << item.getCurrentBidAmount() << " CP." << std::endl;
+        }
+        index++;
+      }
+
+      int choice;
       std::cout << "Enter your choice: ";
       std::cin >> choice;
 

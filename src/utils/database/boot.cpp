@@ -7,6 +7,7 @@
 #include "../../libs/Database.h"
 #include "../../libs/Item.h"
 #include "../../libs/Member.h"
+#include "../../libs/Review.h"
 #include "../../libs/Transaction.h"
 #include "../../libs/User.h"
 
@@ -173,9 +174,9 @@ std::vector<Transaction> getAllTransactionsFromDatabase() {
   while (std::getline(file, line)) {
     std::string transactionID = line.substr(0, line.find(", "));
     line = line.substr(line.find(", ") + 1);
-    std::string sellerID = line.substr(1, line.find(", ") - 1);
-    line = line.substr(line.find(", ") + 1);
     std::string buyerID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string sellerID = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
     std::string bidID = line.substr(1, line.find(", ") - 1);
     line = line.substr(line.find(", ") + 1);
@@ -183,12 +184,34 @@ std::vector<Transaction> getAllTransactionsFromDatabase() {
     line = line.substr(line.find(", ") + 1);
     long time = std::stol(line.substr(1, line.find(", ") - 1));
 
-    Transaction transaction(transactionID, sellerID, buyerID, bidID, itemID,
+    Transaction transaction(transactionID, buyerID, sellerID, bidID, itemID,
                             time);
     transactions.push_back(transaction);
   }
   file.close();
   return transactions;
+}
+
+std::vector<Review> getAllReviewsFromDatabase() {
+  std::vector<Review> reviews;
+  std::ifstream file("./data/reviews.txt", std::ios::in);
+  std::string line;
+  while (std::getline(file, line)) {
+    std::string reviewID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string memberID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string reviewerID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string content = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    float rating = std::stof(line.substr(1, line.find(", ") - 1));
+
+    Review review(reviewID, memberID, reviewerID, content, rating);
+    reviews.push_back(review);
+  }
+  file.close();
+  return reviews;
 }
 
 Database::Database() {
@@ -199,4 +222,5 @@ Database::Database() {
   this->items = getAllItemsFromDatabase();
   this->bids = getAllBidsFromDatabase();
   this->transactions = getAllTransactionsFromDatabase();
+  this->reviews = getAllReviewsFromDatabase();
 }

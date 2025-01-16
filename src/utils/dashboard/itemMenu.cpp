@@ -24,7 +24,7 @@ Item *processAutomaticBid(Bid currentBid, Bid lastBid, Item *item) {
   // Check if lastBid reach the limit price
   if (lastBid.getBidAmount() + item->getBidIncrement() >
       lastBid.getLimitPrice()) {
-    item->setCurrentBidAmount(lastBid.getBidAmount());
+    item->setCurrentBidAmount(currentBid.getBidAmount());
     item->save();
     return item;
   }

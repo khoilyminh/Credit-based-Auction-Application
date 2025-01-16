@@ -8,6 +8,7 @@
 #include "./Bid.h"
 #include "./Item.h"
 #include "./Member.h"
+#include "./Review.h"
 #include "./Transaction.h"
 #include "./User.h"
 
@@ -40,6 +41,10 @@ class Database {
   std::vector<Transaction> transactions;
   /** This function is used to save the whole transaction list to file. */
   void saveTransactionsToFile();
+
+  std::vector<Review> reviews;
+  /** This function is used to save the whole review list to file. */
+  void saveReviewsToFile();
 
  public:
   Database();
@@ -123,6 +128,17 @@ class Database {
   void saveTransaction(Transaction *transaction);
   /** This function is used to remove a Transaction from the database. */
   void removeTransaction(Transaction transaction);
+
+  // ------- Review Methods -------
+
+  /** This function is used to get all reviews */
+  std::vector<Review> getAllReviews();
+  /** This function is used to get all reviews of a member */
+  std::vector<Review> getReviewsByMemberID(std::string memberID);
+  /** This function is used to add or update a Review in the database. */
+  void saveReview(Review *review);
+  /** This function is used to remove a Review from the database. */
+  void removeReview(Review review);
 };
 
 #endif

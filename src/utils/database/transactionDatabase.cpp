@@ -14,8 +14,8 @@ void Database::saveTransactionsToFile() {
   std::ofstream file("./data/transactions.txt", std::ios::trunc);
   for (int i = 0; i < this->transactions.size(); i++) {
     file << this->transactions[i].getTransactionID() << ", "
-         << this->transactions[i].getSellerID() << ", "
          << this->transactions[i].getBuyerID() << ", "
+         << this->transactions[i].getSellerID() << ", "
          << this->transactions[i].getBidID() << ", "
          << this->transactions[i].getItemID() << ", "
          << this->transactions[i].getTransactionTime() << std::endl;
