@@ -1,6 +1,4 @@
 transaction -> review
-guest -> view item name, category, description
-
 account -> overview (show sold items, show bought items)
 
 C. Advanced Features: 14. Activity dashboard: When a member logs into the application, a personalized dashboard

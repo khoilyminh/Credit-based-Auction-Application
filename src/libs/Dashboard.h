@@ -67,6 +67,12 @@ class Dashboard {
   void displayItemsDetailMenu(Item *item, Auction *auction);
 
   void handleItemsDetailMenu(Item *item, Auction *auction, bool clear);
+
+  // ------- Guest methods -------
+
+  void displayGuestMenu();
+
+  void handleGuestMenu(bool clear);
 };
 
 #endif

@@ -61,8 +61,7 @@ void Dashboard::handleMainMenu(bool clear = true) {
   switch (choice) {
     case 1: {
       std::cout << "Continuing as Guest..." << std::endl;
-      // Add logic for guest functionality
-      break;
+      return Dashboard::displayGuestMenu();
     }
 
     case 2: {
