@@ -67,6 +67,15 @@ class Dashboard {
   void displayItemsDetailMenu(Item *item, Auction *auction);
 
   void handleItemsDetailMenu(Item *item, Auction *auction, bool clear);
+
+    // ------- Reviews and Rating methods -------
+
+  void displayMemberReviews(Review *); // Method to view review's content for a member
+
+  void leaveReview(Review); // Method to leave a review for another member
+
 };
+
+
 
 #endif

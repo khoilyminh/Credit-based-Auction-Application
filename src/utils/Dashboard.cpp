@@ -12,6 +12,7 @@
 #include "../libs/Database.h"
 #include "../libs/Member.h"
 #include "../libs/User.h"
+#include "../libs/Review.h"
 
 #define NULL_TIME -2209075200
 
@@ -63,7 +64,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
 
@@ -73,7 +75,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
       std::cout << "Welcome back, " << member.getFullname() << "!" << std::endl;
@@ -98,7 +101,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
 
@@ -108,7 +112,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
 
@@ -135,7 +140,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
       try {
@@ -153,7 +159,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
       return Dashboard::displayMainMenu();
@@ -175,7 +182,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
       try {
@@ -184,12 +192,14 @@ void Dashboard::handleMainMenu(bool clear = true) {
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMainMenu();
       }
       std::cout << "Admin account created successfully!" << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();
     }
 
@@ -201,7 +211,8 @@ void Dashboard::handleMainMenu(bool clear = true) {
     default: {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       return Dashboard::displayMainMenu();  // Prompt again for valid input
     }
   }
@@ -244,7 +255,8 @@ void Dashboard::handleAdminMenu(bool clear = true) {
       std::cout << auction.toString() << std::endl;
 
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
 
@@ -262,7 +274,8 @@ void Dashboard::handleAdminMenu(bool clear = true) {
     default: {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
   }
@@ -307,7 +320,8 @@ void Dashboard::handleAdminAuctionMenu(bool clear = true) {
       if (choice < 0 || choice > database.getAllAuctions().size()) {
         std::cout << "Invalid choice. Please try again." << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayAdminAuctionMenu();
       } else {
         Auction auction = database.getAllAuctions().at(choice - 1);
@@ -368,12 +382,14 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction,
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayAdminAuctionDetailMenu(auction);
       }
       std::cout << "Auction started successfully!" << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
 
@@ -384,19 +400,22 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction,
       } catch (const std::invalid_argument &e) {
         std::cout << "Error: " << e.what() << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayAdminAuctionDetailMenu(auction);
       }
       std::cout << "Auction ended successfully!" << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
 
     default: {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
   }
@@ -416,6 +435,8 @@ void Dashboard::displayMemberMenu() {
   std::cout << "1. View my account" << std::endl;
   std::cout << "2. View active auction" << std::endl;
   std::cout << "3. Top up credit" << std::endl;
+  std::cout << "4. View my reviews" << std::endl;
+  std::cout << "5. Rate and review my auction" << std::endl;
   return Dashboard::handleMemberMenu(false);
 }
 
@@ -449,7 +470,8 @@ void Dashboard::handleMemberMenu(bool clear = true) {
       std::cout << std::endl
                 << "Return to member menu in 10 seconds..." << std::endl;
       // Wait 10 seconds
-      sleep(10);
+      //sleep(10);
+      Sleep(10000); // for Window
       return Dashboard::displayMemberMenu();
     }
 
@@ -473,19 +495,79 @@ void Dashboard::handleMemberMenu(bool clear = true) {
       std::cout << "Credit topped up successfully!" << std::endl;
 
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
+
+    case 4: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "           My Reviews               " << std::endl;
+      std::cout << "====================================" << std::endl;
+      std::cout << std::endl;
+
+      Database database;
+      std::vector<Review> reviews = database.getReviewsByMemberID(this->member->getMemberID());
+
+      if (reviews.size() == 0) {
+        std::cout << "You have no reviews yet." << std::endl;
+      } else {
+        for (int index = 0; index < reviews.size(); index++) {
+        std::cout << "------------------------------------" << std::endl;
+        std::cout << "Reviewer ID: " << reviews.at(index).getReviewerID() << std::endl;
+        std::cout << "Rating: " << reviews.at(index).getRating() << " / 5" << std::endl;
+        std::cout << "Comments: " << reviews.at(index).getContent() << std::endl;
+        }
+      }
+
+      std::cout << "\nPress any key to return to the Member Menu." << std::endl;
+      std::cin.ignore();
+      std::cin.get();
+      Dashboard::displayMemberMenu();
+    }
+
+    case 5: {
+      std::system("clear");
+      std::cout << "====================================" << std::endl;
+      std::cout << "          Rate and Review           " << std::endl;
+      std::cout << "====================================" << std::endl;
+      std::cout << std::endl;
+      
+      std::string targetMemberID, content;
+      int rating;
+
+      std::cout << "Enter the Member ID you want to review: ";
+      std::cin >> targetMemberID;
+      std::cout << "Enter your rating (1-5): ";
+      std::cin >> rating;
+
+      if (rating < 1 || rating > 5) {
+        std::cout << "Error: Rating must be between 1 and 5." << std::endl;
+        Sleep(2000);
+        return Dashboard::displayMemberMenu();
+      }
+
+      std::cout << "Enter your comments: ";
+      std::cin.ignore();
+      std::getline(std::cin, content);
+      Sleep(3000);
+      Dashboard::displayMemberMenu();
+    }
+        
 
     default: {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
   }
   return Dashboard::displayMemberMenu();
 }
+
+
 
 void Dashboard::displayMemberAuctionMenu() {
   std::system("clear");
@@ -532,7 +614,8 @@ void Dashboard::handleMemberAuctionMenu(bool clear = true) {
       if (choice < 0 || choice > activeAuctions.size()) {
         std::cout << "Invalid choice. Please try again." << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayMemberAuctionMenu();
       } else {
         Auction auction = activeAuctions.at(choice - 1);
@@ -626,14 +709,16 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
       std::cout << "Item added successfully!" << std::endl;
 
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       return Dashboard::displayMemberAuctionDetailMenu(auction);
     }
 
     default: {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
   }
@@ -691,7 +776,8 @@ void Dashboard::handleItemsMenu(Auction *auction, bool clear = true) {
       if (choice < 0 || choice > filteredItems.size()) {
         std::cout << "Invalid choice. Please try again." << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayItemsMenu(auction);
       } else {
         Item item = filteredItems.at(choice - 1);
@@ -755,7 +841,8 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
       if (this->member->getMemberID() == item->getSellerID()) {
         std::cout << "You cannot place bid on your own item." << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayItemsDetailMenu(item, auction);
       }
 
@@ -763,7 +850,8 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
       if (auction->getStartTime() == -1) {
         std::cout << "Auction has not started yet." << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayItemsDetailMenu(item, auction);
       }
 
@@ -797,7 +885,8 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
         std::cout << "You cannot remove an item that you do not own."
                   << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayItemsDetailMenu(item, auction);
       }
 
@@ -807,13 +896,15 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
 
         std::cout << "Item removed successfully!" << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayItemsMenu(auction);
       } else {
         std::cout << "You cannot remove an item that has bids on it."
                   << std::endl;
         // Wait for 3 seconds
-        sleep(3);
+        //sleep(3);
+        Sleep(3000); // for Window
         return Dashboard::displayItemsDetailMenu(item, auction);
       }
     }
@@ -821,7 +912,8 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
     default: {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // Wait for 3 seconds
-      sleep(3);
+      //sleep(3);
+      Sleep(3000); // for Window
       break;
     }
   }

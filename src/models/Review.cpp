@@ -9,7 +9,7 @@
 // Define constants
 #define DEFAULT_REVIEW_ID ""
 #define DEFAULT_CONTENT ""
-#define DEFAULT_RATING 0
+#define DEFAULT_RATING 3 // Default rating for newly registered member
 
 // ------- Constructors -------
 
@@ -61,9 +61,9 @@ void Review::setContent(std::string content)
 
 void Review::setRating(int rating)
 {
-    if (rating < 0 || rating > 5)
+    if (rating < 1 || rating > 5)
     {
-        throw std::invalid_argument("Rating must be between 0 and 5.");
+        throw std::invalid_argument("Rating must be between 1 and 5.");
     }
     this->rating = rating;
 }

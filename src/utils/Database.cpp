@@ -1,6 +1,6 @@
 #include "../libs/Database.h"
 
-#include <unistd.h>
+//#include <unistd.h>
 
 #include <fstream>
 #include <iostream>
@@ -9,6 +9,7 @@
 #include "../libs/Item.h"
 #include "../libs/Member.h"
 #include "../libs/User.h"
+#include "../libs/Review.h"
 
 std::vector<User> getAllUsersFromDatabase() {
   std::vector<User> users;
@@ -166,6 +167,31 @@ std::vector<Bid> getAllBidsFromDatabase() {
   return bids;
 }
 
+std::vector<Review> getAllReviewsFromDatabase() {
+  std::vector<Review> reviews;
+  std::ifstream file("./data/reviews.txt", std::ios::in);
+  std::string line;
+  while (std::getline(file, line)) {
+    // The fisrt value is reviewID, the second value is the memberID
+    // the third value is reviewerID, the forth value is the rating,
+    // the fifth value is the content of the review.
+    std::string reviewID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string memberID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string reviewerID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    int rating = std::stoi(line.substr(0, line.find(", ")));
+    line = line.substr(line.find(", ") + 1);
+    std::string content = line;
+    // Create a new review object and add it to the review vector
+    Review review(reviewID, memberID, reviewerID, content, rating);
+    reviews.push_back(review);
+  }
+  file.close();
+  return reviews;
+}
+
 Database::Database() {
   this->users = getAllUsersFromDatabase();
   this->members = getAllMembersFromDatabase();
@@ -173,6 +199,7 @@ Database::Database() {
   this->auctions = getAllAuctionsFromDatabase();
   this->items = getAllItemsFromDatabase();
   this->bids = getAllBidsFromDatabase();
+  this->reviews = getAllReviewsFromDatabase();
 }
 
 // ------- User methods -------
@@ -452,4 +479,53 @@ void Database::saveBidsToFile() {
          << bid.isAutomaticBid() << ", " << bid.getLimitPrice() << std::endl;
   }
   file.close();
+}
+
+// ------- Review methods -------
+
+void Database::saveReviewsToFile() {
+    std::ofstream file("./data/reviews.txt", std::ios::trunc);
+    for (Review &review: this->reviews) {
+      file << review.getReviewID() << ", " << review.getMemberID() << ", "
+           << review.getReviewerID() << ", " << review.getRating() << ", "
+           << review.getContent() << std::endl;
+    }
+    file.close();
+}
+
+std::vector<Review> Database::getAllReviews() { return this->reviews; }
+
+Review *Database::getReviewsByMemberID(std::string memberID) {
+    for (int index = 0; index < this->reviews.size(); index++) {
+        if (this->reviews.at(index).getMemberID() == memberID) {
+          return &this->reviews.at(index);
+        }
+    }
+    return nullptr;
+}
+
+void Database::saveReview(Review *review) {
+  bool isExist = false;
+  for (int index = 0; index < this->reviews.size(); index++) {
+    if (this->reviews.at(index).getReviewID() == review->getReviewID()) {
+      this->reviews.at(index) = *review; // Update existing review
+      isExist = true;
+      break;
+    }
+  }
+  // If the review is not exist in the database, add it to the database.
+  if (!isExist) this->reviews.push_back(*review);
+  // Update the data in the file.
+  this->saveAuctionsToFile();
+}
+
+void Database::removeReview(Review review) {
+    for (int index = 0; index < this->reviews.size(); index++) {
+        if (this->reviews.at(index).getReviewID() == review.getReviewID()) {
+            this->reviews.erase(this->reviews.begin() + index); // Remove review
+            break;
+        }
+    }
+
+    this->saveReviewsToFile(); 
 }

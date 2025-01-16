@@ -9,6 +9,7 @@
 #include "./Item.h"
 #include "./Member.h"
 #include "./User.h"
+#include "./Review.h"
 
 class Database {
  private:
@@ -35,6 +36,11 @@ class Database {
   std::vector<Bid> bids;
   /** This function is used to save the whole bid list to file. */
   void saveBidsToFile();
+
+  std::vector<Review> reviews;
+  /** This function is used to save the whole review list to file. */
+  void saveReviewsToFile();
+
 
  public:
   Database();
@@ -105,6 +111,18 @@ class Database {
   void saveBid(Bid *bid);
   /** This function is used to remove a Bid from the database. */
   void removeBid(Bid bid);
+
+  // ------- Review Methods -------
+
+  /** This function is used to get all review in the ddatabse. */
+  std::vector<Review> getAllReviews();
+  /** This funciton is used to get review by memberID */
+  Review *getReviewsByMemberID(std::string memberID);
+  /** This function is used to add or update a Review in the database. */
+  void saveReview(Review *review);
+  /** This function is used to remove a Revview from the database */
+  void removeReview(Review review); 
+
 };
 
 #endif
