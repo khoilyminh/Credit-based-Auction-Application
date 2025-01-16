@@ -7,6 +7,7 @@
 #include "./Auction.h"
 #include "./Item.h"
 #include "./Member.h"
+#include "./Transaction.h"
 #include "./User.h"
 
 class Dashboard {
@@ -72,7 +73,11 @@ class Dashboard {
 
   void displayGuestMenu();
 
-  void handleGuestMenu(bool clear);
+  // ------- Transaction methods -------
+
+  void displayTransactionDetailedMenu(Transaction *transaction);
+
+  void handleTransactionDetailedMenu(Transaction *transaction, bool clear);
 };
 
 #endif

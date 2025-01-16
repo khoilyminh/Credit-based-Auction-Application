@@ -247,6 +247,9 @@ void Dashboard::handleMemberMenu(bool clear = true) {
       std::cout << "0. Back to member menu." << std::endl;
 
       Database database;
+      // Update member instance
+      this->member = database.getMemberByID(this->member->getMemberID());
+
       std::vector<Transaction> filteredTransactions;
       // Get all transactions that this member is involved in
       for (Transaction &transaction : Database().getAllTransactions()) {
@@ -283,13 +286,23 @@ void Dashboard::handleMemberMenu(bool clear = true) {
         return Dashboard::displayMemberMenu();
       }
 
-      if (choice == 0) {
-        return Dashboard::displayMemberMenu();
-      } else {
-        std::cout << "Invalid choice. Please try again." << std::endl;
-        // Wait for 3 seconds
-        sleep(3);
-        return Dashboard::displayMemberMenu();
+      switch (choice) {
+        case 0: {
+          return Dashboard::displayMemberMenu();
+        }
+
+        default: {
+          // Check if choice is within the range of transactions
+          if (choice > 0 && choice <= filteredTransactions.size()) {
+            return Dashboard::displayTransactionDetailedMenu(
+                &filteredTransactions[choice - 1]);
+          } else {
+            std::cout << "Invalid choice. Please try again." << std::endl;
+            // Wait for 3 seconds
+            sleep(3);
+            return Dashboard::displayMemberMenu();
+          }
+        }
       }
     }
 

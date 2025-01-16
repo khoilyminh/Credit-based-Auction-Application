@@ -6,6 +6,7 @@
 
 #include "../libs/Database.h"
 #include "../libs/IDGenerator.h"
+#include "../libs/Member.h"
 
 // Define constants
 #define DEFAULT_REVIEW_ID ""
@@ -29,6 +30,15 @@ Review::Review(std::string reviewID, std::string memberID,
       reviewerID(reviewerID),
       content(content),
       rating(rating) {}
+
+Review::Review(Member member, Member reviewer, std::string content,
+               int rating) {
+  this->reviewID = IDGenerator::generateID(16);
+  this->memberID = member.getMemberID();
+  this->reviewerID = reviewer.getMemberID();
+  this->content = content;
+  this->rating = rating;
+}
 
 // ------- Getters -------
 
@@ -59,4 +69,9 @@ std::string Review::toString() {
   return "Review ID: " + reviewID + ", Member ID: " + memberID +
          ", Reviewer ID: " + reviewerID + ", Content: " + content +
          ", Rating: " + std::to_string(rating);
+}
+
+void Review::save() {
+  Database database;
+  database.saveReview(this);
 }

@@ -1,9 +1,10 @@
 transaction -> review( rate a buyer/seller after a transaction)
 A member can only view items that match their ratings. (done)
-A member can perform the ratings and reviews after completing a transaction. (on going)
-A member can view their own average rating, as well as reviews left by others. (on going)
-
+A member can perform the ratings and reviews after completing a transaction. (done)
+A member can view their own average rating, as well as reviews left by others. (done)
 account -> overview (show sold items, show bought items, active bids, active listing items, account balance) (done)
+
+Time for both UNIX and Windows (on going)
 
 Chỉnh lai class diagram.
 
