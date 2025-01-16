@@ -13,4 +13,4 @@ if [ ! -d "./data" ]; then
 fi
 
 # Compile the program
-g++ -std=c++11 ./src/main.cpp ./src/**/*.cpp -o ./bin/main
+g++ -std=c++11 ./src/**/*.cpp ./src/**/**/*.cpp ./src/main.cpp -o ./bin/main

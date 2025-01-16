@@ -1,5 +1,6 @@
 #include "../libs/Bid.h"
 
+#include "../libs/Database.h"
 #include "../libs/IDGenerator.h"
 
 #define BID_ID_LENGTH 16
@@ -14,6 +15,7 @@ Bid::Bid(Member member, Item item, float bidAmount, bool automaticBid,
   this->bidID = IDGenerator::generateID(BID_ID_LENGTH);
   this->memberID = member.getMemberID();
   this->itemID = item.getItemID();
+  this->bidAmount = bidAmount;
 }
 
 Bid::Bid(std::string bidID, std::string memberID, std::string itemID,
@@ -22,7 +24,8 @@ Bid::Bid(std::string bidID, std::string memberID, std::string itemID,
       memberID(memberID),
       itemID(itemID),
       automaticBid(automaticBid),
-      limitPrice(limitPrice) {}
+      limitPrice(limitPrice),
+      bidAmount(bidAmount) {}
 
 // Getters
 std::string Bid::getBidID() { return bidID; }
@@ -37,19 +40,24 @@ bool Bid::isAutomaticBid() { return automaticBid; }
 
 float Bid::getLimitPrice() { return limitPrice; }
 
+// Setters
+
+void Bid::setBidID(std::string bidID) { this->bidID = bidID; }
+
+void Bid::setMemberID(std::string memberID) { this->memberID = memberID; }
+
+void Bid::setItemID(std::string itemID) { this->itemID = itemID; }
+
+void Bid::setBidAmount(float bidAmount) { this->bidAmount = bidAmount; }
+
+void Bid::setAutomaticBid(bool automaticBid) {
+  this->automaticBid = automaticBid;
+}
+
+void Bid::setLimitPrice(float limitPrice) { this->limitPrice = limitPrice; }
+
 // Methods
-void Bid::placeBid(Member member, float bidAmount) {
-  // Logic to place a bid
-}
-
-void Bid::updateDetails() {
-  // Logic to update bid details
-}
-
-void Bid::removeListing() {
-  // Logic to remove the bid listing
-}
-
-void Bid::closeAuction() {
-  // Logic to close the auction
+void Bid::save() {
+  Database database;
+  database.saveBid(this);
 }

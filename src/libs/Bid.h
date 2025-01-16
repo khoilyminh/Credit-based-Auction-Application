@@ -31,11 +31,16 @@ class Bid {
   bool isAutomaticBid();
   float getLimitPrice();
 
+  // Setters
+  void setBidID(std::string bidID);
+  void setMemberID(std::string memberID);
+  void setItemID(std::string itemID);
+  void setBidAmount(float bidAmount);
+  void setAutomaticBid(bool automaticBid);
+  void setLimitPrice(float limitPrice);
+
   // Methods
-  void placeBid(Member member, float bidAmount);
-  void updateDetails();
-  void removeListing();
-  void closeAuction();
+  void save();
 };
 
 #endif
