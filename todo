@@ -1,0 +1,5 @@
+endAuction -> transaction -> review
+admin -> view all member -> view all items
+guest -> view item name, category, description
+
+account -> overview (show sold items, show bought items)
