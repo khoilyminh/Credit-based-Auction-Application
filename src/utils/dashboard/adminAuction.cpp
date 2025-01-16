@@ -44,6 +44,12 @@ void processEndAuction(Auction *auction) {
     // Create transaction
     Transaction transaction = Transaction(buyer, seller, highestBid, item);
     transaction.save();
+
+    seller.setCredit(highestBid.getBidAmount() + seller.getCredit());
+    seller.save();
+
+    buyer.setCredit(buyer.getCredit() - highestBid.getBidAmount());
+    buyer.save();
   }
 }
 
