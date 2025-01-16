@@ -5,10 +5,11 @@
 #include "../../libs/Item.h"
 #include "../../libs/Transaction.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void Dashboard::displayGuestMenu()
 {
-  std::system("clear");
+  clearing();
   std::cout << "====================================" << std::endl;
   std::cout << "        Items list for Guest        " << std::endl;
   std::cout << "====================================" << std::endl;

@@ -9,6 +9,7 @@
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 Item *processAutomaticBid(Bid currentBid, Bid lastBid, Item *item)
 {
@@ -39,7 +40,7 @@ Item *processAutomaticBid(Bid currentBid, Bid lastBid, Item *item)
 
 void Dashboard::displayItemsMenu(Auction *auction)
 {
-  std::system("clear");
+  clearing();
   std::cout << "=====================================" << std::endl;
   std::cout << "       Buying items in auction       " << std::endl;
   std::cout << "=====================================" << std::endl;
@@ -70,7 +71,7 @@ void Dashboard::displayItemsMenu(Auction *auction)
 void Dashboard::handleItemsMenu(Auction *auction, bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -126,7 +127,7 @@ void Dashboard::handleItemsMenu(Auction *auction, bool clear = true)
 
 void Dashboard::displayItemsDetailMenu(Item *item, Auction *auction)
 {
-  std::system("clear");
+  clearing();
   std::cout << "=====================================" << std::endl;
   std::cout << "     Item Detail Menu for Member     " << std::endl;
   std::cout << "=====================================" << std::endl;
@@ -160,7 +161,7 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
                                       bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -185,7 +186,7 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
 
   case 1:
   {
-    std::system("clear");
+    clearing();
     std::cout << "=====================================" << std::endl;
     std::cout << "       Placing bid for item          " << std::endl;
     std::cout << "=====================================" << std::endl;
@@ -412,7 +413,7 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
 
   case 3:
   {
-    std::system("clear");
+    clearing();
     std::cout << "=====================================" << std::endl;
     std::cout << "         Seller information          " << std::endl;
     std::cout << "=====================================" << std::endl;

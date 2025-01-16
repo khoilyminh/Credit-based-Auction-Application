@@ -9,10 +9,11 @@
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void Dashboard::displayMainMenu()
 {
-  std::system("clear");
+  clearing();
   std::cout << "EEET2482/COSC2082 GROUP ASSIGNMENT" << std::endl;
   std::cout << "Semester 3 2024" << std::endl;
   std::cout << "AUCTION APPLICATION" << std::endl;
@@ -42,7 +43,7 @@ void Dashboard::displayMainMenu()
 void Dashboard::handleMainMenu(bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
 
   int choice;
   std::cout << "Enter your choice: ";
@@ -69,7 +70,7 @@ void Dashboard::handleMainMenu(bool clear = true)
 
   case 2:
   {
-    std::system("clear");
+    clearing();
     std::cout << "Logging in as Member..." << std::endl;
     std::string username, password;
     std::cout << "Enter username: ";
@@ -110,7 +111,7 @@ void Dashboard::handleMainMenu(bool clear = true)
 
   case 3:
   {
-    std::system("clear");
+    clearing();
     std::cout << "Logging in as Admin..." << std::endl;
 
     std::string username, password;
@@ -154,7 +155,7 @@ void Dashboard::handleMainMenu(bool clear = true)
 
   case 4:
   {
-    std::system("clear");
+    clearing();
     User user;
     try
     {
@@ -201,7 +202,7 @@ void Dashboard::handleMainMenu(bool clear = true)
 
   case 5:
   {
-    std::system("clear");
+    clearing();
     std::cout << "Signing up as Admin..." << std::endl;
     User user;
     try

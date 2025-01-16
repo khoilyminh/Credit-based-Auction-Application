@@ -12,10 +12,11 @@
 #include "../../libs/Transaction.h"
 #include "../../libs/User.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void Dashboard::displayMemberMenu()
 {
-  std::system("clear");
+  clearing();
   std::cout << "====================================" << std::endl;
   std::cout << "            Member Menu             " << std::endl;
   std::cout << "====================================" << std::endl;
@@ -33,7 +34,7 @@ void Dashboard::displayMemberMenu()
 void Dashboard::handleMemberMenu(bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -61,7 +62,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
 
   case 1:
   {
-    std::system("clear");
+    clearing();
     std::cout << "====================================" << std::endl;
     std::cout << "          Account detailed          " << std::endl;
     std::cout << "====================================" << std::endl
@@ -87,7 +88,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
 
   case 3:
   {
-    std::system("clear");
+    clearing();
     std::cout << "====================================" << std::endl;
     std::cout << "          Top up credit             " << std::endl;
     std::cout << "====================================" << std::endl;
@@ -108,7 +109,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
 
   case 4:
   {
-    std::system("clear");
+    clearing();
     std::cout << "====================================" << std::endl;
     std::cout << "          Account overview          " << std::endl;
     std::cout << "====================================" << std::endl;
@@ -272,7 +273,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
 
   case 5:
   {
-    std::system("clear");
+    clearing();
     std::cout << "====================================" << std::endl;
     std::cout << "        Account transactions        " << std::endl;
     std::cout << "====================================" << std::endl

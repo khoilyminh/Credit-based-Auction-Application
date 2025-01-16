@@ -8,7 +8,7 @@
 #include "../../libs/Database.h"
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
-#include "../..//libs/waiting.h"
+#include "../../libs/waiting.h"
 
 void Dashboard::displayMemberAuctionMenu()
 {
@@ -52,7 +52,7 @@ void Dashboard::handleMemberAuctionMenu(bool clear = true)
     std::cin.ignore();
     std::cout << "Invalid choice. Please try again." << std::endl;
     // waiting for 3 seconds
-    sleep(3);
+    waiting(3);
     return Dashboard::displayMemberAuctionMenu();
   }
 
@@ -79,7 +79,7 @@ void Dashboard::handleMemberAuctionMenu(bool clear = true)
     {
       std::cout << "Invalid choice. Please try again." << std::endl;
       // waiting for 3 seconds
-      sleep(3);
+      waiting(3);
       return Dashboard::displayMemberAuctionMenu();
     }
     else
@@ -139,7 +139,7 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
     std::cin.ignore();
     std::cout << "Invalid choice. Please try again." << std::endl;
     // waiting for 3 seconds
-    sleep(3);
+    waiting(3);
     return Dashboard::displayMemberAuctionDetailMenu(auction);
   }
 
@@ -193,7 +193,7 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
     std::cout << "Item added successfully!" << std::endl;
 
     // waiting for 3 seconds
-    sleep(3);
+    waiting(3);
     return Dashboard::displayMemberAuctionDetailMenu(auction);
   }
 
@@ -201,7 +201,7 @@ void Dashboard::handleMemberAuctionDetailMenu(Auction *auction,
   {
     std::cout << "Invalid choice. Please try again." << std::endl;
     // waiting for 3 seconds
-    sleep(3);
+    waiting(3);
     break;
   }
   }

@@ -10,6 +10,7 @@
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void processEndAuction(Auction *auction)
 {
@@ -58,7 +59,7 @@ void processEndAuction(Auction *auction)
 
 void Dashboard::displayAdminAuctionMenu()
 {
-  std::system("clear");
+  clearing();
   std::cout << "====================================" << std::endl;
   std::cout << "  Auctions Menu for Administrator   " << std::endl;
   std::cout << "====================================" << std::endl;
@@ -80,7 +81,7 @@ void Dashboard::displayAdminAuctionMenu()
 void Dashboard::handleAdminAuctionMenu(bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -126,7 +127,7 @@ void Dashboard::handleAdminAuctionMenu(bool clear = true)
 
 void Dashboard::displayAdminAuctionDetailMenu(Auction *auction)
 {
-  std::system("clear");
+  clearing();
   std::cout << "=====================================" << std::endl;
   std::cout << "Auction Detail Menu for Administrator" << std::endl;
   std::cout << "=====================================" << std::endl;
@@ -160,7 +161,7 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction,
                                              bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;

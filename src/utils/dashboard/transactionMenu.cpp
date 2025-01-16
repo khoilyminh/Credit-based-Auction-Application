@@ -12,10 +12,11 @@
 #include "../../libs/Transaction.h"
 #include "../../libs/User.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void Dashboard::displayTransactionDetailedMenu(Transaction *transaction)
 {
-  std::system("clear");
+  clearing();
   std::cout << "====================================" << std::endl;
   std::cout << "        Transaction Detailed        " << std::endl;
   std::cout << "====================================" << std::endl;
@@ -78,7 +79,7 @@ void Dashboard::handleTransactionDetailedMenu(Transaction *transaction,
 {
   if (clear)
   {
-    std::system("clear");
+    clearing();
   }
 
   std::cout << "Enter your choice: ";
@@ -102,7 +103,7 @@ void Dashboard::handleTransactionDetailedMenu(Transaction *transaction,
   }
   case 1:
   {
-    std::system("clear");
+    clearing();
     Database database;
     Member buyer = *database.getMemberByID(transaction->getBuyerID());
     Member seller = *database.getMemberByID(transaction->getSellerID());

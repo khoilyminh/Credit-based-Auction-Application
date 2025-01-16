@@ -58,9 +58,25 @@ items.txt // Persistent storage for item data
     ```
 
 2.  If you are using Windows OS, open the terminal (PowerShell, CMD, etc.) and then run the command:
+
     ```powershell
     .\run.ps1
     ```
+
+    If the problem **"cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170."** appear, please run the following commands:
+
+    -   Run this command with Administrator Powershell:
+
+    ```
+    Set-ExecutionPolicy RemoteSigned
+    ```
+
+    -   After you finish compiling and running the application, use this command to set to **strict** again:
+
+    ```
+    Set-ExecutionPolicy Restricted
+    ```
+
 3.  If you are using MacOS or any Linux distribution, open the terminal and then run the command:
     ```bash
     ./run.sh

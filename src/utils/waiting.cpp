@@ -1,18 +1,26 @@
-#include <unistd.h>
 #include <iostream>
 #include <fstream>
+
+#ifdef _WIN32
+#include <windows.h> // For Sleep on Windows
+#elif _WIN64
+#include <windows.h> // For Sleep on Windows
+#elif __APPLE__
+#include <unistd.h> // For sleep on Mac
+#elif __linux__
+#include <unistd.h> // For sleep on Linux
+#endif
 
 /** This function is used to sleep in cross OS. */
 void waiting(int sleepTime)
 {
-  // Read environment variable from ./data/environment file
-  std::ifstream file("./data/environment", std::ios::in);
-  std::string environment;
-  std::getline(file, environment);
-  file.close();
-
-  if (environment == "WINDOWS")
-    sleep(sleepTime * 1000);
-  else
-    sleep(sleepTime);
+#ifdef _WIN32
+  Sleep(sleepTime * 1000);
+#elif _WIN64
+  Sleep(sleepTime * 1000);
+#elif __APPLE__
+  sleep(sleepTime);
+#elif __linux__
+  sleep(sleepTime);
+#endif
 }

@@ -10,10 +10,11 @@
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
 #include "../..//libs/waiting.h"
+#include "../../libs/clearing.h"
 
 void Dashboard::displayAdminMenu()
 {
-  std::system("clear");
+  clearing();
   std::cout << "====================================" << std::endl;
   std::cout << "         Administrator Menu         " << std::endl;
   std::cout << "====================================" << std::endl;
@@ -30,7 +31,7 @@ void Dashboard::displayAdminMenu()
 void Dashboard::handleAdminMenu(bool clear = true)
 {
   if (clear)
-    std::system("clear");
+    clearing();
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
@@ -50,7 +51,7 @@ void Dashboard::handleAdminMenu(bool clear = true)
   {
   case 1:
   {
-    std::system("clear");
+    clearing();
     std::cout << "Creating new auction..." << std::endl;
 
     std::string name;
@@ -75,7 +76,7 @@ void Dashboard::handleAdminMenu(bool clear = true)
 
   case 3:
   {
-    std::system("clear");
+    clearing();
     std::cout << "====================================" << std::endl;
     std::cout << "           List of members          " << std::endl;
     std::cout << "====================================" << std::endl;
@@ -111,7 +112,7 @@ void Dashboard::handleAdminMenu(bool clear = true)
 
   case 4:
   {
-    std::system("clear");
+    clearing();
     std::cout << "====================================" << std::endl;
     std::cout << "            List of items           " << std::endl;
     std::cout << "====================================" << std::endl;
