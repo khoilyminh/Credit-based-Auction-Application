@@ -8,10 +8,45 @@
 
 #include "../../libs/Admin.h"
 #include "../../libs/Auction.h"
+#include "../../libs/Bid.h"
 #include "../../libs/Dashboard.h"
 #include "../../libs/Database.h"
 #include "../../libs/Member.h"
 #include "../../libs/User.h"
+
+void processEndAuction(Auction *auction) {
+  Database database;
+
+  // Get all items of the auction which is bid
+  std::vector<Item> filteredItems;
+  for (Item &item : database.getAllItems()) {
+    if (item.getAuctionID() == auction->getAuctionID() &&
+        item.getCurrentBidAmount() != 0) {
+      filteredItems.push_back(item);
+      std::cout << "Item: " << item.getItemName() << std::endl;
+    }
+  }
+
+  // For each item, get the highest bid
+  for (Item &item : filteredItems) {
+    Bid highestBid;
+    for (Bid &bid : database.getAllBids()) {
+      if (bid.getItemID() == item.getItemID() &&
+          bid.getBidAmount() == item.getCurrentBidAmount()) {
+        highestBid = bid;
+        break;
+      }
+    }
+
+    // Get the seller and buyer of the item
+    Member seller = *database.getMemberByID(item.getSellerID());
+    Member buyer = *database.getMemberByID(highestBid.getMemberID());
+
+    // Create transaction
+    Transaction transaction = Transaction(buyer, seller, highestBid, item);
+    transaction.save();
+  }
+}
 
 void Dashboard::displayAdminAuctionMenu() {
   std::system("clear");
@@ -129,6 +164,8 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction,
         sleep(3);
         return Dashboard::displayAdminAuctionDetailMenu(auction);
       }
+
+      processEndAuction(auction);
       std::cout << "Auction ended successfully!" << std::endl;
       // Wait for 3 seconds
       sleep(3);

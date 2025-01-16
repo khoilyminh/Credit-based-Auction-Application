@@ -8,6 +8,7 @@
 #include "./Bid.h"
 #include "./Item.h"
 #include "./Member.h"
+#include "./Transaction.h"
 #include "./User.h"
 
 class Database {
@@ -35,6 +36,10 @@ class Database {
   std::vector<Bid> bids;
   /** This function is used to save the whole bid list to file. */
   void saveBidsToFile();
+
+  std::vector<Transaction> transactions;
+  /** This function is used to save the whole transaction list to file. */
+  void saveTransactionsToFile();
 
  public:
   Database();
@@ -105,6 +110,19 @@ class Database {
   void saveBid(Bid *bid);
   /** This function is used to remove a Bid from the database. */
   void removeBid(Bid bid);
+
+  // ------- Transaction Methods -------
+
+  /** This function is used to get all transactions */
+  std::vector<Transaction> getAllTransactions();
+  /** This function is used to get all transactions of a member */
+  std::vector<Transaction> getTransactionsByMemberID(std::string memberID);
+  /** This function is used to get all transactions of an item */
+  std::vector<Transaction> getTransactionsByItemID(std::string itemID);
+  /** This function is used to add or update a Transaction in the database. */
+  void saveTransaction(Transaction *transaction);
+  /** This function is used to remove a Transaction from the database. */
+  void removeTransaction(Transaction transaction);
 };
 
 #endif

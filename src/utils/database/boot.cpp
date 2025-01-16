@@ -7,6 +7,7 @@
 #include "../../libs/Database.h"
 #include "../../libs/Item.h"
 #include "../../libs/Member.h"
+#include "../../libs/Transaction.h"
 #include "../../libs/User.h"
 
 std::vector<User> getAllUsersFromDatabase() {
@@ -165,6 +166,31 @@ std::vector<Bid> getAllBidsFromDatabase() {
   return bids;
 }
 
+std::vector<Transaction> getAllTransactionsFromDatabase() {
+  std::vector<Transaction> transactions;
+  std::ifstream file("./data/transactions.txt", std::ios::in);
+  std::string line;
+  while (std::getline(file, line)) {
+    std::string transactionID = line.substr(0, line.find(", "));
+    line = line.substr(line.find(", ") + 1);
+    std::string sellerID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string buyerID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string bidID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string itemID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    long time = std::stol(line.substr(1, line.find(", ") - 1));
+
+    Transaction transaction(transactionID, sellerID, buyerID, bidID, itemID,
+                            time);
+    transactions.push_back(transaction);
+  }
+  file.close();
+  return transactions;
+}
+
 Database::Database() {
   this->users = getAllUsersFromDatabase();
   this->members = getAllMembersFromDatabase();
@@ -172,4 +198,5 @@ Database::Database() {
   this->auctions = getAllAuctionsFromDatabase();
   this->items = getAllItemsFromDatabase();
   this->bids = getAllBidsFromDatabase();
+  this->transactions = getAllTransactionsFromDatabase();
 }
