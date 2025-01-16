@@ -33,6 +33,16 @@ void Dashboard::handleMemberMenu(bool clear = true) {
   int choice;
   std::cin >> choice;
 
+  // Check if choice is integer
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::displayMemberMenu();
+  }
+
   switch (choice) {
     case 0: {
       std::cout << "Logging out..." << std::endl;

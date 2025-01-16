@@ -62,6 +62,16 @@ void Dashboard::handleItemsMenu(Auction *auction, bool clear = true) {
   int choice;
   std::cin >> choice;
 
+  // Check if choice is integer
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::displayItemsMenu(auction);
+  }
+
   switch (choice) {
     case 0: {
       return Dashboard::displayMemberAuctionDetailMenu(auction);
@@ -129,6 +139,16 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
+
+  // Check if choice is integer
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::displayItemsDetailMenu(item, auction);
+  }
 
   switch (choice) {
     case 0: {
@@ -346,6 +366,15 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
       int choice;
       std::cout << "Enter your choice: ";
       std::cin >> choice;
+      // Check if choice is integer
+      if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayItemsDetailMenu(item, auction);
+      }
       if (choice == 0) {
         return Dashboard::displayItemsDetailMenu(item, auction);
       } else {

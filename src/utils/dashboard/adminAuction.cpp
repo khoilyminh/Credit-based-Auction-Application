@@ -78,6 +78,16 @@ void Dashboard::handleAdminAuctionMenu(bool clear = true) {
   int choice;
   std::cin >> choice;
 
+  // Check if choice is integer
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::displayAdminAuctionMenu();
+  }
+
   switch (choice) {
     case 0: {
       return Dashboard::displayAdminMenu();
@@ -137,6 +147,16 @@ void Dashboard::handleAdminAuctionDetailMenu(Auction *auction,
   std::cout << "Enter your choice: ";
   int choice;
   std::cin >> choice;
+
+  // Check if choice is integer
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::displayAdminAuctionDetailMenu(auction);
+  }
 
   switch (choice) {
     case 0: {

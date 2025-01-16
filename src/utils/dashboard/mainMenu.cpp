@@ -48,6 +48,16 @@ void Dashboard::handleMainMenu(bool clear = true) {
   std::cout << "Enter your choice: ";
   std::cin >> choice;
 
+  // Check if choice is integer
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cin.ignore();
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    // Wait for 3 seconds
+    sleep(3);
+    return Dashboard::displayMainMenu();  // Prompt again for valid input
+  }
+
   switch (choice) {
     case 1: {
       std::cout << "Continuing as Guest..." << std::endl;
