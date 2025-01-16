@@ -330,6 +330,30 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
       std::cout << "         Seller information          " << std::endl;
       std::cout << "=====================================" << std::endl;
       std::cout << std::endl;
+
+      Database database;
+      Member seller = *database.getMemberByID(item->getSellerID());
+      std::cout << "Seller name: " << seller.getFullname() << std::endl;
+      std::cout << "Seller email: " << seller.getEmail() << std::endl;
+      std::cout << "Seller phone number: " << seller.getPhoneNumber()
+                << std::endl;
+      std::cout << "Seller rating: " << seller.getRating() << std::endl;
+      std::cout << std::endl;
+
+      std::cout << "Please choose an option:" << std::endl;
+      std::cout << "0. Back to item detail menu." << std::endl;
+
+      int choice;
+      std::cout << "Enter your choice: ";
+      std::cin >> choice;
+      if (choice == 0) {
+        return Dashboard::displayItemsDetailMenu(item, auction);
+      } else {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // Wait for 3 seconds
+        sleep(3);
+        return Dashboard::displayItemsDetailMenu(item, auction);
+      }
     }
 
     default: {
