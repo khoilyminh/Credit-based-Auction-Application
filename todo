@@ -1,8 +1,13 @@
 transaction -> review( rate a buyer/seller after a transaction)
-** member can only view items that match their ratings.
+A member can only view items that match their ratings.
+A member can perform the ratings and reviews after completing a transaction.
+A member can view their own average rating, as well as reviews left by others.
 
-account -> overview (show sold items, show bought items)
+account -> overview (show sold items, show bought items, active bids, active listing items, account balance)
 
+Chỉnh lai class diagram.
+
+Viết lại description cho classes diagram. 
 
 C. Advanced Features: 14. Activity dashboard: When a member logs into the application, a personalized dashboard
 should be displayed showing their account overview, active item listings and active bids.
