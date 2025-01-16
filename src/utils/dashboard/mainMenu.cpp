@@ -15,6 +15,17 @@
 
 void Dashboard::displayMainMenu() {
   std::system("clear");
+  std::cout << "EEET2482/COSC2082 GROUP ASSIGNMENT" << std::endl;
+  std::cout << "Semester 3 2024" << std::endl;
+  std::cout << "AUCTION APPLICATION" << std::endl;
+  std::cout << std::endl;
+  std::cout << "Instructor: Dr Ling Huo Chong" << std::endl;
+  std::cout << "Group: 8" << std::endl;
+  std::cout << "S4032825, Dinh Ngoc Hoang Cuong" << std::endl;
+  std::cout << "S3989037, Ly Minh Khoi" << std::endl;
+  std::cout << "S4040506, Nguyen Phuong Anh" << std::endl;
+  std::cout << "S4014896, Nguyen Duc Trung" << std::endl;
+  std::cout << std::endl;
   std::cout << "====================================" << std::endl;
   std::cout << "           Welcome to the           " << std::endl;
   std::cout << "  Credit-Based Auction Application        " << std::endl;
