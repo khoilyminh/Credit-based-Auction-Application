@@ -201,7 +201,7 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
     }
 
     // Check if auction is started
-    if (auction->getStartTime() == -1)
+    if (auction->getStartTime() == 0)
     {
       std::cout << "Auction has not started yet." << std::endl;
       // waiting for 3 seconds
@@ -210,7 +210,7 @@ void Dashboard::handleItemsDetailMenu(Item *item, Auction *auction,
     }
 
     // Check if auction is ended
-    if (auction->getEndTime() != -1)
+    if (auction->getEndTime() != 0)
     {
       std::cout << "Auction has ended." << std::endl;
       // waiting for 3 seconds

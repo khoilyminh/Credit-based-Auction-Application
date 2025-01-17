@@ -9,8 +9,8 @@
 // Define constants
 #define DEFAULT_AUCTION_ID_LENGTH 16
 #define DEFAULT_AUCTION_NAME ""
-#define DEFAULT_START_TIME -1
-#define DEFAULT_END_TIME -1
+#define DEFAULT_START_TIME 0
+#define DEFAULT_END_TIME 0
 
 // ------- Constructors -------
 
@@ -94,7 +94,7 @@ void Auction::removeItem(std::string itemID)
 
 void Auction::startAuction()
 {
-  if (this->startTime != -1)
+  if (this->startTime != 0)
   {
     throw std::invalid_argument("Auction has already started.");
   }
@@ -105,7 +105,7 @@ void Auction::startAuction()
 
 void Auction::endAuction()
 {
-  if (this->endTime != -1)
+  if (this->endTime != 0)
   {
     throw std::invalid_argument("Auction has already ended.");
   }
@@ -117,7 +117,7 @@ void Auction::endAuction()
 std::string Auction::toString()
 {
   std::string startTime;
-  if (this->startTime == -1)
+  if (this->startTime == 0)
   {
     startTime = "Not started";
   }
@@ -129,7 +129,7 @@ std::string Auction::toString()
   }
 
   std::string endTime;
-  if (this->endTime == -1)
+  if (this->endTime == 0)
   {
     endTime = "Not ended";
   }

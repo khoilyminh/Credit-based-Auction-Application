@@ -125,7 +125,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
     std::vector<Item> activeItems;
     for (Item &item : Database().getAllItems())
     {
-      if (database.getAuctionByID(item.getAuctionID())->getEndTime() == -1 &&
+      if (database.getAuctionByID(item.getAuctionID())->getEndTime() == 0 &&
           item.getSellerID() == this->member->getMemberID())
       {
         activeItems.push_back(item);
@@ -140,7 +140,7 @@ void Dashboard::handleMemberMenu(bool clear = true)
           database.getItemByID(bid.getItemID())->getAuctionID());
       Item item = *database.getItemByID(bid.getItemID());
 
-      if (auction.getEndTime() == -1 && // Auction is still active
+      if (auction.getEndTime() == 0 && // Auction is still active
           bid.getMemberID() ==
               this->member->getMemberID() && // Bidder is
                                              // current member

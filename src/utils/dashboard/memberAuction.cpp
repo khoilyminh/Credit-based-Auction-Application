@@ -18,7 +18,7 @@ void Dashboard::displayMemberAuctionMenu()
   std::vector<Auction> activeAuctions;
   for (Auction &auction : auctions)
   {
-    if (auction.getEndTime() == -1)
+    if (auction.getEndTime() == 0)
       activeAuctions.push_back(auction);
   }
 
@@ -70,7 +70,7 @@ void Dashboard::handleMemberAuctionMenu(bool clear = true)
     std::vector<Auction> activeAuctions;
     for (Auction &auction : auctions)
     {
-      if (auction.getEndTime() == -1)
+      if (auction.getEndTime() == 0)
         activeAuctions.push_back(auction);
     }
 
@@ -109,10 +109,10 @@ void Dashboard::displayMemberAuctionDetailMenu(Auction *auction)
   startTime.pop_back();
   endTime.pop_back();
   std::cout << "Start time: "
-            << (auction->getStartTime() == -1 ? "Not yet" : startTime)
+            << (auction->getStartTime() == 0 ? "Not yet" : startTime)
             << std::endl;
   std::cout << "End time: "
-            << (auction->getEndTime() == -1 ? "Not yet" : endTime) << std::endl;
+            << (auction->getEndTime() == 0 ? "Not yet" : endTime) << std::endl;
   std::cout << std::endl;
 
   std::cout << "Please choose an option:" << std::endl;
