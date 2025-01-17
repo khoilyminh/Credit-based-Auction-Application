@@ -71,6 +71,13 @@ void Dashboard::handleMemberMenu(bool clear = true)
     std::cout << "Phone number: " << this->member->getPhoneNumber()
               << std::endl;
     std::cout << "Email: " << this->member->getEmail() << std::endl;
+
+    if (this->member->getIDNumber().substr(0, 2) == "P-")
+      std::cout << "Passport number: " << this->member->getIDNumber().substr(2)
+                << std::endl;
+    else
+      std::cout << "Citizen ID: " << this->member->getIDNumber().substr(2) << std::endl;
+
     std::cout << "Credit: " << this->member->getCredit() << std::endl;
     std::cout << "Rating score: " << this->member->getRating() << std::endl;
     std::cout << std::endl

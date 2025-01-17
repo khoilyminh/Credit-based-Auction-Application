@@ -13,21 +13,27 @@
 #define DEFAULT_EMAIL ""
 #define DEFAULT_RATING 3.0
 #define DEFAULT_CREDIT 0
+#define DEFAULT_USER_ID ""
+#define DEFAULT_ID_NUMBER ""
 
 // ------- Constructors -------
 
-Member::Member() {
+Member::Member()
+{
   this->memberID = IDGenerator::generateID(MEMBER_ID_LENGTH);
   this->fullname = DEFAULT_FULLNAME;
   this->phoneNumber = DEFAULT_PHONE_NUMBER;
   this->email = DEFAULT_EMAIL;
   this->rating = DEFAULT_RATING;
   this->credit = DEFAULT_CREDIT;
+  this->userID = DEFAULT_USER_ID;
+  this->IDNumber = DEFAULT_ID_NUMBER;
 }
 
 Member::Member(std::string memberID, std::string fullname,
                std::string phoneNumber, std::string email, float rating,
-               int credit, std::string userID) {
+               int credit, std::string userID, std::string IDNumber)
+{
   this->memberID = memberID;
   this->fullname = fullname;
   this->phoneNumber = phoneNumber;
@@ -35,10 +41,12 @@ Member::Member(std::string memberID, std::string fullname,
   this->rating = rating;
   this->credit = credit;
   this->userID = userID;
+  this->IDNumber = IDNumber;
 }
 
 Member::Member(std::string fullname, std::string phoneNumber, std::string email,
-               User user) {
+               User user, std::string IDNumber)
+{
   this->memberID = IDGenerator::generateID(MEMBER_ID_LENGTH);
   this->setFullname(fullname);
   this->setPhoneNumber(phoneNumber);
@@ -46,6 +54,7 @@ Member::Member(std::string fullname, std::string phoneNumber, std::string email,
   this->rating = DEFAULT_RATING;
   this->credit = DEFAULT_CREDIT;
   this->userID = user.getUserID();
+  this->setIDNumber(IDNumber);
 }
 
 // ------- Getters -------
@@ -62,25 +71,33 @@ float Member::getRating() { return this->rating; }
 
 int Member::getCredit() { return this->credit; }
 
+std::string Member::getIDNumber() { return this->IDNumber; }
+
 // ------- Setters -------
 
 void Member::setFullname(std::string fullname) { this->fullname = fullname; }
 
-void Member::setPhoneNumber(std::string phoneNumber) {
+void Member::setPhoneNumber(std::string phoneNumber)
+{
   // Check if phone number is valid
-  if (phoneNumber.length() < 10 || phoneNumber.length() > 12) {
+  if (phoneNumber.length() < 10 || phoneNumber.length() > 12)
+  {
     throw std::invalid_argument(
         "Phone number must be between 10 and 12 characters.");
   }
-  for (int index = 0; index < phoneNumber.length(); index++) {
-    if (phoneNumber[index] < '0' || phoneNumber[index] > '9') {
+  for (int index = 0; index < phoneNumber.length(); index++)
+  {
+    if (phoneNumber[index] < '0' || phoneNumber[index] > '9')
+    {
       throw std::invalid_argument("Phone number must be a number.");
     }
   }
   // Check if phone number is unique
   std::vector<Member> members = Database().getAllMembers();
-  for (int index = 0; index < members.size(); index++) {
-    if (members[index].getPhoneNumber() == phoneNumber) {
+  for (int index = 0; index < members.size(); index++)
+  {
+    if (members[index].getPhoneNumber() == phoneNumber)
+    {
       throw std::invalid_argument("This phone number is already used.");
     }
   }
@@ -88,7 +105,8 @@ void Member::setPhoneNumber(std::string phoneNumber) {
   this->phoneNumber = phoneNumber;
 }
 
-void Member::setEmail(std::string email) {
+void Member::setEmail(std::string email)
+{
   // Check if email is valid using regex
   // Source: https://regexr.com/3e48o
   // try {
@@ -104,8 +122,10 @@ void Member::setEmail(std::string email) {
   // }
   // Check if email is unique
   std::vector<Member> members = Database().getAllMembers();
-  for (int index = 0; index < members.size(); index++) {
-    if (members[index].getEmail() == email) {
+  for (int index = 0; index < members.size(); index++)
+  {
+    if (members[index].getEmail() == email)
+    {
       throw std::invalid_argument("This email address is already used.");
     }
   }
@@ -116,14 +136,18 @@ void Member::setRating(float rating) { this->rating = rating; }
 
 void Member::setCredit(int credit) { this->credit = credit; }
 
-std::string Member::getUserID() {
+std::string Member::getUserID()
+{
   // Check if user ID is existed
   return this->userID;
 }
 
+void Member::setIDNumber(std::string IDNumber) { this->IDNumber = IDNumber; }
+
 // ------- Other methods -------
 
-std::string Member::toString() {
+std::string Member::toString()
+{
   return "Member ID: " + this->memberID + ", Fullname: " + this->fullname +
          ", Phone number: " + this->phoneNumber + ", Email: " + this->email +
          ", Rating: " + std::to_string(this->rating) +
@@ -131,10 +155,13 @@ std::string Member::toString() {
          ", User ID: " + this->userID;
 }
 
-User *Member::getUser() {
+User *Member::getUser()
+{
   std::vector<User> users = Database().getAllUsers();
-  for (User &user : users) {
-    if (user.getUserID() == this->userID) {
+  for (User &user : users)
+  {
+    if (user.getUserID() == this->userID)
+    {
       return &user;
     }
     throw std::invalid_argument("User ID does not exist");
@@ -144,16 +171,20 @@ User *Member::getUser() {
 
 void Member::save() { Database().saveMember(this); }
 
-void *Member::findMemberByUser(User user) {
+void *Member::findMemberByUser(User user)
+{
   Database database;
   std::vector<Member> members = database.getAllMembers();
   bool found = false;
-  for (Member &member : members) {
-    if (strcmp(member.getUserID().c_str(), user.getUserID().c_str()) == 0) {
+  for (Member &member : members)
+  {
+    if (strcmp(member.getUserID().c_str(), user.getUserID().c_str()) == 0)
+    {
       *this = member;
       found = true;
     }
   }
-  if (!found) throw std::invalid_argument("Member does not exist.");
+  if (!found)
+    throw std::invalid_argument("Member does not exist.");
   return nullptr;
 }

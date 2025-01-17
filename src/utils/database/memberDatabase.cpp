@@ -17,7 +17,7 @@ void Database::saveMembersToFile()
          << this->members[i].getPhoneNumber() << ", "
          << this->members[i].getEmail() << ", " << this->members[i].getRating()
          << ", " << this->members[i].getCredit() << ", "
-         << this->members[i].getUserID() << std::endl;
+         << this->members[i].getUserID() << ", " << this->members[i].getIDNumber() << std::endl;
   }
   file.close();
 }

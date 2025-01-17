@@ -58,9 +58,11 @@ std::vector<Member> getAllMembersFromDatabase()
     int credit = std::stoi(line.substr(1, line.find(", ") - 1));
     line = line.substr(line.find(", ") + 1);
     std::string userID = line.substr(1, line.find(", ") - 1);
+    line = line.substr(line.find(", ") + 1);
+    std::string IDNumber = line.substr(1, line.find(", ") - 1);
     // Create a new member object and add it to the members vector.
     Member member(memberID, fullname, phoneNumber, email, rating, credit,
-                  userID);
+                  userID, IDNumber);
     members.push_back(member);
   }
   file.close();

@@ -186,8 +186,35 @@ void Dashboard::handleMainMenu(bool clear = true)
       std::cin >> phoneNumber;
       std::cout << "Enter email: ";
       std::cin >> email;
-      Member member = Member(fullname, phoneNumber, email, user);
-      member.save();
+
+      std::cout << "Press 1 if you want to use passport number, press 2 if you want to use citizen ID number: ";
+      int choice;
+      std::cin >> choice;
+      if (choice != 1 && choice != 2)
+      {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // waiting for 3 seconds
+        waiting(3);
+        return Dashboard::displayMainMenu(); // Prompt again for valid input
+      }
+      if (choice == 1)
+      {
+        std::string passportNumber;
+        std::cout << "Enter passport number: ";
+        std::cin >> passportNumber;
+        Member member = Member(fullname, phoneNumber, email, user, "P-" + passportNumber);
+        member.save();
+      }
+      else
+      {
+        std::string citizenID;
+        std::cout << "Enter citizen ID: ";
+        std::cin >> citizenID;
+        Member member = Member(fullname, phoneNumber, email, user, "C-" + citizenID);
+        member.save();
+      }
+      std::cout << "Member account created successfully!" << std::endl;
+      waiting(3);
     }
     catch (const std::invalid_argument &e)
     {
