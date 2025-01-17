@@ -133,7 +133,9 @@ void Dashboard::handleAdminMenu(bool clear = true)
           << (database.getTransactionsByItemID(item.getItemID()).size() > 0
                   ? ", Sold"
                   : ", Unsold")
+          << std::endl
           << std::endl;
+      index++;
     }
 
     std::cout << std::endl;

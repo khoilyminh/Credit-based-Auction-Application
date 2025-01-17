@@ -24,6 +24,7 @@ void Dashboard::displayMainMenu()
   std::cout << "S4040506, Nguyen Phuong Anh" << std::endl;
   std::cout << "S4014896, Nguyen Duc Trung" << std::endl;
   std::cout << std::endl;
+  std::cout << "PLEASE DO NOT USE COMMA IN ANY CASE!" << std::endl;
   std::cout << "====================================" << std::endl;
   std::cout << "           Welcome to the           " << std::endl;
   std::cout << "  Credit-Based Auction Application        " << std::endl;

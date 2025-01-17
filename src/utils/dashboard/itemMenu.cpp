@@ -64,6 +64,12 @@ void Dashboard::displayItemsMenu(Auction *auction)
     std::cout << index << ". " << item.getItemName() << std::endl;
     index++;
   }
+
+  if (filteredItems.size() == 0)
+  {
+    std::cout << "No items or mismatch rating." << std::endl;
+  }
+
   return Dashboard::handleItemsMenu(auction, false);
 }
 
