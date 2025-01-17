@@ -9,7 +9,7 @@ if (-not (Test-Path -Path "data")) {
 }
 
 # Compile the program
-g++ -std=c++11 ./src/main.cpp ./src/**/*.cpp ./src/**/**/*.cpp -o ./bin/main.exe
+g++ -std=c++11 -static -static-libgcc -static-libstdc++ ./src/main.cpp ./src/**/*.cpp ./src/**/**/*.cpp -o ./bin/main.exe
 
 # Run the program
 .\bin\main.exe
