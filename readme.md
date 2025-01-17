@@ -15,11 +15,11 @@ The Credit-Based Auction Application is a console-based C++ program that allows 
 
 **Member:**
 
--   **Profile Management:** View, update, and top up credit points.
--   **Item Listings:** Create, edit, and remove listings (restrictions apply if bids are placed).
+-   **Profile Management:** View, and top up credit points.
+-   **Item Listings:** Create, and remove listings (restrictions apply if bids are placed).
 -   **Bidding:**
     -   Search for items by name, category, or credit point range.
-    -   View item details, including the highest bid and bidder.
+    -   View item details, including the highest bid.
     -   Place bids, ensuring sufficient CP balance.
 -   **Ratings & Reviews:**
     -   Rate buyers and sellers after transactions.
@@ -39,47 +39,56 @@ The Credit-Based Auction Application is a console-based C++ program that allows 
 
 ## Project Structure
 
-/src
-main.cpp // Entry point for the application
-User.h/.cpp // User class for member and guest functionality
-Admin.h/.cpp // Admin-specific functionality
-Item.h/.cpp // Item class for auction listings
-Auction.h/.cpp // Auction-related operations
-/data
-users.txt // Persistent storage for user data
-items.txt // Persistent storage for item data
+`./src`: The source of the whole project.
 
-## Installation
+`./data`: The directory where data of the application will be stored.
 
-1.  Clone the repository:
+`./bin`: The directory where the binary file for execution will be store
 
-    ```bash
-    git clone https://github.com/khoilyminh/Credit-based-Auction-Application.git
-    ```
+## Execution on Windows OS (Windows 10/11)
 
-2.  If you are using Windows OS, open the terminal (PowerShell, CMD, etc.) and then run the command:
+The application was compiled and tested using `g++.exe (MinGW.org GCC-6.3.0-1) 6.3.0` on `Windows 10 Pro version 22H2 build 19045.5247`.
+
+Please follow the instructions to compile and execute the project:
+
+1. Make sure you are at the root directory of the project and you could see `./src` directory.
+
+2. Use this command to compile and run:
 
     ```powershell
     .\run.ps1
     ```
 
-    If the problem **"cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170."** appear, please run the following commands:
+3. (Optional) If the problem **"cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170."** appear, please run the following commands:
 
-    -   Run this command with Administrator Powershell:
+    - Run this command with Administrator Powershell:
 
     ```
     Set-ExecutionPolicy RemoteSigned
     ```
 
-    -   After you finish compiling and running the application, use this command to set to **strict** again:
+    - After you finish compiling and running the application, use this command to set to **strict** again:
 
     ```
     Set-ExecutionPolicy Restricted
     ```
 
-3.  If you are using MacOS or any Linux distribution, open the terminal and then run the command:
+## Execution on MacOS/Linux:
+
+The application was compiled and tested using `g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0` on `Ubuntu 20.04.6 LTS` and `Apple clang version 15.0.0 (clang-1500.3.9.4)` on `macOS Sonoma 14.5`.
+
+1. Make sure you are at the root directory of the project and you could see `./src` directory.
+
+2. Use this command to compile:
+
     ```bash
-    ./run.sh
+    ./compile.sh && ./run.sh
+    ```
+
+3. (Optional) In case of nothing happend due to file execution restriction, please using bellow command with sudo permission and re-run step 2:
+
+    ```bash
+    chmod ./compile.sh 777 && chmod ./run.sh 777
     ```
 
 ## Usage
@@ -93,31 +102,6 @@ items.txt // Persistent storage for item data
 
 3.  Follow the prompts to explore features such as creating listings, bidding, and rating.
 
-## Data Files
-
--   **users.txt:** Stores registered user details, including username, password (encrypted), and ratings.
--   **items.txt:** Stores auction items with details like name, category, and current bid status.
-
-## Contributing
-
-This project uses GitHub for version control. To contribute:
-
-1.  Fork the repository.
-2.  Create a new branch for your feature:
-
-    ```bash
-    git checkout -b feature-name
-    ```
-
-3.  Commit and push your changes:
-
-    ```bash
-    git commit -m "Add feature description"
-    git push origin feature-name
-    ```
-
-4.  Submit a pull request.
-
 ## Testing
 
 -   Unit testing is implemented for core functionalities like registration, bidding, and file handling.
@@ -125,9 +109,9 @@ This project uses GitHub for version control. To contribute:
 
 ## Acknowledgments
 
--   Instructor: Dr. Ling Huo Chong
--   Course: Software Engineering Design (EEET2482) / Advanced Programming Techniques (COSC2082)
--   Semester: 3, 2024
+-   **Instructor:** Dr. Ling Huo Chong
+-   **Course**: Software Engineering Design (EEET2482) / Advanced Programming Techniques (COSC2082)
+-   **Semester**: 3, 2024
 
 ## License
 
