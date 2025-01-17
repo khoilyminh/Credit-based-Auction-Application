@@ -26,6 +26,7 @@ void Dashboard::displayMemberMenu()
   std::cout << "3. Top up credit" << std::endl;
   std::cout << "4. Account overview." << std::endl;
   std::cout << "5. View all transactions." << std::endl;
+  std::cout << "6. Change password." << std::endl;
   return Dashboard::handleMemberMenu(false);
 }
 
@@ -348,6 +349,41 @@ void Dashboard::handleMemberMenu(bool clear = true)
         return Dashboard::displayMemberMenu();
       }
     }
+    }
+  }
+
+  case 6:
+  {
+    clearing();
+    std::cout << "====================================" << std::endl;
+    std::cout << "          Change password           " << std::endl;
+    std::cout << "====================================" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Enter your old password: ";
+    std::string oldPassword;
+    std::cin >> oldPassword;
+    std::cout << "Enter your new password: ";
+    std::string newPassword;
+    std::cin >> newPassword;
+
+    Database database;
+    User *user = database.getUserByID(this->member->getUserID());
+    if (!user->checkPassword(oldPassword))
+    {
+      std::cout << "Old password is incorrect. Please try again." << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayMemberMenu();
+    }
+    else
+    {
+      user->setPassword(newPassword);
+      user->save();
+      std::cout << "Password changed successfully!" << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayMemberMenu();
     }
   }
 
