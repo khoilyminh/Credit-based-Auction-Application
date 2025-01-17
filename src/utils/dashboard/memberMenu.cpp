@@ -27,6 +27,9 @@ void Dashboard::displayMemberMenu()
   std::cout << "4. Account overview." << std::endl;
   std::cout << "5. View all transactions." << std::endl;
   std::cout << "6. Change password." << std::endl;
+  std::cout << "7. Search and filter items by name." << std::endl;
+  std::cout << "8. Search and filter items by credit points." << std::endl;
+  std::cout << "9. Search and filter items by category." << std::endl;
   return Dashboard::handleMemberMenu(false);
 }
 
@@ -391,6 +394,238 @@ void Dashboard::handleMemberMenu(bool clear = true)
       // waiting for 3 seconds
       waiting(3);
       return Dashboard::displayMemberMenu();
+    }
+  }
+
+  case 7:
+  {
+    clearing();
+    std::cout << "====================================" << std::endl;
+    std::cout << "       Search and filter items       " << std::endl;
+    std::cout << "====================================" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Enter search keyword: ";
+    std::string keyword;
+    std::cin >> keyword;
+
+    std::cout << std::endl
+              << "0. Back to member menu." << std::endl;
+    std::vector<Item> filteredItems;
+    for (Item &item : Database().getAllItems())
+    {
+      if (item.getItemName().find(keyword) != std::string::npos && Database().getAuctionByID(item.getAuctionID())->getEndTime() == 0)
+      {
+        filteredItems.push_back(item);
+      }
+    }
+    if (filteredItems.size() == 0)
+    {
+      std::cout << "No items found." << std::endl;
+      // waiting for 3 seconds
+    }
+
+    int index = 1;
+    for (Item &item : filteredItems)
+    {
+      std::cout << index << ". Name: " << item.getItemName()
+                << ", Category: " << item.getCategory()
+                << ", Current bid: " << item.getCurrentBidAmount() << " CP."
+                << std::endl;
+      index++;
+    }
+
+    int choice;
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+
+    // Check if choice is integer
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore();
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayMemberMenu();
+    }
+
+    switch (choice)
+    {
+    case 0:
+    {
+      return Dashboard::displayMemberMenu();
+    }
+
+    default:
+    {
+      // Check if choice is within the range of filtered items
+      if (choice > 0 && choice <= filteredItems.size())
+      {
+        return Dashboard::displayItemsDetailMenu(&filteredItems[choice - 1], Database().getAuctionByID(filteredItems[choice - 1].getAuctionID()));
+      }
+      else
+      {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // waiting for 3 seconds
+        waiting(3);
+        return Dashboard::displayMemberMenu();
+      }
+    }
+    }
+  }
+
+  case 8:
+  {
+    clearing();
+    std::cout << "====================================" << std::endl;
+    std::cout << "       Search and filter items       " << std::endl;
+    std::cout << "====================================" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Enter minimum credit points: ";
+    float minCredit;
+    std::cin >> minCredit;
+    std::cout << "Enter maximum credit points: ";
+    float maxCredit;
+    std::cin >> maxCredit;
+
+    std::cout << std::endl
+              << "0. Back to member menu." << std::endl;
+    std::vector<Item> filteredItems;
+    for (Item &item : Database().getAllItems())
+    {
+      if ((item.getCurrentBidAmount() >= minCredit || item.getCurrentBidAmount() == 0) &&
+          (item.getCurrentBidAmount() <= maxCredit || item.getCurrentBidAmount() == 0) && Database().getAuctionByID(item.getAuctionID())->getEndTime() == 0)
+      {
+        filteredItems.push_back(item);
+      }
+    }
+    if (filteredItems.size() == 0)
+    {
+      std::cout << "No items found." << std::endl;
+    }
+
+    int index = 1;
+    for (Item &item : filteredItems)
+    {
+      std::cout << index << ". Name: " << item.getItemName()
+                << ", Category: " << item.getCategory()
+                << ", Current bid: " << item.getCurrentBidAmount() << " CP."
+                << std::endl;
+      index++;
+    }
+
+    int choice;
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+
+    // Check if choice is integer
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore();
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayMemberMenu();
+    }
+
+    switch (choice)
+    {
+    case 0:
+    {
+      return Dashboard::displayMemberMenu();
+    }
+
+    default:
+    {
+      // Check if choice is within the range of filtered items
+      if (choice > 0 && choice <= filteredItems.size())
+      {
+        return Dashboard::displayItemsDetailMenu(&filteredItems[choice - 1], Database().getAuctionByID(filteredItems[choice - 1].getAuctionID()));
+      }
+      else
+      {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // waiting for 3 seconds
+        waiting(3);
+        return Dashboard::displayMemberMenu();
+      }
+    }
+    }
+  }
+
+  case 9:
+  {
+    clearing();
+    std::cout << "====================================" << std::endl;
+    std::cout << "       Search and filter items       " << std::endl;
+    std::cout << "====================================" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Enter category: ";
+    std::string category;
+    std::cin >> category;
+
+    std::cout << std::endl
+              << "0. Back to member menu." << std::endl;
+    std::vector<Item> filteredItems;
+    for (Item &item : Database().getAllItems())
+    {
+      if (item.getCategory().find(category) != std::string::npos && Database().getAuctionByID(item.getAuctionID())->getEndTime() == 0)
+      {
+        filteredItems.push_back(item);
+      }
+    }
+
+    int index = 1;
+    for (Item &item : filteredItems)
+    {
+      std::cout << index << ". Name: " << item.getItemName()
+                << ", Category: " << item.getCategory()
+                << ", Current bid: " << item.getCurrentBidAmount() << " CP."
+                << std::endl;
+      index++;
+    }
+
+    int choice;
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+
+    // Check if choice is integer
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore();
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      // waiting for 3 seconds
+      waiting(3);
+      return Dashboard::displayMemberMenu();
+    }
+
+    switch (choice)
+    {
+    case 0:
+    {
+      return Dashboard::displayMemberMenu();
+    }
+
+    default:
+    {
+      // Check if choice is within the range of filtered items
+      if (choice > 0 && choice <= filteredItems.size())
+      {
+        return Dashboard::displayItemsDetailMenu(&filteredItems[choice - 1], Database().getAuctionByID(filteredItems[choice - 1].getAuctionID()));
+      }
+      else
+      {
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        // waiting for 3 seconds
+        waiting(3);
+        return Dashboard::displayMemberMenu();
+      }
+    }
     }
   }
 
